@@ -12,11 +12,7 @@ import { tokens } from "../theme";
 export function OrdersAttentionCard({ ordersNeedAttention }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('orders/'); // Redirect on click
-    };
 
     // Determine styles based on ordersNeedAttention value
     const isZero = ordersNeedAttention === 0;
@@ -25,7 +21,6 @@ export function OrdersAttentionCard({ ordersNeedAttention }) {
 
     return (
         <Card
-            onClick={handleClick}
             sx={{
                 p: 2,
                 height: '100%',

@@ -1,8 +1,7 @@
 import {Box} from "@mui/material";
 import Header from '../../components/Header';
-import {Outlet} from "react-router-dom";
 
-const PageLayout = ({heading, subHeading}) => {
+const PageLayout = ({heading, subHeading, children}) => {
 
     return (
         <Box
@@ -15,8 +14,10 @@ const PageLayout = ({heading, subHeading}) => {
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Header title={heading} subtitle={subHeading}/>
             </Box>
+            <Box sx={{flexGrow: 1}}>
             {/* Main content passed between tags*/}
-            < Outlet />
+            {children}
+            </Box>
         </Box>
     );
 }

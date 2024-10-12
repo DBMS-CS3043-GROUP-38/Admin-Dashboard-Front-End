@@ -47,7 +47,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 const Sidebar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [selected, setSelected] = useState("Overview"); // State to track active item
+    const [selected, setSelected] = useState("Overview");
 
     return (
         <Box
@@ -107,7 +107,7 @@ const Sidebar = () => {
                     >
                         <Item
                             title="Schedule trains"
-                            to="schedule-train"
+                            to="schedule-trains"
                             icon={<TrainIcon />}
                             selected={selected}
                             setSelected={setSelected}

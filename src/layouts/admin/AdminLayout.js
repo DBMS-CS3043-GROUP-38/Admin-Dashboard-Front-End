@@ -1,6 +1,6 @@
 import Topbar from "../../components/Topbar";
 import Sidebar from "../../components/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import {Outlet, Route, Routes} from "react-router-dom";
 import Overview from "../../pages/admin/Overview";
 import { Box } from "@mui/material";
 import ScheduleTrain from "../../pages/admin/ScheduleTrain";
@@ -17,11 +17,7 @@ export default function AdminLayout() {
                 }}
             >
                 <Topbar />
-                <Routes>
-                    {/* Admin sub-routes */}
-                    <Route path="/" element={<Overview />} />
-                    <Route path="schedule-train" element={<ScheduleTrain />} />
-                </Routes>
+                <Outlet />
             </Box>
         </Box>
     );

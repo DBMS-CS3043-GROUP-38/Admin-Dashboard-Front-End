@@ -1,58 +1,46 @@
-import {Box} from "@mui/material";
-import Header from '../../components/Header';
 import Grid from '@mui/material/Grid2';
 import QuaterlySalesCard from "../../components/QuaterlySalesCard";
 import TrainsCompletedCard from "../../components/TrainsCompletedCard";
 import OrdersAttentionCard from "../../components/OrdersAttentionCard.";
 import PendingOrdersCard from "../../components/PendingOrdersCard";
 import RevanueLineChart from "../../components/RevanueLineChart";
-import OrdersStatusChart from "../../components/OrdersStatusChart";
+import {OrdersStatusChart} from "../../components/OrdersStatusChart";
 import TodaysOutgingTrainTable from "../../components/TodaysOutgingTrainTable";
 import ProductSummary from "../../components/ProductSummeryCard";
+import PageLayout from "../../layouts/admin/PageLayout";
 
 const Overview = () => {
 
     return (
-        <Box
-            display="flex"
-            flexDirection="column"
-            overflowY="auto" // Allow scrolling if content overflows>
-            p={2}
-        >
-            {/* HEADER */}
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Header title="DASHBOARD" subtitle="Welcome to your dashboard"/>
-            </Box>
+        <PageLayout heading={"Overview"} subHeading={"Dashboard"}>
 
-            <Box sx={{flexGrow: 1}}>
-                <Grid container spacing={2}>
-                    <Grid size={3}>
-                        <QuaterlySalesCard currentQuarterSales={100000} previousQuarterSales={80000}/>
-                    </Grid>
-                    <Grid size={3}>
-                        <TrainsCompletedCard completedTrains={10} totalTrains={20}/>
-                    </Grid>
-                    <Grid size={3}>
-                        <PendingOrdersCard pendingOrders={100}/>
-                    </Grid>
-                    <Grid size={3}>
-                        < OrdersAttentionCard ordersNeedAttention={12}/>
-                    </Grid>
-                    <Grid size={8}>
-                        <RevanueLineChart revenueData={revenueData}/>
-                    </Grid>
-                    <Grid size={4}>
-                        <OrdersStatusChart orderStatuses={orderStatuses}/>
-                    </Grid>
-                    <Grid size={7}>
-                        <TodaysOutgingTrainTable/>
-                    </Grid>
-                    <Grid size={5}>
-                        <ProductSummary/>
-                    </Grid>
+            <Grid container spacing={2}>
+                <Grid size={3}>
+                    <QuaterlySalesCard currentQuarterSales={100000} previousQuarterSales={80000}/>
                 </Grid>
-            </Box>
-        </Box>
+                <Grid size={3}>
+                    <TrainsCompletedCard completedTrains={10} totalTrains={20}/>
+                </Grid>
+                <Grid size={3}>
+                    <PendingOrdersCard pendingOrders={100}/>
+                </Grid>
+                <Grid size={3}>
+                    < OrdersAttentionCard ordersNeedAttention={12}/>
+                </Grid>
+                <Grid size={8}>
+                    <RevanueLineChart revenueData={revenueData}/>
+                </Grid>
+                <Grid size={4}>
+                    <OrdersStatusChart orderStatuses={orderStatuses}/>
+                </Grid>
+                <Grid size={7}>
+                    <TodaysOutgingTrainTable data={todayTrains}/>
+                </Grid>
+                <Grid size={5}>
+                    <ProductSummary/>
+                </Grid>
+            </Grid>
+        </PageLayout>
     );
 }
 
@@ -87,3 +75,17 @@ const orderStatuses = {
     delivered: 1500, // high number
     cancelled: 300,   // high number
 };
+
+const todayTrains = [
+    { id: 'T001', destination: 'City A', capacityFilled: 80, fullCapacity: 100, time: '2024-10-12T01:00:00Z' },
+    { id: 'T002', destination: 'City B', capacityFilled: 50, fullCapacity: 100, time: '2024-10-12T05:16:00Z' },
+    { id: 'T003', destination: 'City C', capacityFilled: 30, fullCapacity: 100, time: '2024-10-12T05:26:30Z' },
+    { id: 'T004', destination: 'City D', capacityFilled: 90, fullCapacity: 100, time: '2024-10-12T13:45:00Z' },
+    { id: 'T005', destination: 'City E', capacityFilled: 20, fullCapacity: 100, time: '2024-10-12T15:30:00Z' },
+    { id: 'T006', destination: 'City F', capacityFilled: 100, fullCapacity: 100, time: '2024-10-12T17:00:00Z' },
+    { id: 'T007', destination: 'City G', capacityFilled: 70, fullCapacity: 100, time: '2024-10-12T18:00:00Z' },
+    { id: 'T008', destination: 'City H', capacityFilled: 0, fullCapacity: 100, time: '2024-10-12T20:00:00Z' },
+    { id: 'T009', destination: 'City I', capacityFilled: 60, fullCapacity: 100, time: '2024-10-12T21:30:00Z' },
+    { id: 'T010', destination: 'City J', capacityFilled: 40, fullCapacity: 100, time: '2024-10-12T23:00:00Z' },
+    { id: 'T011', destination: 'City K', capacityFilled: 20, fullCapacity: 100, time: '2024-10-13T01:00:00Z' },
+];

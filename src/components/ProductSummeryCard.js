@@ -8,10 +8,10 @@ import {
     TableRow,
     Typography,
     Paper,
-    Card,
     useTheme
 } from '@mui/material';
 import { tokens } from '../theme';
+import Card from "./CustomGrayCard";
 
 // Dummy data remains the same
 const dummyData = [
@@ -50,18 +50,7 @@ const ProductSummary = () => {
     const colors = tokens(theme.palette.mode);
 
     return (
-        <Card sx={{
-            borderRadius: 2,
-            backgroundColor: colors.grey["900"],
-            height: 'auto', // Use auto height
-            cursor: 'pointer',
-            transition: 'transform 0.2s',
-            '&:hover': {
-                transform: 'scale(1.02)',
-            },
-            boxShadow: theme.shadows[1],
-            p: 2
-        }}>
+        <Card >
             <Typography variant="h6" color="text.primary" gutterBottom>
                 Product Summary (Current Quarter)
             </Typography>

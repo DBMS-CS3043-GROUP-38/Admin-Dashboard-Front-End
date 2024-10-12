@@ -14,9 +14,6 @@ export function PendingOrdersCard({ pendingOrders }) {
     const colors = tokens(theme.palette.mode);
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('orders/'); // Redirect on click
-    };
 
     // Determine styles based on pendingOrders value
     const isZero = pendingOrders === 0;
@@ -25,7 +22,6 @@ export function PendingOrdersCard({ pendingOrders }) {
 
     return (
         <Card
-            onClick={handleClick}
             sx={{
                 p: 2,
                 height: '100%',
@@ -51,7 +47,7 @@ export function PendingOrdersCard({ pendingOrders }) {
                         <IconComponent sx={{ fontSize: 60, color: isZero ? colors.greenAccent["300"] : colors.yellowAccent["300"] }} />
                     </Stack>
                     <Typography variant="body2" color="text.secondary">
-                        {isZero ? 'No pending orders!' : 'Check the pending orders that need your attention.'}
+                        {isZero ? 'No pending orders!' : 'Schedule the pending orders.'}
                     </Typography>
                 </Stack>
             </CardContent>
