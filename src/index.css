@@ -6,7 +6,7 @@ body,
 #root,
 .app,
 .content {
-  height: 1000;
+  height: 100%;
   width: 100%;
   font-family: 'Source Sans 3', sans-serif;
 }
@@ -26,9 +26,9 @@ body,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #7e96c1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #5b5b80;
 }
