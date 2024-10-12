@@ -1,5 +1,5 @@
 import PageLayout from "../../layouts/admin/PageLayout";
-import {OrdersStatusChartH} from "../../components/OrdersStatusChart";
+import {OrdersStatusChartH} from "../../components/charts/OrdersStatusChart";
 import Grid from "@mui/material/Grid2";
 import {CustomTable, AttentionOrdersTable } from "../../components/OrderDetailsTable";
 import OrderDetailsSearchCard from "../../components/OrderDetailsSearch";

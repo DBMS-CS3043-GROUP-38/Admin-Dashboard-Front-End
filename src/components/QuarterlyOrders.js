@@ -1,20 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AssignmentIcon from '@mui/icons-material/Assignment'; // Icon for Orders
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
-export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }) {
+export function QuarterlyOrdersCard({ currentQuarterOrders, previousQuarterOrders }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const navigate = useNavigate();
 
     // Calculate the percentage change
-    const percentageChange = ((currentQuarterSales - previousQuarterSales) / previousQuarterSales) * 100;
+    const percentageChange = ((currentQuarterOrders - previousQuarterOrders) / previousQuarterOrders) * 100;
     const isIncrease = percentageChange > 0;
 
     // Determine trend and value for display
@@ -28,7 +30,7 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                 p: 2,
                 height: '100%',
                 borderRadius: '10px',
-                backgroundColor: `${colors.cyanAccent["900"]}`,
+                backgroundColor: `${colors.purpleAccent["900"]}`,
                 transition: 'transform 0.2s',
                 '&:hover': {
                     transform: 'scale(1.02)',
@@ -40,13 +42,13 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                     <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
                         <Stack spacing={1}>
                             <Typography color="text.secondary" variant="overline">
-                                Quarterly Sales
+                                Quarterly Orders
                             </Typography>
                             <Typography variant="h4">
-                                ${currentQuarterSales.toLocaleString()}
+                                {currentQuarterOrders.toLocaleString()}
                             </Typography>
                         </Stack>
-                        <MonetizationOnIcon sx={{ fontSize: 60, color: `${colors.cyanAccent["300"]}` }} />
+                        <AssignmentIcon sx={{ fontSize: 60, color: `${colors.purpleAccent["300"]}` }} />
                     </Stack>
                     {percentageChange !== 0 && (
                         <Stack sx={{ alignItems: 'center' }} direction="row" spacing={1}>
@@ -65,4 +67,4 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
     );
 }
 
-export default QuarterlySalesCard;
+export default QuarterlyOrdersCard;

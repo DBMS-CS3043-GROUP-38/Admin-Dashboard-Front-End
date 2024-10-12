@@ -1,20 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import StoreIcon from '@mui/icons-material/Store'; // Icon for Store
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
-export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }) {
+export function TopPerformingStoreCard({ storeId, storeName, currentRevenue, previousRevenue }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const navigate = useNavigate();
 
     // Calculate the percentage change
-    const percentageChange = ((currentQuarterSales - previousQuarterSales) / previousQuarterSales) * 100;
+    const percentageChange = ((currentRevenue - previousRevenue) / previousRevenue) * 100;
     const isIncrease = percentageChange > 0;
 
     // Determine trend and value for display
@@ -24,11 +26,12 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
 
     return (
         <Card
+            onClick={() => navigate(`store-report/${storeId}`)}
             sx={{
                 p: 2,
                 height: '100%',
                 borderRadius: '10px',
-                backgroundColor: `${colors.cyanAccent["900"]}`,
+                backgroundColor: `${colors.greenAccent["900"]}`,
                 transition: 'transform 0.2s',
                 '&:hover': {
                     transform: 'scale(1.02)',
@@ -40,13 +43,19 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                     <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
                         <Stack spacing={1}>
                             <Typography color="text.secondary" variant="overline">
-                                Quarterly Sales
+                                Top Performing Store
                             </Typography>
-                            <Typography variant="h4">
-                                ${currentQuarterSales.toLocaleString()}
+                            <Typography variant="h5">
+                                {storeName} {/* Larger Store Name */}
+                            </Typography>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                Store ID: {storeId} {/* Smaller Store ID */}
+                            </Typography>
+                            <Typography variant="h5">
+                                Revenue: ${currentRevenue.toLocaleString()}
                             </Typography>
                         </Stack>
-                        <MonetizationOnIcon sx={{ fontSize: 60, color: `${colors.cyanAccent["300"]}` }} />
+                        <StoreIcon sx={{ fontSize: 60, color: `${colors.greenAccent["300"]}` }} />
                     </Stack>
                     {percentageChange !== 0 && (
                         <Stack sx={{ alignItems: 'center' }} direction="row" spacing={1}>
@@ -55,7 +64,7 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                                 {Math.abs(percentageChange).toFixed(2)}%
                             </Typography>
                             <Typography color="text.secondary" variant="caption">
-                                {isIncrease ? 'higher' : 'lower'} than last quarter
+                                {isIncrease ? 'higher' : 'lower'} than previous period
                             </Typography>
                         </Stack>
                     )}
@@ -65,4 +74,4 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
     );
 }
 
-export default QuarterlySalesCard;
+export default TopPerformingStoreCard;

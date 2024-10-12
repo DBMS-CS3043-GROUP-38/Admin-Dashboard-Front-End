@@ -6,6 +6,7 @@ import Overview from "./pages/admin/Overview";
 import ScheduleTrain from "./pages/admin/ScheduleTrain";
 import ScheduleOrders from "./pages/admin/ScheduleOrders";
 import Orders from "./pages/admin/Orders";
+import SalesReport from "./pages/admin/SalesReport";
 
 function App() {
     const {theme, colorMode} = useMode();
@@ -24,6 +25,7 @@ function App() {
                             <Route path="schedule-trains" element={<ScheduleTrain/>}/>
                             <Route path='schedule-orders' element={<ScheduleOrders/>}/>
                             <Route path='orders' element={<Orders/>}/>
+                            <Route path='sales-reports' element={<SalesReport />}/>
                         < /Route>
                     </Routes>
                 </BrowserRouter>

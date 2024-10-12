@@ -2,16 +2,15 @@ import React from 'react';
 import {   CardContent, Typography } from '@mui/material';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import { useTheme } from '@mui/material';
-import { tokens } from '../theme';
-import { useNavigate } from 'react-router-dom';
-import Card from "./CustomGrayCard";
+import { tokens } from '../../theme';
+import CustomGrayCard from "../CustomGrayCard";
 
 const RevenueLineChart = ({ revenueData }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return (
-        <Card>
+        <CustomGrayCard>
                 <CardContent>
                     <Typography variant="h5" color="text.secondary" gutterBottom>
                         Revenue for the Past 12 Months
@@ -39,7 +38,7 @@ const RevenueLineChart = ({ revenueData }) => {
 
                     </ResponsiveContainer>
                 </CardContent>
-        </Card>
+        </CustomGrayCard>
     );
 };
 

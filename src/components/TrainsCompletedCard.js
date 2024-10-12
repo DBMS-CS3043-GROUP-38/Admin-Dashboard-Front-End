@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -12,14 +11,12 @@ import Card from "@mui/material/Card";
 export function TrainsCompletedCard({ completedTrains, totalTrains }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const navigate = useNavigate();
 
     // Calculate the completion percentage
     const completionPercentage = (completedTrains / totalTrains) * 100;
 
     return (
         <Card
-            onClick={() => navigate('trains/') }
             sx={{
                 p: 2,
                 height: '100%',

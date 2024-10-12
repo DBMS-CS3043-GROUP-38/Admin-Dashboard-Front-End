@@ -11,8 +11,8 @@ import {
     Cell, LabelList
 } from 'recharts';
 import {useTheme} from '@mui/material/styles';
-import {tokens} from "../theme";
-import Card from "./CustomGrayCard";
+import {tokens} from "../../theme";
+import Card from "../CustomGrayCard";
 
 const OrdersStatusChart = ({orderStatuses}) => {
     const theme = useTheme();
