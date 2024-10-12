@@ -38,7 +38,7 @@ const OrderDetailsSearchCard = () => {
         const dummyTrackingData = [
             {updateDateTime: "2024-10-10 12:00", trackingStatus: "In Store"},
             {updateDateTime: "2024-10-11 08:30", trackingStatus: "In Shipment"},
-            {updateDateTime: "2024-10-12 15:45", trackingStatus: "Delivered"}
+            {updateDateTime: "2024-10-12 15:45", trackingStatus: "Delivegreen"}
         ];
 
         const dummyProductDetails = [
@@ -59,26 +59,78 @@ const OrderDetailsSearchCard = () => {
             <Typography variant="h5" color="text.primary" gutterBottom>
                 Search Order Details
             </Typography>
-            <Box sx={{display: 'flex', mb: 2}}>
+            {/*<Box sx={{display: 'flex', mb: 2}}>*/}
+            {/*    <TextField*/}
+            {/*        variant="outlined"*/}
+            {/*        label="Order ID"*/}
+            {/*        value={searchOrderID}*/}
+            {/*        onChange={(e) => setSearchOrderID(e.target.value)}*/}
+            {/*        sx={{mr: 2}}*/}
+            {/*    />*/}
+            {/*    <Box*/}
+            {/*        component="button"*/}
+            {/*        sx={{*/}
+            {/*            padding: '10px 20px',*/}
+            {/*            color: colors.grey["100"],*/}
+            {/*            backgroundColor: colors.greenAccent["500"],*/}
+            {/*            border: 'none',*/}
+            {/*            cursor: 'pointer',*/}
+            {/*            borderRadius: '4px',*/}
+            {/*            '&:hover': {*/}
+            {/*                backgroundColor: colors.greenAccent["700"]*/}
+            {/*            }*/}
+            {/*        }}*/}
+            {/*        onClick={handleSearch}*/}
+            {/*    >*/}
+            {/*        Search*/}
+            {/*    </Box>*/}
+            {/*</Box>*/}
+
+            <Box sx={{ display: 'flex', mb: 2 }}>
                 <TextField
                     variant="outlined"
                     label="Order ID"
                     value={searchOrderID}
                     onChange={(e) => setSearchOrderID(e.target.value)}
-                    sx={{mr: 2}}
+                    sx={{
+                        mr: 2,
+                        '& .MuiOutlinedInput-root': {
+                            backgroundColor: colors.greenAccent[900],
+                            color: colors.greenAccent[500],
+                            '& fieldset': {
+                                borderColor: colors.greenAccent[500],
+                            },
+                            '&:hover fieldset': {
+                                borderColor: colors.greenAccent[500],
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: colors.greenAccent[500],
+                            },
+                        },
+                        '& .MuiInputLabel-root': {
+                            color: colors.greenAccent[500],
+                            '&.Mui-focused': {
+                                color: colors.greenAccent[500],
+                            },
+                        },
+                    }}
                 />
                 <Box
                     component="button"
                     sx={{
                         padding: '10px 20px',
                         color: colors.grey["100"],
-                        backgroundColor: colors.redAccent["500"],
+                        backgroundColor: colors.greenAccent["700"],
                         border: 'none',
                         cursor: 'pointer',
                         borderRadius: '4px',
                         '&:hover': {
-                            backgroundColor: colors.redAccent["700"]
-                        }
+                            backgroundColor: colors.greenAccent["800"],
+                        },
+                        // Add similar styles as the Select component
+                        '&:focus': {
+                            outline: `2px solid ${colors.greenAccent[500]}`, // Optional: Focus outline to match
+                        },
                     }}
                     onClick={handleSearch}
                 >
@@ -131,7 +183,7 @@ const OrderDetailsSearchCard = () => {
                     <Grid size={12}>
                         <CustomTable
                             data={orderDetails.tracking}
-                            colorSelection="redAccent"
+                            colorSelection="yellowAccent"
                             heading="Tracking Status"
                             maxHeight={200}
                         />
@@ -140,7 +192,7 @@ const OrderDetailsSearchCard = () => {
                     <Grid size={12}>
                         <CustomTable
                             data={orderDetails.products}
-                            colorSelection="greenAccent"
+                            colorSelection="cyanAccent"
                             heading="Product Details"
                             maxHeight={200}
                         />

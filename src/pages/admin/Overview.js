@@ -1,13 +1,14 @@
 import Grid from '@mui/material/Grid2';
 import QuaterlySalesCard from "../../components/QuaterlySalesCard";
-import TrainsCompletedCard from "../../components/TrainsCompletedCard";
-import OrdersAttentionCard from "../../components/OrdersAttentionCard.";
+// import TrainsCompletedCard from "../../components/TrainsCompletedCard";
+import {TrainsCompletedCard} from "../../components/CompletedCard";
 import PendingOrdersCard from "../../components/PendingOrdersCard";
 import RevanueLineChart from "../../components/charts/RevanueLineChart";
 import {OrdersStatusChart} from "../../components/charts/OrdersStatusChart";
 import TodaysOutgingTrainTable from "../../components/TodaysOutgingTrainTable";
 import ProductSummary from "../../components/ProductSummeryCard";
 import PageLayout from "../../layouts/admin/PageLayout";
+import OrdersAttentionCard from "../../components/OrdersAttentionCard.";
 
 const Overview = () => {
 

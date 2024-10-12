@@ -8,7 +8,7 @@ import { tokens } from "../theme";
 import TrainIcon from '@mui/icons-material/Train';
 import Card from "@mui/material/Card";
 
-export function TrainsCompletedCard({ completedTrains, totalTrains }) {
+const TrainsCompletedCard = function ({ completedTrains, totalTrains }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -63,4 +63,4 @@ export function TrainsCompletedCard({ completedTrains, totalTrains }) {
     );
 }
 
-export default TrainsCompletedCard;
+// export default TrainsCompletedCard;

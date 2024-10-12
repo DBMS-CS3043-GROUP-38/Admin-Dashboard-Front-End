@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import {
     Sidebar as ProSidebar,
     Menu,
@@ -11,8 +11,8 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
-import { tokens } from "../theme";
-import { Link } from "react-router-dom";
+import {tokens} from "../theme";
+import {Link} from "react-router-dom";
 import AppsIcon from "@mui/icons-material/Apps";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import TrainIcon from "@mui/icons-material/Train";
@@ -24,14 +24,17 @@ import PeopleIcon from "@mui/icons-material/People";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import {TrainSharp} from "@mui/icons-material";
+import RouteIcon from '@mui/icons-material/Route';
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return (
         <MenuItem
-            component={<Link to={to} />}
+            component={<Link to={to}/>}
             active={selected === title}
             style={{
                 color: colors.grey[100],
@@ -69,7 +72,7 @@ const Sidebar = () => {
                 >
                     <Typography
                         variant="h3"
-                        style={{ color: colors.purpleAccent["300"] }}
+                        style={{color: colors.purpleAccent["300"]}}
                     >
                         Dashboard
                     </Typography>
@@ -77,7 +80,7 @@ const Sidebar = () => {
                 <Menu
                     iconShape="square"
                     menuItemStyles={{
-                        button: ({ active}) => {
+                        button: ({active}) => {
                             return {
                                 backgroundColor: active ? colors.purpleAccent["800"] : undefined,
                                 borderRadius: "10px",
@@ -96,77 +99,93 @@ const Sidebar = () => {
                     <Item
                         title="Overview"
                         to="./"
-                        icon={<AppsIcon />}
+                        icon={<AppsIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
                     <SubMenu
-                        icon={<ScheduleIcon />}
-                        label="Schedule"
+                        icon={<ScheduleIcon/>}
+                        label="Schedule and Dispatch"
                         defaultOpen={true}
                     >
                         <Item
                             title="Schedule trains"
                             to="schedule-trains"
-                            icon={<TrainIcon />}
+                            icon={<TrainIcon/>}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
                             title="Schedule orders"
                             to="schedule-orders"
-                            icon={<ShoppingCartCheckoutIcon />}
+                            icon={<ShoppingCartCheckoutIcon/>}
                             selected={selected}
                             setSelected={setSelected}
                         />
                     </SubMenu>
+                    <Item
+                        title="Sales Reports"
+                        to="sales-reports"
+                        icon={<AssessmentIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Scheduled Orders"
+                        to="trains"
+                        icon={<TrainSharp/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
 
                     <Item
                         title="Orders"
                         to="orders"
-                        icon={<AllInboxIcon />}
+                        icon={<AllInboxIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
-                    <Item
-                        title="Sales Reports"
-                        to="sales-reports"
-                        icon={<AssessmentIcon />}
-                        selected={selected}
-                        setSelected={setSelected}
-                    />
+
+
                     <Item
                         title="Stores"
                         to="stores"
-                        icon={<StoreIcon />}
+                        icon={<StoreIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
                     <Item
                         title="Customers"
                         to="customers"
-                        icon={<PeopleIcon />}
+                        icon={<PeopleIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
                     <Item
                         title="Drivers"
                         to="drivers"
-                        icon={<DriveEtaIcon />}
+                        icon={<DriveEtaIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
                     <Item
                         title="Assistants"
                         to="assistants"
-                        icon={<PersonIcon />}
+                        icon={<PersonIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
                     <Item
                         title="Trucks"
                         to="trucks"
-                        icon={<LocalShippingIcon />}
+                        icon={<LocalShippingIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Routes"
+                        to="routes"
+                        icon={<RouteIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
@@ -204,6 +223,7 @@ const given = () => {
                         E-commerce (disabled)
                     </MenuItem>
                     <MenuItem icon={<StoreIcon name="service"/>}> Examples</MenuItem>
+                    <MenuItem icon={<ExitToAppIcon/>}> Dispatch</MenuItem>
                 </Menu>
             </ProSidebar>
         </div>
