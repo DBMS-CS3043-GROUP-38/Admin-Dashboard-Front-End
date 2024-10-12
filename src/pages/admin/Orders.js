@@ -1,20 +1,32 @@
 import PageLayout from "../../layouts/admin/PageLayout";
 import {OrdersStatusChartH} from "../../components/OrdersStatusChart";
 import Grid from "@mui/material/Grid2";
-import OrderDetailsTable from "../../components/OrderDetailsTable";
+import {CustomTable, AttentionOrdersTable } from "../../components/OrderDetailsTable";
+import OrderDetailsSearchCard from "../../components/OrderDetailsSearch";
 
 export default function Orders() {
     return (
         <PageLayout subHeading={"View orders and search order details"} heading={"Orders"}>
             <Grid container spacing={2}>
                 <Grid size={12}>
+                    <OrderDetailsSearchCard/>
+                </Grid>
+                <Grid size={12}>
                     <OrdersStatusChartH orderStatuses={orderStatuses}/>
                 </Grid>
-                <Grid size={6}>
-                    <OrderDetailsTable heading={"Pending Orders"} data={pendingOrders} maxHeight={300} colorSelection={'yellowAccent'}/>
+                <Grid size={12}>
+                    <AttentionOrdersTable
+                        data={attentionOrdersData}
+                        colorSelection="redAccent"
+                        heading="Attention Required Orders"
+                        maxHeight={400}
+                    />
+                </Grid>
+                    <Grid size={6}>
+                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={300} colorSelection={'yellowAccent'}/>
                 </Grid>
                 <Grid size={6}>
-                    <OrderDetailsTable
+                    <CustomTable
                         heading="Train Assigned Orders"
                         data={TrainAssignedData}
                         maxHeight={300}
@@ -22,7 +34,7 @@ export default function Orders() {
                     />
                 </Grid>
                 <Grid size={6}>
-                    <OrderDetailsTable
+                    <CustomTable
                         heading="Orders In Train"
                         data={InTrainData}
                         maxHeight={300}
@@ -30,7 +42,7 @@ export default function Orders() {
                     />
                 </Grid>
                 <Grid size={6}>
-                    <OrderDetailsTable
+                    <CustomTable
                         heading="Orders In Store"
                         data={InStoreData}
                         maxHeight={300}
@@ -38,7 +50,7 @@ export default function Orders() {
                     />
                 </Grid>
                 <Grid size={6}>
-                    <OrderDetailsTable
+                    <CustomTable
                         heading="Orders In Shipment"
                         data={InShipmentData}
                         maxHeight={300}
@@ -46,7 +58,7 @@ export default function Orders() {
                     />
                 </Grid>
                 <Grid size={6}>
-                    <OrderDetailsTable
+                    <CustomTable
                         heading="Orders In Truck"
                         data={InTruckData}
                         maxHeight={300}
@@ -112,4 +124,42 @@ const InTruckData = [
     { orderId: "ORD009", driverId: "D001", assistantId: "A001", truckId: "T001", routeId: "R003" },
     { orderId: "ORD010", driverId: "D002", assistantId: "A002", truckId: "T002", routeId: "R004" },
     // Add more In Truck data
+];
+
+const attentionOrdersData = [
+    {
+        OrderID: "A001",
+        CustomerID: "CUST01",
+        CustomerName: "John Doe",
+        CustomerCity: "New York",
+        CustomerContact: "(555) 123-4567"
+    },
+    {
+        OrderID: "A002",
+        CustomerID: "CUST02",
+        CustomerName: "Jane Smith",
+        CustomerCity: "Los Angeles",
+        CustomerContact: "(555) 987-6543"
+    },
+    {
+        OrderID: "A003",
+        CustomerID: "CUST03",
+        CustomerName: "Alice Johnson",
+        CustomerCity: "Chicago",
+        CustomerContact: "(555) 246-8102"
+    },
+    {
+        OrderID: "A004",
+        CustomerID: "CUST04",
+        CustomerName: "Bob Brown",
+        CustomerCity: "Houston",
+        CustomerContact: "(555) 135-7913"
+    },
+    {
+        OrderID: "A005",
+        CustomerID: "CUST05",
+        CustomerName: "Carol White",
+        CustomerCity: "Miami",
+        CustomerContact: "(555) 462-8539"
+    }
 ];

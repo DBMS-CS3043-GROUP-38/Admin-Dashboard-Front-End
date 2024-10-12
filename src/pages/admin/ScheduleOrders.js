@@ -1,14 +1,11 @@
 import PageLayout from "../../layouts/admin/PageLayout";
-import CustomTable from "../../components/OrderDetailsTable";
+import {CustomTable} from "../../components/OrderDetailsTable";
 import Grid from "@mui/material/Grid2";
-import {Box, colors, useTheme} from "@mui/material";
+import {Box} from "@mui/material";
 import SchedulePendingOrdersButton from "../../components/SchedulePendingOrdersButton";
-import {tokens} from "../../theme";
 
 export default function ScheduleOrders() {
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     return (
         <PageLayout heading={"Schedule Orders"} subHeading={"Schedule pending orders"}>
             <Grid container spacing={2}>

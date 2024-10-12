@@ -11,7 +11,6 @@ import {
     Cell, LabelList
 } from 'recharts';
 import {useTheme} from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom';
 import {tokens} from "../theme";
 import Card from "./CustomGrayCard";
 
@@ -165,7 +164,6 @@ const OrdersStatusChartH = ({orderStatuses}) => {
                                 width={90}
                                 stroke={theme.palette.text.secondary}
                             />
-                            <Legend/>
                             <Bar dataKey="count" fill={colors.yellowAccent["600"]}>
                                 {data.map((entry, index) => (
                                     <Cell
