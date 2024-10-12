@@ -82,12 +82,12 @@ const TodayOutgoingTrainsTable = () => {
                 <Table stickyHeader sx={{ minWidth: 600, tableLayout: 'fixed' }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '60px', position: 'sticky', top: 0, zIndex: 1 }}>ID</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '100px', position: 'sticky', top: 0, zIndex: 1 }}>Destination</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '80px', position: 'sticky', top: 0, zIndex: 1 }}>Capacity (%)</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '80px', position: 'sticky', top: 0, zIndex: 1 }}>Full Capacity</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '100px', position: 'sticky', top: 0, zIndex: 1 }}>Time (UTC)</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[500], color: colors.grey[100], width: '60px', position: 'sticky', top: 0, zIndex: 1 }}>Status</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '60px', position: 'sticky', top: 0, zIndex: 1 }}>ID</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '100px', position: 'sticky', top: 0, zIndex: 1 }}>Destination</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '80px', position: 'sticky', top: 0, zIndex: 1 }}>Capacity (%)</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '80px', position: 'sticky', top: 0, zIndex: 1 }}>Full Capacity</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '100px', position: 'sticky', top: 0, zIndex: 1 }}>Time (UTC)</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], width: '60px', position: 'sticky', top: 0, zIndex: 1 }}>Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

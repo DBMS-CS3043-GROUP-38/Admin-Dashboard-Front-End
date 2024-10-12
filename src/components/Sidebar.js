@@ -53,8 +53,7 @@ const Sidebar = () => {
     return (
         <Box
             display="flex"
-            height="100vh" // Ensure the sidebar takes the full height of the viewport
-            position="fixed" // Fix the sidebar
+            // height="100vh" // Ensure the sidebar takes the full height of the viewport
             sx={{
                 zIndex: 1000, // Ensures the sidebar stays on top
             }}
@@ -63,7 +62,7 @@ const Sidebar = () => {
                 rootStyles={{
                     [`.${sidebarClasses.container}`]: {
                         backgroundColor: colors.primary["400"],
-                        padding: "5px 10px 5px 10px",
+                        padding: "5px 10px 5px 5px",
                     },
                 }}
             >
@@ -73,8 +72,8 @@ const Sidebar = () => {
                         button: {
                             backgroundColor: colors.primary["400"],
                             borderRadius: "10px",
-                            [`&.active`]: {
-                                backgroundColor: colors.primary["400"],
+                            [`&:active`]: {
+                                backgroundColor: colors.redAccent["500"],
                             },
                             [`&:hover`]: {
                                 backgroundColor: colors.purpleAccent["600"],
@@ -108,7 +107,7 @@ const Sidebar = () => {
                     </MenuItem>
                     <Item
                         title="Overview"
-                        to="/adminadmin"
+                        to="./"
                         icon={<AppsIcon />}
                         selected={selected}
                         setSelected={setSelected}

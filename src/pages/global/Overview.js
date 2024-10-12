@@ -15,10 +15,9 @@ const Overview = () => {
     return (
         <Box
             display="flex"
-             flexDirection="column"
-             height="100%" // Fill the available height
-             overflowY="auto" // Allow scrolling if content overflows>
-            p={4}
+            flexDirection="column"
+            overflowY="auto" // Allow scrolling if content overflows>
+            p={2}
         >
             {/* HEADER */}
             <Box display="flex" justifyContent="space-between" alignItems="center">
