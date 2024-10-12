@@ -1,8 +1,9 @@
 import Topbar from "../../components/Topbar";
 import Sidebar from "../../components/Sidebar";
 import { Route, Routes } from "react-router-dom";
-import Overview from "../../pages/global/Overview";
-import {Box} from "@mui/material";
+import Overview from "../../pages/admin/Overview";
+import { Box } from "@mui/material";
+import ScheduleTrain from "../../pages/admin/ScheduleTrain";
 
 export default function AdminLayout() {
     return (
@@ -13,12 +14,13 @@ export default function AdminLayout() {
                 style={{
                     flexGrow: 1,
                     overflowY: 'auto', // Allow vertical scrolling
-                    // height: '100vh', // Full height of the viewport
                 }}
             >
                 <Topbar />
                 <Routes>
-                    <Route path={'/'} element={<Overview />} />
+                    {/* Admin sub-routes */}
+                    <Route path="/" element={<Overview />} />
+                    <Route path="schedule-train" element={<ScheduleTrain />} />
                 </Routes>
             </Box>
         </Box>

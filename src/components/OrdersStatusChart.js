@@ -43,10 +43,10 @@ const OrdersStatusChart = ({orderStatuses}) => {
     //     theme.palette.text.primary,
     // ];
     const barColors = [
-        colors.purpleAccent["500"],
+        colors.yellowAccent["500"],
         colors.greenAccent["500"],
         colors.cyanAccent["500"],
-        colors.yellowAccent["500"],
+        colors.purpleAccent["500"],
         colors.purpleAccent["200"],
         colors.greenAccent["600"],
         colors.grey["500"],

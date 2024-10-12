@@ -28,32 +28,30 @@ import DriveEtaIcon from '@mui/icons-material/DriveEta';
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+
     return (
-        <Link to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <MenuItem
-                active={selected === title}
-                style={{
-                    color: colors.grey[100],
-                }}
-                onClick={() => setSelected(title)}
-                icon={icon}
-            >
-                <Typography>{title}</Typography>
-            </MenuItem>
-        </Link>
+        <MenuItem
+            component={<Link to={to} />}
+            active={selected === title}
+            style={{
+                color: colors.grey[100],
+            }}
+            onClick={() => setSelected(title)}
+            icon={icon}
+        >
+            <Typography>{title}</Typography>
+        </MenuItem>
     );
 };
-
 
 const Sidebar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [selected, setSelected] = useState("Overview");
+    const [selected, setSelected] = useState("Overview"); // State to track active item
 
     return (
         <Box
             display="flex"
-            // height="100vh" // Ensure the sidebar takes the full height of the viewport
             sx={{
                 zIndex: 1000, // Ensures the sidebar stays on top
             }}
@@ -61,24 +59,33 @@ const Sidebar = () => {
             <ProSidebar
                 rootStyles={{
                     [`.${sidebarClasses.container}`]: {
-                        backgroundColor: colors.primary["400"],
-                        padding: "5px 10px 5px 5px",
+                        padding: "5px 5px 5px 5px",
                     },
                 }}
+                backgroundColor={colors.primary["400"]}
             >
+                <Box
+                    padding={2}
+                >
+                    <Typography
+                        variant="h3"
+                        style={{ color: colors.purpleAccent["300"] }}
+                    >
+                        Dashboard
+                    </Typography>
+                </Box>
                 <Menu
                     iconShape="square"
                     menuItemStyles={{
-                        button: {
-                            backgroundColor: colors.primary["400"],
-                            borderRadius: "10px",
-                            [`&:active`]: {
-                                backgroundColor: colors.redAccent["500"],
-                            },
-                            [`&:hover`]: {
-                                backgroundColor: colors.purpleAccent["600"],
+                        button: ({ active}) => {
+                            return {
+                                backgroundColor: active ? colors.purpleAccent["800"] : undefined,
                                 borderRadius: "10px",
-                            },
+                                [`&:hover`]: {
+                                    backgroundColor: colors.purpleAccent["600"],
+                                    borderRadius: "10px",
+                                },
+                            };
                         },
                         subMenuContent: {
                             backgroundColor: colors.primary["400"],
@@ -86,25 +93,6 @@ const Sidebar = () => {
                         },
                     }}
                 >
-                    <MenuItem
-                        style={{
-                            margin: "10px 0px 10px 0",
-                            color: colors.grey["100"],
-                        }}
-                    >
-                        <Box
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                        >
-                            <Typography
-                                variant="h3"
-                                style={{ color: colors.grey["100"] }}
-                            >
-                                Dashboard
-                            </Typography>
-                        </Box>
-                    </MenuItem>
                     <Item
                         title="Overview"
                         to="./"
@@ -132,6 +120,7 @@ const Sidebar = () => {
                             setSelected={setSelected}
                         />
                     </SubMenu>
+
                     <Item
                         title="Orders"
                         to="orders"
@@ -186,5 +175,39 @@ const Sidebar = () => {
         </Box>
     );
 };
+
+const given = () => {
+    return (
+        <div style={{display: 'flex', height: '100%'}}>
+            <ProSidebar>
+                <Menu
+                    menuItemStyles={{
+                        button: ({level, active, disabled}) => {
+                            // only apply styles on first level elements of the tree
+                            if (level === 0)
+                                return {
+                                    color: disabled ? '#f5d9ff' : '#d359ff',
+                                    backgroundColor: active ? '#eecef9' : undefined,
+                                };
+                        },
+                    }}
+                >
+                    <SubMenu defaultOpen label="Charts" icon={<StoreIcon name="bar-chart"/>}>
+                        <MenuItem> Pie charts</MenuItem>
+                        <MenuItem> Line charts</MenuItem>
+                        <MenuItem> Bar charts</MenuItem>
+                    </SubMenu>
+                    <MenuItem active={false} icon={<StoreIcon name="calendar"/>}>
+                        Calendar (active)
+                    </MenuItem>
+                    <MenuItem disabled icon={<StoreIcon name="shopping-cart"/>}>
+                        E-commerce (disabled)
+                    </MenuItem>
+                    <MenuItem icon={<StoreIcon name="service"/>}> Examples</MenuItem>
+                </Menu>
+            </ProSidebar>
+        </div>
+    );
+}
 
 export default Sidebar;
