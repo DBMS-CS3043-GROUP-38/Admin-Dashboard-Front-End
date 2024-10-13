@@ -25,8 +25,9 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import {TrainSharp} from "@mui/icons-material";
+import {Engineering, TrainSharp} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 
 const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
@@ -155,6 +156,13 @@ const Sidebar = () => {
                         setSelected={setSelected}
                     />
                     <Item
+                        title="Managers"
+                        to="managers"
+                        icon={<Engineering/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
                         title="Customers"
                         to="customers"
                         icon={<PeopleIcon/>}
@@ -186,6 +194,13 @@ const Sidebar = () => {
                         title="Routes"
                         to="routes"
                         icon={<RouteIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Report Order"
+                        to="report-order"
+                        icon={<ProductionQuantityLimitsIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />

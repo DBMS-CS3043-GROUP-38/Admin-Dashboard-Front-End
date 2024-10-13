@@ -41,10 +41,6 @@ const TodayOutgoingTrainsTable = ({data}) => {
     const getTimeStatus = (timeString) => {
         const trainTime = new Date(timeString);
 
-        // Subtract 5 hours and 30 minutes from train time
-        trainTime.setHours(trainTime.getHours() - 5);
-        trainTime.setMinutes(trainTime.getMinutes() - 30);
-
         return trainTime.getTime() < currentTime;  // Compare train time with the currentTime state
     };
 
@@ -62,7 +58,7 @@ const TodayOutgoingTrainsTable = ({data}) => {
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Capacity (%)</TableCell>
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Full Capacity</TableCell>
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Time</TableCell>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Status</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Passed?</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -74,7 +70,7 @@ const TodayOutgoingTrainsTable = ({data}) => {
                                     <TableCell sx={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{train.destination}</TableCell>
                                     <TableCell sx={{ width: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{train.capacityFilled}</TableCell>
                                     <TableCell sx={{ width: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{train.fullCapacity}</TableCell>
-                                    <TableCell sx={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{formatTime(train.time)}</TableCell>
+                                    <TableCell sx={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{(new Date(train.time)).toLocaleTimeString()}</TableCell>
                                     <TableCell sx={{ width: '60px' }}>
                                         <CircleIcon
                                             sx={{

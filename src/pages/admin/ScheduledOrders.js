@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, Box, useTheme} from '@mui/material';
 import {CustomTable} from "../../components/OrderDetailsTable";
 import CustomGrayCard from "../../components/CustomGrayCard";
+import DispatchButton from "../../components/DispatchButton";
 
 const Trains = [
     {trainID: 1, Time: "2022-01-01 08:00:00", Destination: "New York"},
@@ -85,6 +86,12 @@ const ScheduledOrders = () => {
                     <CustomTable heading={`Dispatches for TrainID: ${selectedTrain}`} data={Dispatches} maxHeight={400}
                                  colorSelection={'yellowAccent'}/>
                 )}
+
+                {trainDetails && (
+                <CustomGrayCard>
+                    <DispatchButton onDispatch={() => console.log('Scheduled')} onDispatch={() => console.log('Dispatched')}/>
+                </CustomGrayCard>
+                    )}
             </Box>
         </PageLayout>
     );

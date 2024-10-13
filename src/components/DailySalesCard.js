@@ -9,12 +9,12 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
 
-export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }) {
+export function QuarterlySalesCard({ todaySales, prevDaySales }) {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
 
-    const percentageChange = ((currentQuarterSales - previousQuarterSales) / previousQuarterSales) * 100;
+    const percentageChange = ((todaySales - prevDaySales) / prevDaySales) * 100;
     const isIncrease = percentageChange > 0;
 
     // Determine trend and value for display
@@ -40,10 +40,10 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                     <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
                         <Stack spacing={1}>
                             <Typography color="text.secondary" variant="overline">
-                                Quarterly Sales
+                                Today's Sales
                             </Typography>
                             <Typography variant="h4">
-                                ${currentQuarterSales.toLocaleString()}
+                                ${todaySales.toLocaleString()}
                             </Typography>
                         </Stack>
                         <MonetizationOnIcon sx={{ fontSize: 60, color: `${colors.cyanAccent["300"]}` }} />
@@ -55,7 +55,7 @@ export function QuarterlySalesCard({ currentQuarterSales, previousQuarterSales }
                                 {Math.abs(percentageChange).toFixed(2)}%
                             </Typography>
                             <Typography color="text.secondary" variant="caption">
-                                {isIncrease ? 'higher' : 'lower'} than last quarter
+                                {isIncrease ? 'higher' : 'lower'} than yesterday
                             </Typography>
                         </Stack>
                     )}

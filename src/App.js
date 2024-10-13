@@ -14,6 +14,10 @@ import Assistants from "./pages/admin/Assistants";
 import Customers from "./pages/admin/Customers";
 import Trucks from "./pages/admin/Trucks";
 import RoutePath from "./pages/admin/Routes";
+import Logout from "./pages/global/Logout";
+import LoginPage from "./pages/global/Login";
+import ReportOrder from "./pages/admin/ReportOrder";
+import Managers from "./pages/admin/Managers";
 
 function App() {
     const {theme, colorMode} = useMode();
@@ -27,12 +31,17 @@ function App() {
                         {/* Main route */}
                         <Route path="/" element={<h1>Hello</h1>}/>
 
+                        <Route path={'/auth'}>
+                            <Route path={'logout'} element={<Logout/>}/>
+                            <Route path={'login'} element={<LoginPage/>}/>
+                        </Route>
+
                         <Route path="/admin" element={<AdminLayout/>}>
                             <Route index element={<Overview/>}/>
                             <Route path="schedule-trains" element={<ScheduleTrain/>}/>
                             <Route path='schedule-orders' element={<ScheduleOrders/>}/>
                             <Route path='orders' element={<Orders/>}/>
-                            <Route path='sales-reports' element={<SalesReport />}/>
+                            <Route path='sales-reports' element={<SalesReport/>}/>
                             <Route path='trains' element={<ScheduledOrders/>}/>
                             <Route path='stores' element={<Stores/>}/>
                             <Route path='drivers' element={<Drivers/>}/>
@@ -40,12 +49,15 @@ function App() {
                             <Route path='customers' element={<Customers/>}/>
                             <Route path='trucks' element={<Trucks/>}/>
                             <Route path='routes' element={<RoutePath/>}/>
-                        < /Route>
+                            <Route path='report-order' element={<ReportOrder/>}/>
+                            <Route path='managers' element={<Managers/>}/>
+                        </Route>
+
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
         </ColorModeContext.Provider>
-    );
+);
 }
 
 export default App;
