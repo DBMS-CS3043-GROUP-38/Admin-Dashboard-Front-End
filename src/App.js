@@ -18,6 +18,7 @@ import Logout from "./pages/global/Logout";
 import LoginPage from "./pages/global/Login";
 import ReportOrder from "./pages/admin/ReportOrder";
 import Managers from "./pages/admin/Managers";
+import Trains from "./pages/admin/Trains";
 
 function App() {
     const {theme, colorMode} = useMode();
@@ -42,7 +43,7 @@ function App() {
                             <Route path='schedule-orders' element={<ScheduleOrders/>}/>
                             <Route path='orders' element={<Orders/>}/>
                             <Route path='sales-reports' element={<SalesReport/>}/>
-                            <Route path='trains' element={<ScheduledOrders/>}/>
+                            <Route path='dispatch' element={<ScheduledOrders/>}/>
                             <Route path='stores' element={<Stores/>}/>
                             <Route path='drivers' element={<Drivers/>}/>
                             <Route path='assistants' element={<Assistants/>}/>
@@ -51,6 +52,7 @@ function App() {
                             <Route path='routes' element={<RoutePath/>}/>
                             <Route path='report-order' element={<ReportOrder/>}/>
                             <Route path='managers' element={<Managers/>}/>
+                            <Route path='trains' element={<Trains/>}/>
                         </Route>
 
                     </Routes>

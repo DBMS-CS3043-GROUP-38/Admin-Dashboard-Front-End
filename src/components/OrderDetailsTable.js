@@ -16,7 +16,7 @@ import Card from "./CustomGrayCard";
 import CheckIcon from "@mui/icons-material/Check";
 
 
-const CustomTable = ({ data, colorSelection, heading, maxHeight }) => {
+const CustomTable = ({ data = [], colorSelection, heading, maxHeight }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -32,7 +32,7 @@ const CustomTable = ({ data, colorSelection, heading, maxHeight }) => {
 
     // Sort the data based on selected column and direction
     const sortedData = React.useMemo(() => {
-        if (!orderBy) return data;
+        if (!orderBy || data.length === 0) return data;
 
         return [...data].sort((a, b) => {
             if (a[orderBy] < b[orderBy]) return orderDirection === "asc" ? -1 : 1;
@@ -47,51 +47,58 @@ const CustomTable = ({ data, colorSelection, heading, maxHeight }) => {
                 {heading}
             </Typography>
             <TableContainer component={Paper} sx={{ maxHeight }}>
-                <Table stickyHeader sx={{ minWidth: 500 }}>
-                    <TableHead>
-                        <TableRow>
-                            {Object.keys(data[0]).map((key) => (
-                                <TableCell
-                                    key={key}
-                                    sx={{
-                                        bgcolor: colors[colorSelection]["800"],
-                                        color: colors.grey["100"],
-                                        position: 'sticky',
-                                        top: 0,
-                                        zIndex: 1,
-                                    }}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === key}
-                                        direction={orderBy === key ? orderDirection : "asc"}
-                                        onClick={() => handleSortRequest(key)}
+                {data && data.length > 0 ? (
+                    <Table stickyHeader sx={{ minWidth: 500 }}>
+                        <TableHead>
+                            <TableRow>
+                                {Object.keys(data[0]).map((key) => (
+                                    <TableCell
+                                        key={key}
+                                        sx={{
+                                            bgcolor: colors[colorSelection]["800"],
+                                            color: colors.grey["100"],
+                                            position: 'sticky',
+                                            top: 0,
+                                            zIndex: 1,
+                                        }}
                                     >
-                                        {key.charAt(0).toUpperCase() + key.slice(1)}
-                                    </TableSortLabel>
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {sortedData.map((row, index) => (
-                            <TableRow
-                                key={index}
-                                sx={{
-                                    bgcolor: colors.grey["900"],
-                                    '&:hover': { bgcolor: colors[colorSelection][900] }
-                                }}
-                            >
-                                {Object.values(row).map((value, idx) => (
-                                    <TableCell key={idx}>{value}</TableCell>
+                                        <TableSortLabel
+                                            active={orderBy === key}
+                                            direction={orderBy === key ? orderDirection : "asc"}
+                                            onClick={() => handleSortRequest(key)}
+                                        >
+                                            {key.charAt(0).toUpperCase() + key.slice(1)}
+                                        </TableSortLabel>
+                                    </TableCell>
                                 ))}
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {sortedData.map((row, index) => (
+                                <TableRow
+                                    key={index}
+                                    sx={{
+                                        bgcolor: colors.grey["900"],
+                                        '&:hover': { bgcolor: colors[colorSelection][900] }
+                                    }}
+                                >
+                                    {Object.values(row).map((value, idx) => (
+                                        <TableCell key={idx}>{value}</TableCell>
+                                    ))}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                ) : (
+                    <Typography variant="body1" color="text.secondary" sx={{ p: 2 }}>
+                        No data available
+                    </Typography>
+                )}
             </TableContainer>
         </Card>
     );
 };
+
 
 
 

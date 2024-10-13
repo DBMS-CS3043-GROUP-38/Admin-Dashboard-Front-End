@@ -7,20 +7,22 @@ import {
     DialogContentText,
     DialogTitle,
     useTheme,
-    Typography, Box,
+    Typography,
+    Box,
 } from '@mui/material';
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import {tokens} from "../theme";
-import {useNavigate} from "react-router-dom";
+import { tokens } from "../theme";
 
-const ScheduleTrainsButton = ({  onSchedule }) => {
+const ScheduleTrainsButton = ({ onSchedule }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [open, setOpen] = useState(false);
+    const [scheduledCount, setScheduledCount] = useState(0); // State to hold the scheduled train count
 
     const handleSchedule = async () => {
         // Trigger scheduling logic
-        await onSchedule(); // This function will schedule trains in the backend
+        const response = await onSchedule(); // Get the response from the scheduling function
+        setScheduledCount(response.scheduled); // Update the count based on the response
 
         // Show prompt after scheduling
         setOpen(true);
@@ -29,6 +31,11 @@ const ScheduleTrainsButton = ({  onSchedule }) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    // Determine the background color based on scheduledCount
+    const dialogBackgroundColor = scheduledCount > 0
+        ? colors.greenAccent[800]
+        : colors.yellowAccent[800];
 
     return (
         <>
@@ -45,17 +52,19 @@ const ScheduleTrainsButton = ({  onSchedule }) => {
                 }}
             >
                 <Typography variant="h5">
-                Schedule
-                    < /Typography>
+                    Schedule
+                </Typography>
             </Button>
 
             {/* Schedule Confirmation Dialog */}
             <Dialog open={open} onClose={handleClose}>
-                <Box sx={{ bgcolor: `${colors.purpleAccent["800"]}` }}> {/* Change the background color here */}
+                <Box sx={{ bgcolor: dialogBackgroundColor }}> {/* Change the background color here */}
                     <DialogTitle>Scheduling Complete</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            10 trains have been scheduled successfully.
+                            {scheduledCount > 0
+                                ? `${scheduledCount} trains have been scheduled successfully.`
+                                : 'No trains have been scheduled, as there are already available trains for the next 30 days.'}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -67,7 +76,6 @@ const ScheduleTrainsButton = ({  onSchedule }) => {
                     </DialogActions>
                 </Box>
             </Dialog>
-
         </>
     );
 };

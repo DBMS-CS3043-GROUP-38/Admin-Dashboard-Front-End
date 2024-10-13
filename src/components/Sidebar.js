@@ -25,7 +25,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import {Engineering, TrainSharp} from "@mui/icons-material";
+import {Engineering, Send, TrainSharp} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 
@@ -107,7 +107,7 @@ const Sidebar = () => {
                     <SubMenu
                         icon={<ScheduleIcon/>}
                         label="Schedule and Dispatch"
-                        defaultOpen={true}
+                        defaultOpen={false}
                     >
                         <Item
                             title="Schedule trains"
@@ -123,6 +123,13 @@ const Sidebar = () => {
                             selected={selected}
                             setSelected={setSelected}
                         />
+                        <Item
+                            title="Dispatch"
+                            to="dispatch"
+                            icon={<Send/>}
+                            selected={selected}
+                            setSelected={setSelected}
+                        />
                     </SubMenu>
                     <Item
                         title="Sales Reports"
@@ -132,13 +139,12 @@ const Sidebar = () => {
                         setSelected={setSelected}
                     />
                     <Item
-                        title="Scheduled Orders"
+                        title="Trains"
                         to="trains"
-                        icon={<TrainSharp/>}
+                        icon={<TrainIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
-
                     <Item
                         title="Orders"
                         to="orders"

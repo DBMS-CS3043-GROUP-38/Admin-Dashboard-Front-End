@@ -11,18 +11,24 @@ import {
     Paper,
     LinearProgress,
     Box,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    FormControl,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { tokens } from '../theme'; // Assuming tokens is where your color palette is defined
 import CustomGrayCard from "./CustomGrayCard"; // Ensure this path is correct
+import CircleIcon from '@mui/icons-material/Circle';
 
 const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    // State for sorting
+    // State for sorting and filtering
     const [orderDirection, setOrderDirection] = useState("asc");
     const [orderBy, setOrderBy] = useState(null);
+    const [statusFilter, setStatusFilter] = useState('All');
 
     const handleSortRequest = (property) => {
         const isAscending = orderBy === property && orderDirection === "asc";
@@ -41,11 +47,67 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
         });
     }, [data, orderBy, orderDirection]);
 
+    // Filter data based on selected status
+    const filteredData = sortedData.filter((row) => {
+        if (statusFilter === 'All') return true;
+        return row.status === statusFilter;
+    });
+
     return (
         <CustomGrayCard>
             <Typography variant="h4" color="text.primary" gutterBottom>
                 {heading}
             </Typography>
+            <FormControl component="fieldset" sx={{ marginBottom: 2 }}>
+                <RadioGroup
+                    row
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                    <FormControlLabel
+                        value="All"
+                        control={
+                            <Radio
+                                sx={{
+                                    color: colors[colorSelection][500],
+                                    '&.Mui-checked': {
+                                        color: colors[colorSelection][500],
+                                    },
+                                }}
+                            />
+                        }
+                        label="All"
+                    />
+                    <FormControlLabel
+                        value="In Progress"
+                        control={
+                            <Radio
+                                sx={{
+                                    color: colors[colorSelection][500],
+                                    '&.Mui-checked': {
+                                        color: colors[colorSelection][500],
+                                    },
+                                }}
+                            />
+                        }
+                        label="In Progress"
+                    />
+                    <FormControlLabel
+                        value="Not Completed"
+                        control={
+                            <Radio
+                                sx={{
+                                    color: colors[colorSelection][500],
+                                    '&.Mui-checked': {
+                                        color: colors[colorSelection][500],
+                                    },
+                                }}
+                            />
+                        }
+                        label="Not Completed"
+                    />
+                </RadioGroup>
+            </FormControl>
             <TableContainer component={Paper} sx={{ maxHeight }}>
                 <Table stickyHeader sx={{ minWidth: 500 }}>
                     <TableHead>
@@ -129,10 +191,21 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                             >
                                 Filled Capacity
                             </TableCell>
+                            <TableCell
+                                sx={{
+                                    bgcolor: colors[colorSelection]["800"],
+                                    color: colors.grey["100"],
+                                    position: 'sticky',
+                                    top: 0,
+                                    zIndex: 1,
+                                }}
+                            >
+                                Status
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sortedData.map((row, index) => (
+                        {filteredData.map((row, index) => (
                             <TableRow
                                 key={index}
                                 sx={{
@@ -162,6 +235,15 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                                             {`${Math.round(parseFloat(row.capacityFilled) * 100)}%`}
                                         </Typography>
                                     </Box>
+                                </TableCell>
+                                <TableCell>
+                                    <CircleIcon
+                                        fontSize="small"
+                                        sx={{
+                                            color: row.status === "In Progress" ? colors.greenAccent[500] : colors.yellowAccent[500]
+                                        }}
+                                    />
+                                    {row.status}
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -73,3 +73,45 @@ export const getBestProductsQuarter = async () => {
     const response = await api.get('/admin/tables/best-products-quarter');
     return response.data;
 };
+
+//Fetch weekly trains
+export const getWeeklyTrains = async () => {
+    const response = await api.get('/admin/tables/weekly-trains');
+    return response.data;
+};
+
+//Schedule trains
+export const scheduleTrains = async () => {
+    try {
+        const response = await api.post('/admin/buttons/schedule-trains', {
+            // If you need to send any data, you can add it here
+        });
+
+        return response.data; // Return the number of orders scheduled from the response
+    } catch (error) {
+        console.error('Error scheduling trains:', error);
+        throw error; // Re-throw error to handle it in the component
+    }
+};
+
+//Get scheduled trains
+export const getScheduledTrains = async () => {
+    const response = await api.get('/admin/tables/scheduled-trains');
+    return response.data;
+};
+
+export const getActiveTrains = async () => {
+    const response = await api.get('/admin/tables/active-trains');
+    return response.data;
+}
+
+
+export const getTrainStatuses = async () => {
+    const response = await api.get('/admin/cards/train-statuses');
+    return response.data;
+}
+
+export const getPendingOrdersList = async () => {
+    const response = await api.get('/admin/tables/pending-orders-list');
+    return response.data;
+}

@@ -4,8 +4,31 @@ import {Box} from "@mui/material";
 import ScheduleTrainsButton from "../../components/ScheduleTrainsButton";
 import WeeklyTrainsTable from "../../components/WeeklyTrainsTable";
 import Grid from "@mui/material/Grid2";
+import {getWeeklyTrains, scheduleTrains, getScheduledTrains} from "../../services/apiService";
+import {useEffect, useState} from "react";
 
 export default function ScheduleTrain() {
+    const [weeklyTrainData, setWeeklyTrainData] = useState([]);
+    const [scheduledTrains, setScheduledTrains] = useState([]);
+
+    useEffect( () => {
+        const fetchData = async () => {
+            const weeklyTrains = await getWeeklyTrains();
+            const scheduledTrains = await getScheduledTrains();
+
+            setScheduledTrains(scheduledTrains);
+            setWeeklyTrainData(weeklyTrains);
+        }
+
+        fetchData().then(r => console.log('Data fetched'));
+    }, [])
+
+    const handleScheduleTrains = async () => {
+        const response = await scheduleTrains(); // Call the scheduleTrains function
+        return response; // Return the response to be used in the button
+    };
+
+
     return (
 
         <PageLayout heading={"Schedule Train"} subHeading={"Schedule a new train"}>
@@ -15,15 +38,11 @@ export default function ScheduleTrain() {
                 </Grid>
 
                 <Box sx={{display: 'flex', width: '100%', alignContent:'center', justifyContent:'center'}}>
-                    <ScheduleTrainsButton onSchedule={async () => {
-                        console.log("Scheduling trains...");
-                    }}/>
+                    <ScheduleTrainsButton onSchedule={handleScheduleTrains}/>
                 </Box>
 
                 <Grid size={12}>
-
-
-                    <ScheduledTrains data={scheduledTrains}/>
+                    <ScheduledTrains heading={"Scheduled Trains"} colorSelection={'purpleAccent'} maxHeight={600} data={scheduledTrains}/>
                 </Grid>
             </Grid>
         </PageLayout>

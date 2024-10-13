@@ -3,14 +3,28 @@ import {CustomTable} from "../../components/OrderDetailsTable";
 import Grid from "@mui/material/Grid2";
 import {Box} from "@mui/material";
 import SchedulePendingOrdersButton from "../../components/SchedulePendingOrdersButton";
+import {getPendingOrdersList} from "../../services/apiService";
+import {useEffect, useState} from "react";
+
 
 export default function ScheduleOrders() {
+
+    const [pendingOrders, setPendingOrders] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const orders = await getPendingOrdersList();
+            setPendingOrders(orders);
+        }
+
+        fetchData().then(r => console.log('Data fetched'));
+    }, []);
 
     return (
         <PageLayout heading={"Schedule Orders"} subHeading={"Schedule pending orders"}>
             <Grid container spacing={2}>
                 <Grid size={12}>
-                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={400} colorSelection={'yellowAccent'}/>
+                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={600} colorSelection={'yellowAccent'}/>
                 </Grid>
             </Grid>
             <Box sx={{display: 'flex', width: '100%', alignContent:'center', justifyContent:'center'}}>

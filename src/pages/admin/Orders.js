@@ -12,7 +12,7 @@ export default function Orders() {
                     <OrderDetailsSearchCard/>
                 </Grid>
                 <Grid size={12}>
-                    <OrdersStatusChartH orderStatuses={orderStatuses}/>
+                    {/*<OrdersStatusChartH orderStatuses={orderStatuses}/>*/}
                 </Grid>
                 <Grid size={12}>
                     <AttentionOrdersTable
@@ -69,19 +69,6 @@ export default function Orders() {
         </PageLayout>
     );
 }
-
-const orderStatuses = {
-    pending: 50,
-    pendingTrain: 30,
-    trainAssigned: 20,
-    inTrain: 15,
-    inStore: 10,
-    inShipment: 25,
-    inTruck: 5,
-    attention: 12,
-    delivered: 1500, // high number
-    cancelled: 300,   // high number
-};
 
 
 const pendingOrders = [
