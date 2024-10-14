@@ -115,3 +115,116 @@ export const getPendingOrdersList = async () => {
     const response = await api.get('/admin/tables/pending-orders-list');
     return response.data;
 }
+
+export const scheduleOrders = async () => {
+    try {
+        const response = await api.post('/admin/buttons/schedule-orders', {
+            // If you need to send any data, you can add it here
+        });
+
+        return response.data; // Return the number of orders scheduled from the response
+    } catch (error) {
+        console.error('Error scheduling orders:', error);
+        throw error; // Re-throw error to handle it in the component
+    }
+}
+
+export const getTodayTrainsSelector = async () => {
+    const response = await api.get('/admin/selectors/today-trains');
+    return response.data;
+}
+
+export const getOrdersByTrain = async (trainSchID) => {
+    const response = await api.get(`/admin/tables/orders-by-train/${trainSchID}`);
+    return response.data;
+}
+
+export const dispatchTrain = async (trainSchID) => {
+    const response = await api.post(`/admin/buttons/dispatch-train/${trainSchID}`);
+    return response.data;
+}
+
+export const getQuarterlyOrders = async () => {
+    const response = await api.get('/admin/cards/quarterly-orders');
+    return response.data;
+}
+
+export const getQuarterlyStores = async () => {
+    const response = await api.get('/admin/cards/quarterly-store');
+    return response.data;
+}
+
+export const getBestCustomer = async () => {
+    const response = await api.get('/admin/cards/best-customer');
+    return response.data;
+}
+
+export const getPastRevenue = async () => {
+    const response = await api.get('/admin/charts/past-revenue');
+    return response.data;
+}
+
+export const getAvailableYears = async () => {
+    const response = await api.get('/admin/selectors/available-years');
+    return response.data;
+}
+
+export const getAvailableQuarters = async (year) => {
+    const response = await api.get(`/admin/selectors/available-quarters/${year}`);
+    return response.data;
+}
+
+export const getRevenuePerStore = async (year, quarter) => {
+    const response = await api.get(`/admin/charts/revenue-per-store/${year}/${quarter}`);
+    return response.data;
+}
+
+export const getTopProductsPerQuarter = async (year, quarter) => {
+    const response = await api.get(`/admin/tables/top-products-quarter/${year}/${quarter}`);
+    return response.data;
+}
+
+export const getTopCustomersPerQuarter = async (year, quarter) => {
+    const response = await api.get(`/admin/tables/top-customers-quarter/${year}/${quarter}`);
+    return response.data;
+}
+
+export const getOrderDetails = async (orderID) => {
+    const response = await api.get(`/admin/searches/order/${orderID}`);
+    return response.data;
+}
+
+export const getOrderProducts = async (orderID) => {
+    const response = await api.get(`/admin/tables/order-products/${orderID}`);
+    return response.data;
+}
+
+export const getTrackingDetails = async (orderID) => {
+    const response = await api.get(`/admin/tables/tracking-details/${orderID}`);
+    return response.data;
+}
+
+export const getTrainAssignedOrders = async () => {
+    const response = await api.get(`/admin/tables/train-assigned-orders`);
+    return response.data;
+}
+
+export const getOrdersInTrain = async () => {
+    const response = await api.get(`/admin/tables/orders-in-train`);
+    return response.data;
+}
+
+export const getOrdersInStore = async () => {
+    const response = await api.get(`/admin/tables/orders-in-store`);
+    return response.data;
+}
+
+export const getOrdersInShipment = async () => {
+    const response = await api.get(`/admin/tables/orders-in-shipment`);
+    return response.data;
+}
+
+export const getOrdersInTruck = async () => {
+    const response = await api.get(`/admin/tables/orders-in-truck`);
+    return response.data;
+}

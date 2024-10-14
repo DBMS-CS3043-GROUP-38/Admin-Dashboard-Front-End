@@ -7,7 +7,7 @@ import ScheduleTrain from "./pages/admin/ScheduleTrain";
 import ScheduleOrders from "./pages/admin/ScheduleOrders";
 import Orders from "./pages/admin/Orders";
 import SalesReport from "./pages/admin/SalesReport";
-import ScheduledOrders from "./pages/admin/ScheduledOrders";
+import Dispatch from "./pages/admin/Dispatch";
 import Stores from "./pages/admin/Stores";
 import Drivers from "./pages/admin/Drivers";
 import Assistants from "./pages/admin/Assistants";
@@ -43,7 +43,7 @@ function App() {
                             <Route path='schedule-orders' element={<ScheduleOrders/>}/>
                             <Route path='orders' element={<Orders/>}/>
                             <Route path='sales-reports' element={<SalesReport/>}/>
-                            <Route path='dispatch' element={<ScheduledOrders/>}/>
+                            <Route path='dispatch' element={<Dispatch/>}/>
                             <Route path='stores' element={<Stores/>}/>
                             <Route path='drivers' element={<Drivers/>}/>
                             <Route path='assistants' element={<Assistants/>}/>

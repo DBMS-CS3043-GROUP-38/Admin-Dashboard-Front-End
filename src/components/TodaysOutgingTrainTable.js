@@ -53,7 +53,7 @@ const TodayOutgoingTrainsTable = ({data}) => {
                 <Table stickyHeader sx={{ minWidth: 600, tableLayout: 'fixed' }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>ID</TableCell>
+                            <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Sch ID</TableCell>
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Destination</TableCell>
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Capacity (%)</TableCell>
                             <TableCell sx={{ bgcolor: colors.purpleAccent[700], color: colors.grey[100], position: 'sticky', top: 0, zIndex: 1 }}>Full Capacity</TableCell>

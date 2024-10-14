@@ -1,5 +1,5 @@
-import React, {useMemo, useState} from 'react';
-import {CardContent, Typography, FormControl, InputLabel, Select, MenuItem, Box} from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { CardContent, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import {
     BarChart,
     Bar,
@@ -9,147 +9,198 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
-    PieChart,
-    Pie, Cell
 } from 'recharts';
 import { useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import CustomGrayCard from "../CustomGrayCard";
 
-const RevenueGroupedBarChart = ({ revenueData }) => {
+const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRevenueData }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    // State for selected year
-    const [selectedYear, setSelectedYear] = useState(Object.keys(revenueData)[0]); // Set default to the first year
+    const [availableYears, setAvailableYears] = useState([]);
+    const [availableQuarters, setAvailableQuarters] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedQuarter, setSelectedQuarter] = useState('');
+    const [chartData, setChartData] = useState([]);
+    const [error, setError] = useState('');
 
-    // Extracting the data for the selected year
-    const chartData = revenueData[selectedYear];
+    // Fetch available years on component mount
+    useEffect(() => {
+        const fetchYears = async () => {
+            try {
+                const years = await fetchAvailableYears();
+                if (years.length === 0) {
+                    setError('No years available');
+                } else {
+                    setAvailableYears(years);
+                    setSelectedYear(years[0]?.Year);  // set first available year as default
+                }
+            } catch (error) {
+                console.error('Error fetching years:', error);
+                setError('Failed to fetch available years');
+            }
+        };
+        fetchYears().then(r => console.log('Years fetched'));
+    }, [fetchAvailableYears]);
+
+    // Fetch available quarters when a year is selected
+    useEffect(() => {
+        const fetchQuarters = async () => {
+            if (selectedYear) {
+                try {
+                    const quarters = await fetchAvailableQuarters(selectedYear);
+                    if (quarters.length === 0) {
+                        setError(`No quarters available for year ${selectedYear}`);
+                    } else {
+                        setAvailableQuarters(quarters);
+                        setSelectedQuarter(quarters[0]?.Quarter); // set first available quarter as default
+                    }
+                } catch (error) {
+                    console.error('Error fetching quarters:', error);
+                    setError('Failed to fetch available quarters');
+                }
+            }
+        };
+        fetchQuarters().then(r => console.log('Quarters fetched'));
+    }, [fetchAvailableQuarters, selectedYear]);
+
+    // Fetch revenue data for the selected year and quarter
+    useEffect(() => {
+        const fetchData = async () => {
+            if (selectedYear && selectedQuarter) {
+                try {
+                    const data = await fetchRevenueData(selectedYear, selectedQuarter);
+                    if (data.length === 0) {
+                        setError(`No data available for ${selectedYear} Q${selectedQuarter}`);
+                    } else {
+                        setChartData(data);
+                        setError(''); // Clear any previous errors
+                    }
+                } catch (error) {
+                    console.error('Error fetching revenue data:', error);
+                    setError('Failed to fetch revenue data');
+                }
+            }
+        };
+        fetchData();
+    }, [selectedYear, selectedQuarter, fetchRevenueData]);
+
+    // Calculate the domain for the y-axis
+    const getYAxisDomain = () => {
+        if (chartData.length === 0) return [0, 100];
+        const maxRevenue = Math.max(...chartData.map(item => item.revenue));
+        const minRevenue = Math.min(...chartData.map(item => item.revenue));
+        const padding = (maxRevenue - minRevenue) * 0.1; // Add 10% padding
+        return [Math.max(0, minRevenue - padding), maxRevenue + padding];
+    };
 
     return (
         <CustomGrayCard>
             <CardContent>
-                <Typography variant="h5" color="text.secondary" gutterBottom>
-                    Revenue by Store for {selectedYear}
-                </Typography>
-                <FormControl variant="filled" margin="normal" sx={{
-                    m:2
-                }}>
-                    <InputLabel color={'secondary'}>Year</InputLabel>
-                    <Select
-                        variant={'filled'}
-                        value={selectedYear}
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                    >
-                        {Object.keys(revenueData).map(year => (
-                            <MenuItem key={year} value={year}>{year}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="quarter" />
-                        <YAxis />
-                        <Tooltip
-                            contentStyle={{
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.background.paper,
-                                border: `1px solid ${theme.palette.divider}`,
-                            }}
-                        />
-                        <Legend />
-                        <Bar dataKey="store1" fill={colors.greenAccent["500"]} />
-                        <Bar dataKey="store2" fill={colors.redAccent["500"]} />
-                        <Bar dataKey="store3" fill={colors.yellowAccent["500"]} />
-                        <Bar dataKey="store4" fill={colors.purpleAccent["500"]} />
-                        <Bar dataKey="store5" fill={colors.cyanAccent["500"]} />
-                    </BarChart>
-                </ResponsiveContainer>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Typography variant="h5" color="text.secondary">
+                        Revenue Chart
+                    </Typography>
+                    <Box display="flex" gap={2}>
+                        <FormControl sx={{ minWidth: 120 }}>
+                            <InputLabel id="year-select-label" sx={{ color: colors.purpleAccent[500] }}>
+                                Year
+                            </InputLabel>
+                            <Select
+                                labelId="year-select-label"
+                                id="year-select"
+                                value={selectedYear}
+                                label="Year"
+                                onChange={(e) => {
+                                    setSelectedYear(e.target.value);
+                                    setSelectedQuarter('');
+                                    setError('');
+                                }}
+                                variant="outlined"
+                                sx={{
+                                    color: colors.purpleAccent[500],
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[500],
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[300],
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[500],
+                                    },
+                                }}
+                            >
+                                {availableYears.map((year) => (
+                                    <MenuItem key={year.Year} value={year.Year}>
+                                        {year.Year}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ minWidth: 120 }}>
+                            <InputLabel id="quarter-select-label" sx={{ color: colors.purpleAccent[500] }}>
+                                Quarter
+                            </InputLabel>
+                            <Select
+                                labelId="quarter-select-label"
+                                id="quarter-select"
+                                value={selectedQuarter}
+                                label="Quarter"
+                                onChange={(e) => {
+                                    setSelectedQuarter(e.target.value);
+                                    setError('');
+                                }}
+                                variant="outlined"
+                                disabled={!availableQuarters.length}
+                                sx={{
+                                    color: colors.purpleAccent[500],
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[500],
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[300],
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.purpleAccent[500],
+                                    },
+                                }}
+                            >
+                                {availableQuarters.map((quarter) => (
+                                    <MenuItem key={quarter.Quarter} value={quarter.Quarter}>
+                                        Q{quarter.Quarter}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Box>
+                </Box>
+
+                {error ? (
+                    <Typography color="error" sx={{ mt: 2 }}>
+                        {error}
+                    </Typography>
+                ) : (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={chartData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="store" />
+                            <YAxis domain={getYAxisDomain()} />
+                            <Tooltip
+                                contentStyle={{
+                                    color: theme.palette.text.primary,
+                                    backgroundColor: theme.palette.background.paper,
+                                    border: `1px solid ${theme.palette.divider}`,
+                                }}
+                            />
+                            <Legend />
+                            <Bar dataKey="revenue" fill={colors.purpleAccent[600]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                )}
             </CardContent>
         </CustomGrayCard>
     );
 };
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82CA9D'];
-
-const ProductPerformancePieChart = ({ data }) => {
-    const [selectedYear, setSelectedYear] = useState('');
-    const [selectedQuarter, setSelectedQuarter] = useState('');
-
-    const years = useMemo(() => [...new Set(data.map(item => item.year))], [data]);
-    const quarters = useMemo(() => [...new Set(data.map(item => item.quarter))], [data]);
-
-    const filteredData = useMemo(() => {
-        if (!selectedYear || !selectedQuarter) return [];
-        return data.filter(item => item.year === selectedYear && item.quarter === selectedQuarter);
-    }, [data, selectedYear, selectedQuarter]);
-
-    const chartData = useMemo(() => {
-        return filteredData.map(item => ({
-            name: item.productName,
-            value: item.sales
-        }));
-    }, [filteredData]);
-
-    return (
-        <Box>
-            <Typography variant="h6" gutterBottom>
-                Best Performing Products
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <Select
-                    variant={"filled"}
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    displayEmpty
-                    sx={{ minWidth: 120 }}
-                >
-                    <MenuItem value="">
-                        <em>Select Year</em>
-                    </MenuItem>
-                    {years.map(year => (
-                        <MenuItem key={year} value={year}>{year}</MenuItem>
-                    ))}
-                </Select>
-                <Select
-                    variant={"filled"}
-                    value={selectedQuarter}
-                    onChange={(e) => setSelectedQuarter(e.target.value)}
-                    displayEmpty
-                    sx={{ minWidth: 120 }}
-                >
-                    <MenuItem value="">
-                        <em>Select Quarter</em>
-                    </MenuItem>
-                    {quarters.map(quarter => (
-                        <MenuItem key={quarter} value={quarter}>{quarter}</MenuItem>
-                    ))}
-                </Select>
-            </Box>
-            <ResponsiveContainer width="100%" height={400}>
-                <PieChart>
-                    <Pie
-                        data={chartData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        outerRadius={150}
-                        fill="#8884d8"
-                        dataKey="value"
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    >
-                        {chartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </Box>
-    );
-};
-
-
-export {RevenueGroupedBarChart, ProductPerformancePieChart};
+export { RevenueBarChart };

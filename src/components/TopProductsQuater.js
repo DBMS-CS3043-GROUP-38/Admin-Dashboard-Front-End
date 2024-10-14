@@ -1,76 +1,177 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import {CustomTable} from './OrderDetailsTable'; // Make sure to import your CustomTable component
+import React, { useState, useEffect } from 'react';
+import { Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import {CustomTable} from "./OrderDetailsTable";
+import { useTheme } from '@mui/material';
+import { tokens } from '../theme';
+import CustomGrayCard from "./CustomGrayCard";
 
-const TopProductsCard = ({ topProducts, colorSelection }) => {
-    const [selectedYear, setSelectedYear] = useState(Object.keys(topProducts)[0]);
-    const [selectedQuarter, setSelectedQuarter] = useState(Object.keys(topProducts[selectedYear])[0]);
+const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRevenueData }) => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-    const handleYearChange = (event) => {
-        const newYear = event.target.value;
-        setSelectedYear(newYear);
-        setSelectedQuarter(Object.keys(topProducts[newYear])[0]);
-    };
+    const [availableYears, setAvailableYears] = useState([]);
+    const [availableQuarters, setAvailableQuarters] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedQuarter, setSelectedQuarter] = useState('');
+    const [chartData, setChartData] = useState([]);
+    const [error, setError] = useState('');
 
-    const handleQuarterChange = (event) => {
-        setSelectedQuarter(event.target.value);
-    };
+    // Fetch available years on component mount
+    useEffect(() => {
+        const fetchYears = async () => {
+            try {
+                const years = await fetchAvailableYears();
+                if (years.length === 0) {
+                    setError('No years available');
+                } else {
+                    setAvailableYears(years);
+                    setSelectedYear(years[0]?.Year);  // set first available year as default
+                }
+            } catch (error) {
+                console.error('Error fetching years:', error);
+                setError('Failed to fetch available years');
+            }
+        };
+        fetchYears().then(r => console.log('Years fetched for table'));
+    }, [fetchAvailableYears]);
 
-    const getProductsForYearAndQuarter = (year, quarter) => {
-        return Object.values(topProducts[year][quarter]).sort((a, b) => b.revenue - a.revenue);
-    };
+    // Fetch available quarters when a year is selected
+    useEffect(() => {
+        const fetchQuarters = async () => {
+            if (selectedYear) {
+                try {
+                    const quarters = await fetchAvailableQuarters(selectedYear);
+                    if (quarters.length === 0) {
+                        setError(`No quarters available for year ${selectedYear}`);
+                    } else {
+                        setAvailableQuarters(quarters);
+                        setSelectedQuarter(quarters[0]?.Quarter); // set first available quarter as default
+                    }
+                } catch (error) {
+                    console.error('Error fetching quarters:', error);
+                    setError('Failed to fetch available quarters');
+                }
+            }
+        };
+        fetchQuarters().then(r => console.log('Quarters fetched'));
+    }, [fetchAvailableQuarters, selectedYear]);
 
-    const products = getProductsForYearAndQuarter(selectedYear, selectedQuarter);
+    // Fetch revenue data for the selected year and quarter
+    useEffect(() => {
+        const fetchData = async () => {
+            if (selectedYear && selectedQuarter) {
+                try {
+                    const data = await fetchRevenueData(selectedYear, selectedQuarter);
+                    if (data.length === 0) {
+                        setError(`No data available for ${selectedYear} Q${selectedQuarter}`);
+                    } else {
+                        setChartData(data);
+                        setError(''); // Clear any previous errors
+                    }
+                } catch (error) {
+                    console.error('Error fetching revenue data:', error);
+                    setError('Failed to fetch revenue data');
+                }
+            }
+        };
+        fetchData().then(r => console.log('Revenue data fetched'));
+    }, [selectedYear, selectedQuarter, fetchRevenueData]);
+
 
     return (
-        <Card sx={{ minWidth: 275, maxWidth: 800, margin: 'auto' }}>
-            <CardHeader
-                title="Top Performing Products"
-                action={
-                    <div style={{ display: 'flex', gap: '16px' }}>
+        <CustomGrayCard>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Typography variant="h5" color="text.secondary">
+                        Top Products by Quarter
+                    </Typography>
+                    <Box display="flex" gap={2}>
                         <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="year-select-label">Year</InputLabel>
+                            <InputLabel id="year-select-label" sx={{ color: colors.cyanAccent[500] }}>
+                                Year
+                            </InputLabel>
                             <Select
                                 labelId="year-select-label"
+                                id="year-select"
                                 value={selectedYear}
                                 label="Year"
-                                onChange={handleYearChange}
+                                onChange={(e) => {
+                                    setSelectedYear(e.target.value);
+                                    setSelectedQuarter('');
+                                    setError('');
+                                }}
+                                variant="outlined"
+                                sx={{
+                                    color: colors.cyanAccent[500],
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[500],
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[300],
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[500],
+                                    },
+                                }}
                             >
-                                {Object.keys(topProducts).map((year) => (
-                                    <MenuItem key={year} value={year}>
-                                        {year}
+                                {availableYears.map((year) => (
+                                    <MenuItem key={year.Year} value={year.Year}>
+                                        {year.Year}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                         <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="quarter-select-label">Quarter</InputLabel>
+                            <InputLabel id="quarter-select-label" sx={{ color: colors.cyanAccent[500] }}>
+                                Quarter
+                            </InputLabel>
                             <Select
                                 labelId="quarter-select-label"
+                                id="quarter-select"
                                 value={selectedQuarter}
                                 label="Quarter"
-                                onChange={handleQuarterChange}
+                                onChange={(e) => {
+                                    setSelectedQuarter(e.target.value);
+                                    setError('');
+                                }}
+                                variant="outlined"
+                                disabled={!availableQuarters.length}
+                                sx={{
+                                    color: colors.cyanAccent[500],
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[500],
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[300],
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: colors.cyanAccent[500],
+                                    },
+                                }}
                             >
-                                {Object.keys(topProducts[selectedYear]).map((quarter) => (
-                                    <MenuItem key={quarter} value={quarter}>
-                                        {quarter}
+                                {availableQuarters.map((quarter) => (
+                                    <MenuItem key={quarter.Quarter} value={quarter.Quarter}>
+                                        Q{quarter.Quarter}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
-                    </div>
-                }
-            />
-            <CardContent>
-                <CustomTable
-                    data={products}
-                    colorSelection={colorSelection} // Pass the color selection to the CustomTable
-                    heading="Top Products for Selected Quarter"
-                    maxHeight="400px" // Adjust max height as needed
-                />
-            </CardContent>
-        </Card>
+                    </Box>
+                </Box>
+
+                {error ? (
+                    <Typography color="error" sx={{ mt: 2 }}>
+                        {error}
+                    </Typography>
+                ) : (
+                    <CustomTable
+                    heading={`Best Products for ${selectedYear} Q${selectedQuarter}`}
+                    data={chartData}
+                    maxHeight={400}
+                    colorSelection={'cyanAccent'}
+                    />
+                )}
+        </CustomGrayCard>
     );
 };
 
-export default TopProductsCard;
+export default TopProductsQuarter;

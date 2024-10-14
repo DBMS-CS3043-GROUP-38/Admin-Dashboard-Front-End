@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid2';
 import DailySalesCard from "../../components/DailySalesCard";
 import {TrainsCompletedCard} from "../../components/CompletedCard";
 import PendingOrdersCard from "../../components/PendingOrdersCard";
-import RevanueLineChart from "../../components/charts/RevanueLineChart";
+import {RevenueLineChart} from "../../components/charts/RevanueLineChart";
 import {OrdersStatusChart} from "../../components/charts/OrdersStatusChart";
 import TodaysOutgingTrainTable from "../../components/TodaysOutgingTrainTable";
 import ProductSummary from "../../components/ProductSummeryCard";
@@ -72,7 +72,7 @@ const Overview = () => {
                     <OrdersAttentionCard ordersNeedAttention={ordersAttention.attention}/>
                 </Grid>
                 <Grid size={8}>
-                    <RevanueLineChart revenueData={revenueData}/>
+                    <RevenueLineChart revenueData={revenueData}/>
                 </Grid>
                 <Grid size={4}>
                     <OrdersStatusChart data={orderStatuses}/>

@@ -122,6 +122,23 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                                 }}
                             >
                                 <TableSortLabel
+                                    active={orderBy === 'scheduleID'}
+                                    direction={orderBy === 'scheduleID' ? orderDirection : "asc"}
+                                    onClick={() => handleSortRequest('scheduleID')}
+                                >
+                                    Train Schedule ID
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell
+                                sx={{
+                                    bgcolor: colors[colorSelection]["800"],
+                                    color: colors.grey["100"],
+                                    position: 'sticky',
+                                    top: 0,
+                                    zIndex: 1,
+                                }}
+                            >
+                                <TableSortLabel
                                     active={orderBy === 'id'}
                                     direction={orderBy === 'id' ? orderDirection : "asc"}
                                     onClick={() => handleSortRequest('id')}
@@ -213,6 +230,7 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                                     '&:hover': { bgcolor: colors[colorSelection][900] }
                                 }}
                             >
+                                <TableCell>{row.scheduleID}</TableCell>
                                 <TableCell>{row.id}</TableCell>
                                 <TableCell>{row.destination}</TableCell>
                                 <TableCell>{row.fullCapacity}</TableCell>
@@ -222,7 +240,7 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                                         <Box sx={{ width: '100%', mr: 1 }}>
                                             <LinearProgress
                                                 variant="determinate"
-                                                value={parseFloat(row.capacityFilled) * 100} // Already a percentage
+                                                value={parseFloat(row.capacityFilled)} // Already a percentage
                                                 sx={{
                                                     bgcolor: colors.grey["800"],
                                                     '& .MuiLinearProgress-bar': {
@@ -232,7 +250,7 @@ const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
                                             />
                                         </Box>
                                         <Typography variant="body2" color="text.secondary">
-                                            {`${Math.round(parseFloat(row.capacityFilled) * 100)}%`}
+                                            {`${Math.round(parseFloat(row.capacityFilled) )}%`}
                                         </Typography>
                                     </Box>
                                 </TableCell>

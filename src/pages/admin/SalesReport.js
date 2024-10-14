@@ -1,61 +1,81 @@
 import PageLayout from "../../layouts/admin/PageLayout";
-import {RevenueGroupedBarChart} from "../../components/charts/SalesReportCharts";
-import RevanueLineChart from "../../components/charts/RevanueLineChart";
-import TopProductsQuater from "../../components/TopProductsQuater";
+import {RevenueBarChart} from "../../components/charts/SalesReportCharts";
+import {PastRevanueChart} from "../../components/charts/RevanueLineChart";
+import TopProductsQuarter from "../../components/TopProductsQuater";
 import Grid from "@mui/material/Grid2";
 import TopCusomersQuarter from "../../components/TopCusomersQuarter";
 import QuaterlySalesCard from "../../components/QuaterlySalesCard";
 import QuarterlyOrdersCard from "../../components/QuarterlyOrders";
 import TopPerformingStoreCard from "../../components/TopStore";
-import BestCustomer from "../../components/BestCustomer";
+import {BestCustomerCard} from "../../components/BestCustomer";
+import {getQuarterlySales, getQuarterlyOrders, getQuarterlyStores, getBestCustomer, getRevenueData, getAvailableYears, getAvailableQuarters, getRevenuePerStore, getTopProductsPerQuarter, getTopCustomersPerQuarter} from "../../services/apiService";
+import {useEffect, useState} from "react";
 
 export default function SalesReport() {
+    const [quarterlySales, setQuarterlySales] = useState({current: 0, previous: 0});
+    const [quarterlyOrders, setQuarterlyOrders] = useState({current: 0, previous: 0});
+    const [QuarterlyStores, setQuarterlyStores] = useState([
+        {StoreID: 0, StoreCity: '', TotalRevenue: 0}
+    ]);
+    const [BestCustomer, setBestCustomer] = useState([
+        {Name: '', City: '', ID: 0, TotalRevenue: 0}
+    ]);
+    const [revenueData, setRevenueData] = useState([]);
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const QSales = await getQuarterlySales();
+            const QOrders = await getQuarterlyOrders();
+            const QStores = await getQuarterlyStores();
+            const QBestCustomer = await getBestCustomer();
+            const revenueData = await getRevenueData();
+            console.log(revenueData);
+
+            setQuarterlySales(QSales);
+            setQuarterlyOrders(QOrders);
+            setQuarterlyStores(QStores);
+            setBestCustomer(QBestCustomer);
+            setRevenueData(revenueData);
+        }
+
+        fetchData().then(r => console.log('Data fetched'));
+    }, []);
+
+
     return (
         <PageLayout heading={'Sales Report'} subHeading={'Get Quarterly sales reports and more'}>
             <Grid container spacing={2}>
                 <Grid size={3}>
-                    <QuaterlySalesCard currentQuarterSales={100000} previousQuarterSales={80000}/>
+                    <QuaterlySalesCard currentQuarterSales={parseFloat(quarterlySales.current)} previousQuarterSales={quarterlySales.previous}/>
                 </Grid>
                 <Grid   size={3}>
-                    <QuarterlyOrdersCard currentQuarterOrders={1000} previousQuarterOrders={800} />
+                    <QuarterlyOrdersCard currentQuarterOrders={parseFloat(quarterlyOrders.current)} previousQuarterOrders={quarterlyOrders.previous}/>
                 </Grid>
                 <Grid size={3}>
-                    <TopPerformingStoreCard storeId={'001'} currentRevenue={'10000'} previousRevenue={'12020'} storeName={'Kurunegala'}/>
+                    <TopPerformingStoreCard storeId={QuarterlyStores[0].StoreID} storeName={QuarterlyStores[0].StoreCity} currentRevenue={parseFloat(QuarterlyStores[0].TotalRevenue)}/>
                 </Grid>
                 <Grid size={3}>
-                    <BestCustomer customerId={'001'} customerName={'Alice Johnson'} customerCity={'Kurunegala'}/>
+                    <BestCustomerCard customerName={BestCustomer[0].Name} customerCity={BestCustomer[0].City} customerId={BestCustomer[0].ID} totalRevenue={BestCustomer[0].TotalRevenue}/>
                 </Grid>
                 <Grid size={6}>
-                    <RevanueLineChart revenueData={revenueDataAnnual}/>
+                    <PastRevanueChart revenueData={revenueData}/>
                 </Grid>
                 <Grid size={6}>
-                    <RevenueGroupedBarChart revenueData={revenueData} />
+                    < RevenueBarChart fetchAvailableQuarters={getAvailableQuarters} fetchAvailableYears={getAvailableYears} fetchRevenueData={getRevenuePerStore}/>
                 </Grid>
                 <Grid size={6}>
-                    <TopProductsQuater topProducts={topProducts} colorSelection={'yellowAccent'}/>
+                    <TopProductsQuarter fetchAvailableQuarters={getAvailableQuarters} fetchAvailableYears={getAvailableYears} fetchRevenueData={getTopProductsPerQuarter}/>
                 </Grid>
                 <Grid size={6}>
-                    <TopCusomersQuarter topCustomers={topCustomers}/>
+                    <TopCusomersQuarter fetchAvailableQuarters={getAvailableQuarters} fetchAvailableYears={getAvailableYears} fetchRevenueData={getTopCustomersPerQuarter}/>
                 </Grid>
             </Grid>
         </PageLayout>
     );
 }
 
-const revenueDataAnnual = [
-    {month: 'Jan', revenue: 4000},
-    {month: 'Feb', revenue: 3000},
-    {month: 'Mar', revenue: 5000},
-    {month: 'Apr', revenue: 6000},
-    {month: 'May', revenue: 7000},
-    {month: 'Jun', revenue: 8000},
-    {month: 'Jul', revenue: 9000},
-    {month: 'Aug', revenue: 10000},
-    {month: 'Sep', revenue: 11000},
-    {month: 'Oct', revenue: 12000},
-    {month: 'Nov', revenue: 13000},
-    {month: 'Dec', revenue: 14000},
-];
 const revenueData = {
     "2023": [
         { quarter: "Q1", store1: 1000, store2: 1500, store3: 1200, store4: 1100, store5: 1300 },
