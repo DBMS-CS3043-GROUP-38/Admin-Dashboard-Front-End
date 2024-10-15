@@ -228,3 +228,18 @@ export const getOrdersInTruck = async () => {
     const response = await api.get(`/admin/tables/orders-in-truck`);
     return response.data;
 }
+
+export const reportOrder = async (orderID) => {
+    const response = await api.patch(`/admin/buttons/report-order/${orderID}`);
+    return response.data;
+}
+
+export const getAttentionOrders = async () => {
+    const response = await api.get(`/admin/tables/attention-orders`);
+    return response.data;
+}
+
+export const cancelOrder = async (orderID) => {
+    const response = await api.patch(`/admin/buttons/cancel-order/${orderID}`);
+    return response.data;
+}

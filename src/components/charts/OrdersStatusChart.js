@@ -69,7 +69,7 @@ const OrdersStatusChart = ({data}) => {
                             <YAxis
                                 dataKey="status"
                                 type="category"
-                                width={90}
+                                width={100}
                                 stroke={theme.palette.text.secondary}
                             />
                             <Legend/>
@@ -155,7 +155,7 @@ const OrdersStatusChartH = ({ data }) => {
                         <YAxis
                             dataKey="status"
                             type="category"
-                            width={90}
+                            width={100}
                             stroke={theme.palette.text.secondary}
                         />
                         <Bar dataKey="count" fill={colors.yellowAccent["600"]}>

@@ -64,7 +64,7 @@ const ScheduleTrainsButton = ({ onSchedule }) => {
                         <DialogContentText>
                             {scheduledCount > 0
                                 ? `${scheduledCount} trains have been scheduled successfully.`
-                                : 'No trains have been scheduled, as there are already available trains for the next 30 days.'}
+                                : 'No trains have been scheduled, as there are already available trains for the next 7 days.'}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

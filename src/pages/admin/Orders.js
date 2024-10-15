@@ -54,7 +54,6 @@ export default function Orders() {
                 </Grid>
                 <Grid size={12}>
                     <AttentionOrdersTable
-                        data={attentionOrdersData}
                         colorSelection="redAccent"
                         heading="Attention Required Orders"
                         maxHeight={400}
@@ -107,41 +106,3 @@ export default function Orders() {
         </PageLayout>
     );
 }
-
-const attentionOrdersData = [
-    {
-        OrderID: "A001",
-        CustomerID: "CUST01",
-        CustomerName: "John Doe",
-        CustomerCity: "New York",
-        CustomerContact: "(555) 123-4567"
-    },
-    {
-        OrderID: "A002",
-        CustomerID: "CUST02",
-        CustomerName: "Jane Smith",
-        CustomerCity: "Los Angeles",
-        CustomerContact: "(555) 987-6543"
-    },
-    {
-        OrderID: "A003",
-        CustomerID: "CUST03",
-        CustomerName: "Alice Johnson",
-        CustomerCity: "Chicago",
-        CustomerContact: "(555) 246-8102"
-    },
-    {
-        OrderID: "A004",
-        CustomerID: "CUST04",
-        CustomerName: "Bob Brown",
-        CustomerCity: "Houston",
-        CustomerContact: "(555) 135-7913"
-    },
-    {
-        OrderID: "A005",
-        CustomerID: "CUST05",
-        CustomerName: "Carol White",
-        CustomerCity: "Miami",
-        CustomerContact: "(555) 462-8539"
-    }
-];

@@ -115,7 +115,7 @@ const Dispatch = () => {
                 </CustomGrayCard>
 
                 {selectedTrain && (
-                    <CustomTable heading={`Dispatches for TrainID: ${selectedTrain}`} data={Dispatches} maxHeight={400}
+                    <CustomTable heading={`Dispatches for ScheduleID: ${selectedTrain}`} data={Dispatches} maxHeight={400}
                                  colorSelection={'yellowAccent'} />
                 )}
 

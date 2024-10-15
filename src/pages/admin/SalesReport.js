@@ -12,13 +12,13 @@ import {getQuarterlySales, getQuarterlyOrders, getQuarterlyStores, getBestCustom
 import {useEffect, useState} from "react";
 
 export default function SalesReport() {
-    const [quarterlySales, setQuarterlySales] = useState({current: 0, previous: 0});
-    const [quarterlyOrders, setQuarterlyOrders] = useState({current: 0, previous: 0});
+    const [quarterlySales, setQuarterlySales] = useState({"current": "NaN", "previous": "NaN"});
+    const [quarterlyOrders, setQuarterlyOrders] = useState({"current": "NaN", "previous": "NaN"});
     const [QuarterlyStores, setQuarterlyStores] = useState([
-        {StoreID: 0, StoreCity: '', TotalRevenue: 0}
+        {"StoreID": 'Nan', "StoreCity": 'NaN', "TotalRevenue": 'NaN'}
     ]);
     const [BestCustomer, setBestCustomer] = useState([
-        {Name: '', City: '', ID: 0, TotalRevenue: 0}
+        {"Name": 'NaN', "City": 'NaN', "ID": 'NaN', "TotalRevenue": 'NaN'}
     ]);
     const [revenueData, setRevenueData] = useState([]);
 
