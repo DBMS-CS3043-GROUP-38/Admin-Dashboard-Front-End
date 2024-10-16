@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import {TextField, Box, Radio, RadioGroup, FormControlLabel, useTheme, Button} from '@mui/material';
-import { tokens } from "../theme";
+import React, {useState} from 'react';
+import {TextField, Box, Radio, RadioGroup, FormControlLabel, useTheme, Button, Typography} from '@mui/material';
+import {tokens} from "../theme";
 
 // General Search Component
-const SearchComponent = ({ label, searchBy, setSearchBy, searchValue, setSearchValue, handleSearch }) => {
+const SearchComponent = ({label, searchBy, setSearchBy, searchValue, setSearchValue, handleSearch}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     return (
-        <Box sx={{ mb: 4 }}>
-            <Box sx={{ display: 'flex', mb: 2 }}>
+        <Box sx={{mb: 4}}>
+            <Box sx={{display: 'flex', mb: 2}}>
                 <RadioGroup
                     row
                     value={searchBy}
                     onChange={(e) => setSearchBy(e.target.value)}
-                    sx={{ color: colors.purpleAccent[500] }}
+                    sx={{color: colors.purpleAccent[500]}}
                 >
                     <FormControlLabel
                         value="id"
@@ -23,7 +23,7 @@ const SearchComponent = ({ label, searchBy, setSearchBy, searchValue, setSearchV
                             '&.Mui-checked': {
                                 color: colors.purpleAccent[500],
                             }
-                        }} />}
+                        }}/>}
                         label="ID"
                     />
                     <FormControlLabel
@@ -33,13 +33,13 @@ const SearchComponent = ({ label, searchBy, setSearchBy, searchValue, setSearchV
                             '&.Mui-checked': {
                                 color: colors.purpleAccent[500],
                             }
-                        }} />}
+                        }}/>}
                         label="Name"
                     />
                 </RadioGroup>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <TextField
                     variant="outlined"
                     label={searchBy === 'id' ? `Search ${label} ID` : `Search ${label} Name`}
@@ -85,21 +85,36 @@ const SearchComponent = ({ label, searchBy, setSearchBy, searchValue, setSearchV
                 >
                     Search
                 </Button>
+
             </Box>
+            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full list</Typography>
         </Box>
     );
 };
 
 // Customer Search Component
-const CustomerSearch = () => {
+const CustomerSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
-    const [searchValue, setSearchValue] = useState(''); // Define searchValue state
-    const handleSearch = (value, searchBy) => {
-        console.log(`Searching for Customer ${searchBy}: ${value}`);
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearch = () => {
+        onSearch(searchBy, searchValue)
+            .then(results => onResults(results))
+            .catch(error => console.error('Search failed:', error));
     };
 
-    return <SearchComponent label="Customer" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} />;
+    return (
+        <SearchComponent
+            label="Customer"
+            searchBy={searchBy}
+            setSearchBy={setSearchBy}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            handleSearch={handleSearch}
+        />
+    );
 };
+
 
 // Route Search Component
 const RouteSearch = () => {
@@ -113,8 +128,8 @@ const RouteSearch = () => {
     };
 
     return (
-        <Box sx={{ mb: 4 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{mb: 4}}>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
                 <TextField
                     variant="outlined"
                     label="Search Route ID"
@@ -173,7 +188,8 @@ const DriverSearch = () => {
         console.log(`Searching for Driver ${searchBy}: ${value}`);
     };
 
-    return <SearchComponent label="Driver" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} />;
+    return <SearchComponent label="Driver" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
+                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
 };
 
 // Assistant Search Component
@@ -184,7 +200,8 @@ const AssistantSearch = () => {
         console.log(`Searching for Assistant ${searchBy}: ${value}`);
     };
 
-    return <SearchComponent label="Assistant" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} />;
+    return <SearchComponent label="Assistant" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
+                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
 };
 
 // Truck Search Component
@@ -195,7 +212,8 @@ const TruckSearch = () => {
         console.log(`Searching for Truck ${searchBy}: ${value}`);
     };
 
-    return <SearchComponent label="Truck" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} />;
+    return <SearchComponent label="Truck" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
+                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
 };
 
-export { CustomerSearch, RouteSearch, DriverSearch, AssistantSearch, TruckSearch };
+export {CustomerSearch, RouteSearch, DriverSearch, AssistantSearch, TruckSearch};

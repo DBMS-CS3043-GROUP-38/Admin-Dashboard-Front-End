@@ -284,3 +284,20 @@ export const getManagerData = async () => {
     const response = await api.get('/admin/tables/manager-data');
     return response.data;
 }
+
+export const getTopCustomers = async () => {
+    const response = await api.get('/admin/tables/top-customers');
+    return response.data;
+}
+
+export const getCustomerDistribution = async () => {
+    const response = await api.get('/admin/charts/customer-distribution');
+    return response.data;
+}
+
+export const searchCustomer = async (by, term) => {
+    const response = await api.get(`/admin/searches/customer`, {
+        params: { by, term }
+    });
+    return response.data;
+}
