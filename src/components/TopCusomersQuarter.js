@@ -82,7 +82,7 @@ const TopCustomersQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetc
         <CustomGrayCard>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Typography variant="h5" color="text.secondary">
-                    Top Customers by Quarter
+                    Top 100 Customers by Quarter
                 </Typography>
                 <Box display="flex" gap={2}>
                     <FormControl sx={{ minWidth: 120 }}>

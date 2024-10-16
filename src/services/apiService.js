@@ -243,3 +243,44 @@ export const cancelOrder = async (orderID) => {
     const response = await api.patch(`/admin/buttons/cancel-order/${orderID}`);
     return response.data;
 }
+
+
+export const getStores = async () => {
+    const response = await api.get('/admin/selectors/get-stores');
+    return response.data;
+}
+
+export const getReadyShipment = async (id) => {
+    const response = await api.get(`/admin/cards/get-ready-shipments/${id}`);
+    return response.data;
+}
+
+export const getAvailableAssistants = async (id) => {
+    const response = await api.get(`/admin/cards/get-available-assistants/${id}`);
+    return response.data;
+}
+
+export const getAvailableDrivers = async (id) => {
+    const response = await api.get(`/admin/cards/get-available-drivers/${id}`);
+    return response.data;
+}
+
+export const getAvailableTrucks = async (id) => {
+    const response = await api.get(`/admin/cards/get-available-trucks/${id}`);
+    return response.data;
+}
+
+export const getBestProducts = async () => {
+    const response = await api.get('/admin/tables/best-products');
+    return response.data;
+}
+
+export const getStoreData = async () => {
+    const response = await api.get('/admin/tables/store-data');
+    return response.data;
+}
+
+export const getManagerData = async () => {
+    const response = await api.get('/admin/tables/manager-data');
+    return response.data;
+}
