@@ -1,12 +1,10 @@
 import axios from 'axios';
-// import dotenv from 'dotenv';
-//
-// dotenv.config();
-const API_BASE_URL = 'http://localhost:3005';
+const API_BASE_URL = 'http://localhost:3005/dashboard';
 
 
 const api = axios.create({
     baseURL: API_BASE_URL,
+    withCredentials: true,
 });
 
 export const testApi = async () => {
@@ -297,6 +295,34 @@ export const getCustomerDistribution = async () => {
 
 export const searchCustomer = async (by, term) => {
     const response = await api.get(`/admin/searches/customer`, {
+        params: { by, term }
+    });
+    return response.data;
+}
+
+export const searchDriver = async (by, term) => {
+    const response = await api.get(`/admin/searches/driver`, {
+        params: { by, term }
+    });
+    return response.data;
+}
+
+export const searchAssistant = async (by, term) => {
+    const response = await api.get(`/admin/searches/assistant`, {
+        params: { by, term }
+    });
+    return response.data;
+}
+
+export const searchRoute = async (by, term) => {
+    const response = await api.get(`/admin/searches/route`, {
+        params: { by, term }
+    });
+    return response.data;
+}
+
+export const searchTruck = async (by, term) => {
+    const response = await api.get(`/admin/searches/truck`, {
         params: { by, term }
     });
     return response.data;

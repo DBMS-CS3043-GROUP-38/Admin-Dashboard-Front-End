@@ -72,7 +72,7 @@ export function TrainsCompletedCard({ completedTrains, totalTrains }) {
 
     return (
         <CompletedCard
-            title="Trains Dispatched with orders"
+            title="Trains Dispatched"
             completed={completedTrains}
             total={totalTrains}
             color="purpleAccent"

@@ -2,10 +2,30 @@ import React from 'react';
 import { Box, Typography, TextField, Button, Link, useTheme } from '@mui/material';
 import { tokens } from '../../theme';
 import BackgroundImage from '../../assets/truck-8656658_1920.jpg';
+import axios from "axios";
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const { login } = useAuth(); // Get login function from context
+    const navigate = useNavigate();
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [error, setError] = React.useState('');
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3005/dashboard/login', { username, password });
+            login(response.data); // Set user data in context
+            navigate('/admin'); // Redirect to admin page
+        } catch (err) {
+            setError('Invalid credentials');
+        }
+    };
 
     return (
         <Box
@@ -45,6 +65,8 @@ const LoginPage = () => {
                     fullWidth
                     variant="outlined"
                     label="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     sx={{
                         mb: 2,
                         '& .MuiOutlinedInput-root': {
@@ -73,6 +95,8 @@ const LoginPage = () => {
                     variant="outlined"
                     type="password"
                     label="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     sx={{
                         mb: 2,
                         '& .MuiOutlinedInput-root': {
@@ -96,9 +120,15 @@ const LoginPage = () => {
                         },
                     }}
                 />
+                {error && (
+                    <Typography variant="body2" color="error" sx={{ mb: 2 }}>
+                        {error}
+                    </Typography>
+                )}
                 <Button
                     fullWidth
                     variant="contained"
+                    onClick={handleSubmit}
                     sx={{
                         mt: 2,
                         backgroundColor: colors.purpleAccent[700],

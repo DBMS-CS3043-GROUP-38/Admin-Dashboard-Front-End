@@ -117,14 +117,16 @@ const CustomerSearch = ({onSearch, onResults}) => {
 
 
 // Route Search Component
-const RouteSearch = () => {
+const RouteSearch = ({onSearch, onResults}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     const [routeId, setRouteId] = useState(''); // State for Route ID
 
     const handleSearch = () => {
-        console.log(`Searching for Route ID: ${routeId}`);
+        onSearch('id', routeId)
+            .then(results => onResults(results))
+            .catch(error => console.error('Search failed:', error));
     };
 
     return (
@@ -176,44 +178,77 @@ const RouteSearch = () => {
                     Search
                 </Button>
             </Box>
+            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full list</Typography>
         </Box>
     );
 };
 
 // Driver Search Component
-const DriverSearch = () => {
+const DriverSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
-    const [searchValue, setSearchValue] = useState(''); // Define searchValue state
-    const handleSearch = (value, searchBy) => {
-        console.log(`Searching for Driver ${searchBy}: ${value}`);
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearch = () => {
+        onSearch(searchBy, searchValue)
+            .then(results => onResults(results))
+            .catch(error => console.error('Search failed:', error));
     };
 
-    return <SearchComponent label="Driver" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
-                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
-};
+    return (
+        <SearchComponent
+            label="Driver"
+            searchBy={searchBy}
+            setSearchBy={setSearchBy}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            handleSearch={handleSearch}
+        />
+    );
+}
 
 // Assistant Search Component
-const AssistantSearch = () => {
+const AssistantSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
-    const [searchValue, setSearchValue] = useState(''); // Define searchValue state
-    const handleSearch = (value, searchBy) => {
-        console.log(`Searching for Assistant ${searchBy}: ${value}`);
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearch = () => {
+        onSearch(searchBy, searchValue)
+            .then(results => onResults(results))
+            .catch(error => console.error('Search failed:', error));
     };
 
-    return <SearchComponent label="Assistant" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
-                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
-};
-
+    return (
+        <SearchComponent
+            label="Assistant"
+            searchBy={searchBy}
+            setSearchBy={setSearchBy}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            handleSearch={handleSearch}
+        />
+    );
+}
 // Truck Search Component
-const TruckSearch = () => {
+const TruckSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
-    const [searchValue, setSearchValue] = useState(''); // Define searchValue state
-    const handleSearch = (value, searchBy) => {
-        console.log(`Searching for Truck ${searchBy}: ${value}`);
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleSearch = () => {
+        onSearch(searchBy, searchValue)
+            .then(results => onResults(results))
+            .catch(error => console.error('Search failed:', error));
     };
 
-    return <SearchComponent label="Truck" searchBy={searchBy} setSearchBy={setSearchBy} searchValue={searchValue}
-                            setSearchValue={setSearchValue} handleSearch={handleSearch}/>;
+    return (
+        <SearchComponent
+            label="Truck"
+            searchBy={searchBy}
+            setSearchBy={setSearchBy}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            handleSearch={handleSearch}
+        />
+    );
 };
 
 export {CustomerSearch, RouteSearch, DriverSearch, AssistantSearch, TruckSearch};

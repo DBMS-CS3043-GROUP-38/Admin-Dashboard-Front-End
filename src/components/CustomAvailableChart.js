@@ -40,6 +40,21 @@ const CustomTableWithoutProgressBar = ({ data, colorSelection, heading, maxHeigh
         });
     }, [data, orderBy, orderDirection]);
 
+    // Render no data message if data is empty
+    if (!data || data.length === 0) {
+        return (
+            <CustomGrayCard>
+                <Typography variant="h4" color="text.primary" gutterBottom>
+                    {heading}
+                </Typography>
+                <Typography color="text.secondary">No data available</Typography>
+            </CustomGrayCard>
+        );
+    }
+
+    // Extract column names from the data dynamically
+    const columnNames = Object.keys(data[0]);
+
     return (
         <CustomGrayCard>
             <Typography variant="h4" color="text.primary" gutterBottom>
@@ -49,7 +64,7 @@ const CustomTableWithoutProgressBar = ({ data, colorSelection, heading, maxHeigh
                 <Table stickyHeader sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
-                            {Object.keys(data[0]).filter(key => key !== "Availability").map((key) => (
+                            {columnNames.filter(key => key !== "Availability").map((key) => (
                                 <TableCell
                                     key={key}
                                     sx={{
@@ -91,9 +106,9 @@ const CustomTableWithoutProgressBar = ({ data, colorSelection, heading, maxHeigh
                                     '&:hover': { bgcolor: colors[colorSelection][900] }
                                 }}
                             >
-                                {Object.keys(row).filter(key => key !== "Availability").map((key, idx) => (
+                                {columnNames.filter(key => key !== "Availability").map((key, idx) => (
                                     <TableCell key={idx}>
-                                        {row[key]}
+                                        {row[key] ?? "N/A"}
                                     </TableCell>
                                 ))}
                                 <TableCell>
