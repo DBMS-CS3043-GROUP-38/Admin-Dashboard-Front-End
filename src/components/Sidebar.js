@@ -29,7 +29,6 @@ import {Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import InfoIcon from '@mui/icons-material/Info';
-import {IoTrain} from "react-icons/io5";
 
 const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
