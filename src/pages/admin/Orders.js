@@ -5,6 +5,7 @@ import {CustomTable, AttentionOrdersTable } from "../../components/OrderDetailsT
 import OrderDetailsSearchCard from "../../components/OrderDetailsSearch";
 import {getPendingOrdersList, getTrainAssignedOrders, getOrdersInTrain, getOrdersInStore, getOrdersInShipment, getOrdersInTruck, getOrderStatuses} from "../../services/apiService";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function Orders() {
     const [pendingOrders, setPendingOrders] = useState([]);
@@ -14,6 +15,7 @@ export default function Orders() {
     const [InShipmentData, setInShipmentData] = useState([]);
     const [InTruckData, setInTruckData] = useState([]);
     const [orderStatuses, setOrderStatuses] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrderStatuses = async () => {
@@ -36,11 +38,23 @@ export default function Orders() {
                 setInTruckData(tr);
                 setOrderStatuses(orderStatuses);
             } catch (error) {
-                console.error("Error fetching order statuses:", error);
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
             }
         };
         fetchOrderStatuses().then(r => console.log("Order Statuses fetched"));
-    }, []);
+    }, [navigate]);
 
 
     return (

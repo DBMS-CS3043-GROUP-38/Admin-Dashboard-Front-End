@@ -4,28 +4,65 @@ import {Box} from "@mui/material";
 import ScheduleTrainsButton from "../../components/ScheduleTrainsButton";
 import WeeklyTrainsTable from "../../components/WeeklyTrainsTable";
 import Grid from "@mui/material/Grid2";
-import {getWeeklyTrains, scheduleTrains, getScheduledTrains} from "../../services/apiService";
+import {getScheduledTrains, getWeeklyTrains, scheduleTrains} from "../../services/apiService";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function ScheduleTrain() {
     const [weeklyTrainData, setWeeklyTrainData] = useState([]);
     const [scheduledTrains, setScheduledTrains] = useState([]);
+    const navigate = useNavigate();
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchData = async () => {
-            const weeklyTrains = await getWeeklyTrains();
-            const scheduledTrains = await getScheduledTrains();
+            try {
+                const weeklyTrains = await getWeeklyTrains();
+                const scheduledTrains = await getScheduledTrains();
 
-            setScheduledTrains(scheduledTrains);
-            setWeeklyTrainData(weeklyTrains);
+                setScheduledTrains(scheduledTrains);
+                setWeeklyTrainData(weeklyTrains);
+            } catch (error) {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            }
         }
 
         fetchData().then(r => console.log('Data fetched'));
-    }, [])
+    }, [navigate])
 
     const handleScheduleTrains = async () => {
-        const response = await scheduleTrains(); // Call the scheduleTrains function
-        return response; // Return the response to be used in the button
+        // Call the scheduleTrains function
+        let response;
+
+        try {
+            response = await scheduleTrains();
+        } catch (error) {
+            console.error(error);
+            // Check for specific status codes
+            if (error.response) {
+                const {status} = error.response;
+                if (status === 401 || status === 403) {
+                    navigate('/unauthorized'); // Redirect to Unauthorized page
+                } else {
+                    navigate('/database-error'); // Redirect to Database Error page
+                }
+            } else {
+                // Network error or no response
+                navigate('/database-error'); // Redirect for network or unexpected errors
+            }
+        }
+        return response;
     };
 
 
@@ -37,12 +74,13 @@ export default function ScheduleTrain() {
                     <WeeklyTrainsTable weeklyData={weeklyTrainData}/>
                 </Grid>
 
-                <Box sx={{display: 'flex', width: '100%', alignContent:'center', justifyContent:'center'}}>
+                <Box sx={{display: 'flex', width: '100%', alignContent: 'center', justifyContent: 'center'}}>
                     <ScheduleTrainsButton onSchedule={handleScheduleTrains}/>
                 </Box>
 
                 <Grid size={12}>
-                    <ScheduledTrains heading={"Scheduled Trains"} colorSelection={'purpleAccent'} maxHeight={600} data={scheduledTrains}/>
+                    <ScheduledTrains heading={"Scheduled Trains"} colorSelection={'purpleAccent'} maxHeight={600}
+                                     data={scheduledTrains}/>
                 </Grid>
             </Grid>
         </PageLayout>

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Typography, Button, useTheme } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
-import { tokens } from "../../theme";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext";
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'; // You can replace this with a different icon if preferred
+import { Link } from 'react-router-dom';
+import { tokens } from '../../theme';
+import {DiDatabase} from "react-icons/di"; // Assuming this is where your color tokens are defined
 
 const float = keyframes`
   0% { transform: translateY(0px); }
@@ -21,18 +20,33 @@ const Container = styled(Box)(({ theme }) => {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.primary[600],
-        color: colors.grey[100],
-        textAlign: 'center',
         padding: theme.spacing(3),
+        textAlign: 'center',
     };
 });
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+`;
 
 const IconWrapper = styled(Box)(({ theme }) => ({
     animation: `${float} 3s ease-in-out infinite`,
     marginBottom: '16px',
 }));
 
-const StyledErrorIcon = styled(ErrorOutlineIcon)(({ theme }) => {
+const GlowingText = styled(Typography)(({ theme }) => {
+    const colors = tokens(theme.palette.mode);
+    return {
+        color: colors.yellowAccent[500],
+        textShadow: `0 0 10px ${colors.yellowAccent[200]}`,
+        animation: `${pulse} 2s ease-in-out infinite`,
+        marginBottom: theme.spacing(2),
+    };
+});
+
+const StyledErrorIcon = styled(DiDatabase)(({ theme }) => {
     const colors = tokens(theme.palette.mode);
     return {
         fontSize: '100px', // Adjust size as needed
@@ -53,15 +67,12 @@ const StyledButton = styled(Button)(({ theme }) => {
     };
 });
 
-const LogoutPage = () => {
+const DatabaseErrorPage = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const navigate = useNavigate();
-    const { logout } = useAuth();
 
-    const handleLoginRedirect = () => {
-        logout();
-        navigate('/'); // Adjust the route as needed
+    const handleRefresh = () => {
+        window.location.reload(); // Refresh the page
     };
 
     return (
@@ -70,33 +81,25 @@ const LogoutPage = () => {
                 <StyledErrorIcon />
             </IconWrapper>
             <Typography variant="h4" sx={{ mb: 2 }}>
-                Do you want to log out?
+                Database Error
             </Typography>
+            <GlowingText variant="h1">
+                500
+            </GlowingText>
             <Typography variant="body1" sx={{ mb: 4 }}>
-                Please confirm if you want to log out from your account.
+                Oops! Something went wrong while connecting to the database.
+                Please try again later or refresh the page.
             </Typography>
             <Box display={'flex'} justifyContent={'center'}>
-                <StyledButton
-                    variant="contained"
-                    onClick={handleLoginRedirect}
-                >
-                    Log out
+                <StyledButton component={Link} to="/" variant="contained">
+                    Return to Home
                 </StyledButton>
-                <StyledButton
-                    variant="contained"
-                    sx={{
-                        backgroundColor: colors.yellowAccent[700],
-                        '&:hover': {
-                            backgroundColor: colors.yellowAccent[800],
-                        },
-                    }}
-                    onClick={() => navigate('/')}
-                >
-                    Cancel
+                <StyledButton variant="contained" onClick={handleRefresh}>
+                    Refresh Page
                 </StyledButton>
             </Box>
         </Container>
     );
 };
 
-export default LogoutPage;
+export default DatabaseErrorPage;

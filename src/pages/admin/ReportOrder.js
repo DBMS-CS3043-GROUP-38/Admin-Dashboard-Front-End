@@ -5,6 +5,7 @@ import { tokens } from '../../theme';
 import CustomGrayCard from '../../components/CustomGrayCard';
 import PageLayout from "../../layouts/admin/PageLayout";
 import { reportOrder } from '../../services/apiService'; // Make sure to import your API function
+import {useNavigate} from "react-router-dom";
 
 const ReportOrderPage = () => {
     const theme = useTheme();
@@ -12,14 +13,26 @@ const ReportOrderPage = () => {
     const [orderID, setOrderID] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleReportOrder = async () => {
         try {
             const response = await reportOrder(orderID);
             setResponseMessage(response.message);
         } catch (error) {
-            setResponseMessage('Failed to update order status');
             console.error(error);
+            // Check for specific status codes
+            if (error.response) {
+                const {status} = error.response;
+                if (status === 401 || status === 403) {
+                    navigate('/unauthorized'); // Redirect to Unauthorized page
+                } else {
+                    navigate('/database-error'); // Redirect to Database Error page
+                }
+            } else {
+                // Network error or no response
+                navigate('/database-error'); // Redirect for network or unexpected errors
+            }
         }
         setOpenDialog(false);
     };

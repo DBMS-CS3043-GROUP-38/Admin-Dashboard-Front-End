@@ -4,11 +4,17 @@ import { createContext, useState, useContext } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
 
     const login = (userData) => {
-        setUser(userData); // Store user data
-        localStorage.setItem('user', JSON.stringify(userData)); // Optionally store in localStorage
+        console.log('User data received at login function', userData);
+        setUser(userData); // Store user data in state
+        localStorage.setItem('user', JSON.stringify(userData)); // Persist in localStorage
+        console.log('User logged in:', userData);
     };
 
     const logout = () => {

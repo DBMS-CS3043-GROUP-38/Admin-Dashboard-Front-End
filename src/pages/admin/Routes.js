@@ -26,12 +26,3 @@ const Routes = () => {
 
 
 export default Routes;
-
-const routes = [
-    {RouteID: 1, Distance: 100, Time: '10:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero ultrices ultricies. Donec nec nunc nec libero ultrices ultricies. Donec nec nunc nec libero ultrices ultricies. Donec nec nunc nec libero ultrices ultricies. Donec nec nunc nec libero ultrices ultricies.'},
-    {RouteID: 2, Distance: 200, Time: '11:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero'},
-    {RouteID: 3, Distance: 300, Time: '12:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero'},
-    {RouteID: 4, Distance: 400, Time: '13:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero'},
-    {RouteID: 5, Distance: 500, Time: '14:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero'},
-    {RouteID: 6, Distance: 600, Time: '15:00', Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus ac libero'},
-]

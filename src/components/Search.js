@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {TextField, Box, Radio, RadioGroup, FormControlLabel, useTheme, Button, Typography} from '@mui/material';
 import {tokens} from "../theme";
+import {useNavigate} from "react-router-dom";
 
 // General Search Component
 const SearchComponent = ({label, searchBy, setSearchBy, searchValue, setSearchValue, handleSearch}) => {
@@ -87,7 +88,8 @@ const SearchComponent = ({label, searchBy, setSearchBy, searchValue, setSearchVa
                 </Button>
 
             </Box>
-            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full list</Typography>
+            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full
+                list</Typography>
         </Box>
     );
 };
@@ -96,11 +98,25 @@ const SearchComponent = ({label, searchBy, setSearchBy, searchValue, setSearchVa
 const CustomerSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
     const handleSearch = () => {
         onSearch(searchBy, searchValue)
             .then(results => onResults(results))
-            .catch(error => console.error('Search failed:', error));
+            .catch(error => {
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            });
     };
 
     return (
@@ -120,13 +136,27 @@ const CustomerSearch = ({onSearch, onResults}) => {
 const RouteSearch = ({onSearch, onResults}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const navigate = useNavigate();
 
     const [routeId, setRouteId] = useState(''); // State for Route ID
 
     const handleSearch = () => {
         onSearch('id', routeId)
             .then(results => onResults(results))
-            .catch(error => console.error('Search failed:', error));
+            .catch(error => {
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            });
     };
 
     return (
@@ -178,7 +208,8 @@ const RouteSearch = ({onSearch, onResults}) => {
                     Search
                 </Button>
             </Box>
-            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full list</Typography>
+            <Typography mt={2} color={`${colors.purpleAccent["500"]}`}> Search without anything for a full
+                list</Typography>
         </Box>
     );
 };
@@ -187,11 +218,25 @@ const RouteSearch = ({onSearch, onResults}) => {
 const DriverSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
     const handleSearch = () => {
         onSearch(searchBy, searchValue)
             .then(results => onResults(results))
-            .catch(error => console.error('Search failed:', error));
+            .catch(error => {
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            });
     };
 
     return (
@@ -210,11 +255,27 @@ const DriverSearch = ({onSearch, onResults}) => {
 const AssistantSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSearch = () => {
         onSearch(searchBy, searchValue)
             .then(results => onResults(results))
-            .catch(error => console.error('Search failed:', error));
+            .catch(error => {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            });
     };
 
     return (
@@ -232,11 +293,26 @@ const AssistantSearch = ({onSearch, onResults}) => {
 const TruckSearch = ({onSearch, onResults}) => {
     const [searchBy, setSearchBy] = useState('id');
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSearch = () => {
         onSearch(searchBy, searchValue)
             .then(results => onResults(results))
-            .catch(error => console.error('Search failed:', error));
+            .catch(error => {
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            });
     };
 
     return (

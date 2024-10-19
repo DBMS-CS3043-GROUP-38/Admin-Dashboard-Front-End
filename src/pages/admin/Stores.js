@@ -9,6 +9,7 @@ import {
     AvailableAssistantsCard,
     AvailableDriversCard, AvailableTrucksCard, ReadyShipmentsCard,
 } from "../../components/CompletedCard";
+import {useNavigate} from "react-router-dom";
 
 import {getStores, getReadyShipment, getAvailableAssistants, getAvailableDrivers, getAvailableTrucks, getStoreData} from "../../services/apiService";
 
@@ -23,11 +24,28 @@ const Stores = () => {
     const [availableDrivers, setAvailableDrivers] = useState([]);
     const [availableTrucks, setAvailableTrucks] = useState([]);
     const [storesData, setStoresData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            const stores = await getStores();
-            setStores(stores); // Set stores with original structure
+            try {
+                const stores = await getStores();
+                setStores(stores);
+            } catch (error) {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            }
         }
 
         fetchData().then(() => console.log('Stores Data fetched'));
@@ -39,27 +57,43 @@ const Stores = () => {
     };
 
     useEffect(() => {
-        getReadyShipment(selectedStore).then((data) => {
-            setReadyShipments(data);
-            console.log(data);
-        });
-        getAvailableAssistants(selectedStore).then((data) => {
-            setAvailableAssistants(data);
-            console.log(data);
-        });
-        getAvailableDrivers(selectedStore).then((data) => {
-            setAvailableDrivers(data);
-            console.log(data);
-        });
-        getAvailableTrucks(selectedStore).then((data) => {
-            setAvailableTrucks(data);
-            console.log(data);
-        });
-        getStoreData().then((data) => {
-            setStoresData(data);
-            console.log(data);
-        });
-    }, [selectedStore]);
+        try {
+            getReadyShipment(selectedStore).then((data) => {
+                setReadyShipments(data);
+                console.log(data);
+            });
+            getAvailableAssistants(selectedStore).then((data) => {
+                setAvailableAssistants(data);
+                console.log(data);
+            });
+            getAvailableDrivers(selectedStore).then((data) => {
+                setAvailableDrivers(data);
+                console.log(data);
+            });
+            getAvailableTrucks(selectedStore).then((data) => {
+                setAvailableTrucks(data);
+                console.log(data);
+            });
+            getStoreData().then((data) => {
+                setStoresData(data);
+                console.log(data);
+            });
+        } catch (error) {
+            console.error(error);
+            // Check for specific status codes
+            if (error.response) {
+                const {status} = error.response;
+                if (status === 401 || status === 403) {
+                    navigate('/unauthorized'); // Redirect to Unauthorized page
+                } else {
+                    navigate('/database-error'); // Redirect to Database Error page
+                }
+            } else {
+                // Network error or no response
+                navigate('/database-error'); // Redirect for network or unexpected errors
+            }
+        }
+    }, [navigate, selectedStore]);
 
     return (
         <PageLayout heading={'Stores'} subHeading={'Details about stores'}>

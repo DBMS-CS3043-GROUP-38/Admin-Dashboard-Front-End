@@ -7,7 +7,6 @@ const PageLayout = ({heading, subHeading, children}) => {
         <Box
             display="flex"
             flexDirection="column"
-            overflowY="auto" // Allow scrolling if content overflows>
             p={2}
         >
             {/* HEADER */}

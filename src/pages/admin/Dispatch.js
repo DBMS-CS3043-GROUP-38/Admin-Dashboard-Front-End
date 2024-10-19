@@ -6,6 +6,7 @@ import {CustomTable} from "../../components/OrderDetailsTable";
 import CustomGrayCard from "../../components/CustomGrayCard";
 import DispatchButton from "../../components/DispatchButton";
 import {getTodayTrainsSelector, getOrdersByTrain, dispatchTrain} from "../../services/apiService";
+import {useNavigate} from "react-router-dom";
 
 const Dispatch = () => {
     const theme = useTheme();
@@ -13,6 +14,7 @@ const Dispatch = () => {
     const [selectedTrain, setSelectedTrain] = useState("");
     const [Trains, setTrains] = useState([]);
     const [Dispatches, setDispatches] = useState([]);
+    const navigate = useNavigate();
 
     // Move fetchTrains outside useEffect
     const fetchTrains = async () => {
@@ -20,13 +22,25 @@ const Dispatch = () => {
             const data = await getTodayTrainsSelector();
             setTrains(data);
         } catch (error) {
-            console.error('Error fetching trains:', error);
+            console.error(error);
+            // Check for specific status codes
+            if (error.response) {
+                const {status} = error.response;
+                if (status === 401 || status === 403) {
+                    navigate('/unauthorized'); // Redirect to Unauthorized page
+                } else {
+                    navigate('/database-error'); // Redirect to Database Error page
+                }
+            } else {
+                // Network error or no response
+                navigate('/database-error'); // Redirect for network or unexpected errors
+            }
         }
     };
 
     useEffect(() => {
         fetchTrains().then(() => console.log('Trains fetched'));
-    }, []);
+    }, [fetchTrains]);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -34,14 +48,26 @@ const Dispatch = () => {
                 const data = await getOrdersByTrain(selectedTrain);
                 setDispatches(data);
             } catch (error) {
-                console.error('Error fetching orders:', error);
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
             }
         };
 
         if (selectedTrain) {
             fetchOrders().then(() => console.log('Orders fetched'));
         }
-    }, [selectedTrain]);
+    }, [navigate, selectedTrain]);
 
     const handleChange = (event) => {
         setSelectedTrain(event.target.value);
