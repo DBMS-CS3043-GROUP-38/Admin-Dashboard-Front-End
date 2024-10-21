@@ -7,6 +7,21 @@ const api = axios.create({
     withCredentials: true,
 });
 
+
+api.interceptors.request.use(
+    (config) => {
+        // Get the auth token from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.token) {
+            config.headers['Authorization'] = `Bearer ${user.token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const testApi = async () => {
     const response = await api.get('/admin/test');
     return response.data;
