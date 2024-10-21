@@ -2,7 +2,7 @@ import PageLayout from "../../layouts/PageLayout";
 import Grid from "@mui/material/Grid2";
 import {CustomTable} from "../../components/OrderDetailsTable";
 import {RouteSearch} from "../../components/Search";
-import {searchRoute} from "../../services/apiService";
+import {searchRouteM} from "../../services/apiService";
 import {useState} from "react";
 
 const Routes = () => {
@@ -14,7 +14,7 @@ const Routes = () => {
         <PageLayout heading={'Routes'} subHeading={'Details about Routes'}>
             <Grid container spacing={2}>
                 <Grid size={12}>
-                   <RouteSearch onSearch={searchRoute} onResults={setSearchResults} />
+                   <RouteSearch onSearch={searchRouteM} onResults={setSearchResults} />
                 </Grid>
                 <Grid size={12}>
                     <CustomTable heading={'Route List'} maxHeight={500} colorSelection={'purpleAccent'} data={searchResults} />

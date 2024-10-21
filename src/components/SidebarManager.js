@@ -25,11 +25,13 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import {Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
+import {AddBox, Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import InfoIcon from '@mui/icons-material/Info';
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { TbShoppingCartDown } from "react-icons/tb";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+
 
 const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
@@ -106,33 +108,21 @@ const Sidebar = () => {
                         selected={selected}
                         setSelected={setSelected}
                     />
-                    <SubMenu
-                        icon={<ScheduleIcon/>}
-                        label="Schedule and Dispatch"
-                        defaultOpen={false}
-                    >
                         <Item
-                            title="Schedule trains"
-                            to="schedule-trains"
-                            icon={<TrainTwoTone/>}
+                            title="Receive"
+                            to="receive"
+                            icon={<ArrowDownwardIcon/>}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Schedule orders"
-                            to="schedule-orders"
-                            icon={<ShoppingCartCheckoutIcon/>}
+                            title="Bundle Orders"
+                            to="bundle-orders"
+                            icon={<AddBox/>}
                             selected={selected}
                             setSelected={setSelected}
                         />
-                        <Item
-                            title="Dispatch"
-                            to="dispatch"
-                            icon={<ArrowUpwardIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                    </SubMenu>
+
 
                     <Item
                         title="Sales Reports"

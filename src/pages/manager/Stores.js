@@ -11,7 +11,7 @@ import {
 } from "../../components/CompletedCard";
 import {useNavigate} from "react-router-dom";
 
-import {getStores, getReadyShipment, getAvailableAssistants, getAvailableDrivers, getAvailableTrucks, getStoreData} from "../../services/apiService";
+import {getStoresM, getReadyShipmentM, getAvailableAssistantsM, getAvailableDriversM, getAvailableTrucksM, getStoreDataM} from "../../services/apiService";
 
 const Stores = () => {
     const theme = useTheme();
@@ -29,7 +29,7 @@ const Stores = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const stores = await getStores();
+                const stores = await getStoresM();
                 setStores(stores);
             } catch (error) {
                 console.error(error);
@@ -58,23 +58,23 @@ const Stores = () => {
 
     useEffect(() => {
         try {
-            getReadyShipment(selectedStore).then((data) => {
+            getReadyShipmentM(selectedStore).then((data) => {
                 setReadyShipments(data);
                 console.log(data);
             });
-            getAvailableAssistants(selectedStore).then((data) => {
+            getAvailableAssistantsM(selectedStore).then((data) => {
                 setAvailableAssistants(data);
                 console.log(data);
             });
-            getAvailableDrivers(selectedStore).then((data) => {
+            getAvailableDriversM(selectedStore).then((data) => {
                 setAvailableDrivers(data);
                 console.log(data);
             });
-            getAvailableTrucks(selectedStore).then((data) => {
+            getAvailableTrucksM(selectedStore).then((data) => {
                 setAvailableTrucks(data);
                 console.log(data);
             });
-            getStoreData().then((data) => {
+            getStoreDataM().then((data) => {
                 setStoresData(data);
                 console.log(data);
             });

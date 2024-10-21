@@ -120,7 +120,7 @@ const UnauthorizedPage = () => {
                     variant="contained"
                     size="large"
                     startIcon={<HiLogout/>}
-                    onClick={
+                    onClick={() =>
                         logout()
                     }
                 >

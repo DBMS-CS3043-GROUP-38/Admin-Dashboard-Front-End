@@ -1,6 +1,6 @@
 import {ColorModeContext, useMode} from "./theme";
 import {CssBaseline, ThemeProvider} from "@mui/material";
-import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import AdminLayout from "./layouts/admin/AdminLayout";
 import Overview from "./pages/admin/Overview";
 import ScheduleTrain from "./pages/admin/ScheduleTrain";
@@ -25,6 +25,24 @@ import UnauthorizedPage from "./pages/global/UnAuthorised";
 import HomePage from "./pages/global/Home";
 import NotFoundPage from "./pages/global/NotFoundPage";
 import DataBaseError from "./pages/global/DataBaseError";
+import ManagerLayout from "./layouts/manager/ManagerLayout";
+
+import OverviewM from "./pages/manager/Overview";
+import ScheduleTrainM from "./pages/manager/ScheduleTrain";
+import BundleOrdersM from "./pages/manager/BundleOrders";
+import OrdersM from "./pages/manager/Orders";
+import SalesReportM from "./pages/manager/SalesReport";
+import StoresM from "./pages/manager/Stores";
+import DriversM from "./pages/manager/Drivers";
+import AssistantsM from "./pages/manager/Assistants";
+import RoutesPathM from "./pages/manager/Routes";
+import CustomersM from "./pages/manager/Customers";
+import TrucksM from "./pages/manager/Trucks";
+import ReportOrderM from "./pages/manager/ReportOrder";
+import ManagersM from "./pages/manager/Managers";
+import TrainsM from "./pages/manager/Trains";
+import Receive from "./pages/manager/Receive";
+
 
 function App() {
     const {theme, colorMode} = useMode();
@@ -62,6 +80,29 @@ function App() {
                                         <Route path='trains' element={<Trains/>}/>
                                     </Route>
                                 </Route>
+
+                                <Route path="/manager" element={<PrivateRoute allowedRoles={['StoreManager']}/>}>
+                                    <Route path="" element={<ManagerLayout/>}>
+                                        <Route index element={<OverviewM/>}/>
+                                        <Route path="schedule-trains" element={<ScheduleTrainM/>}/>
+                                        <Route path='bundle-orders' element={<BundleOrdersM/>}/>
+                                        <Route path='orders' element={<OrdersM/>}/>
+                                        <Route path='sales-reports' element={<SalesReportM/>}/>
+                                        <Route path='receive' element={<Receive/>}/>
+                                        <Route path='stores' element={<StoresM/>}/>
+                                        <Route path='drivers' element={<DriversM/>}/>
+                                        <Route path='assistants' element={<AssistantsM/>}/>
+                                        <Route path='customers' element={<CustomersM/>}/>
+                                        <Route path='trucks' element={<TrucksM/>}/>
+                                        <Route path='routes' element={<RoutesPathM/>}/>
+                                        <Route path='report-order' element={<ReportOrderM/>}/>
+                                        <Route path='managers' element={<ManagersM/>}/>
+                                        <Route path='trains' element={<TrainsM/>}/>
+                                    </Route>
+                                </Route>
+
+
+
 
                                 {/* Unauthorized page */}
                                 <Route path="/unauthorized" element={<UnauthorizedPage/>}/>

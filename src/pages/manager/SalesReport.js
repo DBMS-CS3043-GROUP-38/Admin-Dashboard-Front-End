@@ -9,16 +9,16 @@ import QuarterlyOrdersCard from "../../components/QuarterlyOrders";
 import TopPerformingStoreCard from "../../components/TopStore";
 import {BestCustomerCard} from "../../components/BestCustomer";
 import {
-    getQuarterlySales,
-    getQuarterlyOrders,
-    getQuarterlyStores,
-    getBestCustomer,
-    getRevenueData,
-    getAvailableYears,
-    getAvailableQuarters,
-    getRevenuePerStore,
-    getTopProductsPerQuarter,
-    getTopCustomersPerQuarter
+    getQuarterlySalesM,
+    getQuarterlyOrdersM,
+    getQuarterlyStoresM,
+    getBestCustomerM,
+    getRevenueDataM,
+    getAvailableYearsM,
+    getAvailableQuartersM,
+    getRevenuePerStoreM,
+    getTopProductsPerQuarterM,
+    getTopCustomersPerQuarterM
 } from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -39,11 +39,11 @@ export default function SalesReport() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const QSales = await getQuarterlySales();
-                const QOrders = await getQuarterlyOrders();
-                const QStores = await getQuarterlyStores();
-                const QBestCustomer = await getBestCustomer();
-                const revenueData = await getRevenueData();
+                const QSales = await getQuarterlySalesM();
+                const QOrders = await getQuarterlyOrdersM();
+                const QStores = await getQuarterlyStoresM();
+                const QBestCustomer = await getBestCustomerM();
+                const revenueData = await getRevenueDataM();
                 console.log(revenueData);
 
                 setQuarterlySales(QSales);
@@ -96,18 +96,18 @@ export default function SalesReport() {
                     <PastRevanueChart revenueData={revenueData}/>
                 </Grid>
                 <Grid size={6}>
-                    < RevenueBarChart fetchAvailableQuarters={getAvailableQuarters}
-                                      fetchAvailableYears={getAvailableYears} fetchRevenueData={getRevenuePerStore}/>
+                    < RevenueBarChart fetchAvailableQuarters={getAvailableQuartersM}
+                                      fetchAvailableYears={getAvailableYearsM} fetchRevenueData={getRevenuePerStoreM}/>
                 </Grid>
                 <Grid size={6}>
-                    <TopProductsQuarter fetchAvailableQuarters={getAvailableQuarters}
-                                        fetchAvailableYears={getAvailableYears}
-                                        fetchRevenueData={getTopProductsPerQuarter}/>
+                    <TopProductsQuarter fetchAvailableQuarters={getAvailableQuartersM}
+                                        fetchAvailableYears={getAvailableYearsM}
+                                        fetchRevenueData={getTopProductsPerQuarterM}/>
                 </Grid>
                 <Grid size={6}>
-                    <TopCusomersQuarter fetchAvailableQuarters={getAvailableQuarters}
-                                        fetchAvailableYears={getAvailableYears}
-                                        fetchRevenueData={getTopCustomersPerQuarter}/>
+                    <TopCusomersQuarter fetchAvailableQuarters={getAvailableQuartersM}
+                                        fetchAvailableYears={getAvailableYearsM}
+                                        fetchRevenueData={getTopCustomersPerQuarterM}/>
                 </Grid>
             </Grid>
         </PageLayout>

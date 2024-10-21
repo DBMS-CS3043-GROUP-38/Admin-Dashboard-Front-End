@@ -1,6 +1,6 @@
 import PageLayout from "../../layouts/PageLayout";
 import {CustomTable} from "../../components/OrderDetailsTable";
-import {getManagerData} from "../../services/apiService";
+import {getManagerDataM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -11,7 +11,7 @@ const Managers = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const managers = await getManagerData();
+                const managers = await getManagerDataM();
                 setManagerData(managers);
             } catch (error) {
                 console.error(error);

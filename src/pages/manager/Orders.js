@@ -1,9 +1,17 @@
 import PageLayout from "../../layouts/PageLayout";
 import {OrdersStatusChartH} from "../../components/charts/OrdersStatusChart";
 import Grid from "@mui/material/Grid2";
-import {CustomTable, AttentionOrdersTable } from "../../components/OrderDetailsTable";
+import {CustomTable, AttentionOrdersTable} from "../../components/OrderDetailsTable";
 import OrderDetailsSearchCard from "../../components/OrderDetailsSearch";
-import {getPendingOrdersList, getTrainAssignedOrders, getOrdersInTrain, getOrdersInStore, getOrdersInShipment, getOrdersInTruck, getOrderStatuses} from "../../services/apiService";
+import {
+    getInStoreOrdersListM,
+    getTrainAssignedOrdersM,
+    getOrdersInTrainM,
+    getOrdersInStoreM,
+    getOrdersInShipmentM,
+    getOrdersInTruckM,
+    getOrderStatusesM
+} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -20,14 +28,13 @@ export default function Orders() {
     useEffect(() => {
         const fetchOrderStatuses = async () => {
             try {
-                const p = await getPendingOrdersList();
-                const t = await getTrainAssignedOrders();
-                const i = await getOrdersInTrain();
-                const s = await getOrdersInStore();
-                const sh = await getOrdersInShipment();
-                const tr = await getOrdersInTruck();
-                const orderStatuses = await getOrderStatuses();
-
+                const p = await getInStoreOrdersListM();
+                const t = await getTrainAssignedOrdersM();
+                const i = await getOrdersInTrainM();
+                const s = await getOrdersInStoreM();
+                const sh = await getOrdersInShipmentM();
+                const tr = await getOrdersInTruckM();
+                const orderStatuses = await getOrderStatusesM();
 
 
                 setPendingOrders(p);
@@ -66,15 +73,9 @@ export default function Orders() {
                 <Grid size={12}>
                     <OrdersStatusChartH data={orderStatuses}/>
                 </Grid>
-                <Grid size={12}>
-                    <AttentionOrdersTable
-                        colorSelection="redAccent"
-                        heading="Attention Required Orders"
-                        maxHeight={400}
-                    />
-                </Grid>
-                    <Grid size={6}>
-                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={300} colorSelection={'yellowAccent'}/>
+                <Grid size={6}>
+                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={300}
+                                 colorSelection={'yellowAccent'}/>
                 </Grid>
                 <Grid size={6}>
                     <CustomTable

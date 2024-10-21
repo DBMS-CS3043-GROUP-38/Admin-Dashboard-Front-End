@@ -1,5 +1,5 @@
 import PageLayout from "../../layouts/PageLayout";
-import {getActiveTrains, getTrainStatuses} from "../../services/apiService";
+import {getActiveTrainsM, getTrainStatusesM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import ActiveTrainsTable from "../../components/ActiveTrainsTable";
 import TrainStatusCard from "../../components/TrainStatusCard";
@@ -15,8 +15,8 @@ const Trains = () => {
         const fetchData = async () => {
             
             try {
-                const trains = await getActiveTrains();
-                const statuses = await getTrainStatuses();
+                const trains = await getActiveTrainsM();
+                const statuses = await getTrainStatusesM();
                 setActiveTrains(trains);
                 setTrainStatuses(statuses);
             } catch (error) {

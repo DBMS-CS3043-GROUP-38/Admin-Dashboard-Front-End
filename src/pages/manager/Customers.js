@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import {CustomTable} from "../../components/OrderDetailsTable";
 import {getTopCustomers, getCustomerDistribution} from "../../services/apiService";
 import {useEffect, useState} from "react";
-import {searchCustomer} from "../../services/apiService";
+import {searchCustomerM} from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
 
 const Customers = () => {
@@ -53,7 +53,7 @@ const Customers = () => {
                 </Grid>
                 <Grid size={12}>
                     <CustomGrayCard>
-                        <CustomerSearch label={'Customer'} onSearch={searchCustomer} onResults={setSearchResults} />
+                        <CustomerSearch label={'Customer'} onSearch={searchCustomerM} onResults={setSearchResults} />
                     </CustomGrayCard>
                 </Grid>
                 <Grid size={12}>

@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { tokens } from "../theme";
+import {AddBox} from "@mui/icons-material";
 
 const SchedulePendingOrdersButton = ({ onSchedulePendingOrders, onClose }) => {
     const theme = useTheme();
@@ -106,4 +107,98 @@ const SchedulePendingOrdersButton = ({ onSchedulePendingOrders, onClose }) => {
     );
 };
 
-export default SchedulePendingOrdersButton;
+
+const BundleInStoreOrdersButton = ({ onBundleInStoreOrders, onClose }) => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [open, setOpen] = useState(false);
+    const [dialogMessage, setDialogMessage] = useState('');
+    const [bundledOrders, setBundledOrders] = useState(0);
+    const [dialogColor, setDialogColor] = useState(colors.yellowAccent["700"]); // Default color
+
+    const handleBundle = async () => {
+        try {
+            const response = await onBundleInStoreOrders(); // Call the function passed as prop
+
+            // Check if response is valid
+            if (response) {
+                const { message, BundledOrders } = response; // Extract values from response
+                setDialogMessage(message);
+                setBundledOrders(BundledOrders);
+
+                // Determine color based on response
+                if (BundledOrders === 0) {
+                    setDialogColor(colors.yellowAccent["700"]); // Set red accent color for no orders bundled
+                } else if (BundledOrders > 0) {
+                    setDialogColor(colors.greenAccent["700"]); // Set green accent color for successful bundling
+                }
+            } else {
+                // Handle case where no response is received
+                setDialogMessage('No response received from the server. Please try again.');
+                setDialogColor(colors.redAccent["700"]); // Set red accent color for no response
+            }
+        } catch (error) {
+            // Handle error case
+            setDialogMessage('Failed to bundle orders. Please try again later.');
+            setDialogColor(colors.redAccent["700"]); // Set red accent color for error
+        } finally {
+            setOpen(true); // Open the dialog with the final message
+        }
+    };
+
+    const handleClose = () => {
+        onClose(); // Call the function passed as prop
+        setOpen(false);
+    };
+
+    return (
+        <>
+            <Button
+                variant="contained"
+                sx={{
+                    backgroundColor: colors.yellowAccent["700"],
+                    '&:hover': {
+                        backgroundColor: colors.yellowAccent["800"],
+                    },
+                    mt: 2,
+                    mb: 2,
+                    ml: 2,
+                    p: '20px 50px',
+                    color: 'black'
+                }}
+                startIcon={<AddBox />}
+                onClick={handleBundle}
+            >
+                <Typography variant="h5">
+                    Bundle In-Store Orders
+                </Typography>
+            </Button>
+
+            {/* Bundle Confirmation Dialog */}
+            <Dialog open={open} onClose={handleClose}>
+                <Box sx={{ bgcolor: dialogColor }}> {/* Use the determined dialog color */}
+                    <DialogTitle>Order Bundling Result</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {dialogMessage}
+                        </DialogContentText>
+                        {bundledOrders > 0 && (
+                            <DialogContentText>
+                                {bundledOrders} order(s) bundled successfully.
+                            </DialogContentText>
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color='text.secondary'>
+                            <Typography variant='h6'>
+                                Done.
+                            </Typography>
+                        </Button>
+                    </DialogActions>
+                </Box>
+            </Dialog>
+        </>
+    );
+}
+
+export { SchedulePendingOrdersButton, BundleInStoreOrdersButton };

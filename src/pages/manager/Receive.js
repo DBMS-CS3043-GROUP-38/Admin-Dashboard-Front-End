@@ -4,11 +4,11 @@ import React, {useEffect, useState} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, Box, useTheme} from '@mui/material';
 import {CustomTable} from "../../components/OrderDetailsTable";
 import CustomGrayCard from "../../components/CustomGrayCard";
-import {DispatchButton} from "../../components/DispatchButton";
-import {getTodayTrainsSelector, getOrdersByTrain, dispatchTrain} from "../../services/apiService";
+import {ReceiveButton} from "../../components/DispatchButton";
+import {getTodayTrainsSelectorM, getOrdersByTrainM, receiveTrainM} from "../../services/apiService";
 import {useNavigate} from "react-router-dom";
 
-const Dispatch = () => {
+const Receive = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [selectedTrain, setSelectedTrain] = useState("");
@@ -19,7 +19,7 @@ const Dispatch = () => {
     // Move fetchTrains outside useEffect
     const fetchTrains = async () => {
         try {
-            const data = await getTodayTrainsSelector();
+            const data = await getTodayTrainsSelectorM();
             setTrains(data);
         } catch (error) {
             console.error(error);
@@ -45,7 +45,7 @@ const Dispatch = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const data = await getOrdersByTrain(selectedTrain);
+                const data = await getOrdersByTrainM(selectedTrain);
                 setDispatches(data);
             } catch (error) {
                 console.error(error);
@@ -74,9 +74,9 @@ const Dispatch = () => {
         console.log(event.target.value);
     };
 
-    const handleDispatch = async () => {
+    const handleReceive = async () => {
         try {
-            const response = await dispatchTrain(selectedTrain);
+            const response = await receiveTrainM(selectedTrain);
             console.log('Train dispatched');
             return response;
         } catch (error) {
@@ -92,7 +92,7 @@ const Dispatch = () => {
     };
 
     return (
-        <PageLayout heading={'Dispatch'} subHeading={'Select a train to view scheduled orders'}>
+        <PageLayout heading={"Receive Orders"} subHeading={"Receive orders for the selected train"}>
             <Box display='flex' flexDirection='column' sx={{gap: 2}}>
                 <CustomGrayCard>
                     <FormControl sx={{ minWidth: 500, borderRadius: 10 }}>
@@ -147,7 +147,7 @@ const Dispatch = () => {
 
                 {selectedTrain && (
                     <CustomGrayCard>
-                        <DispatchButton onDispatch={handleDispatch} resetData={handleClose} />
+                        <ReceiveButton onReceive={handleReceive} resetData={handleClose} />
                     </CustomGrayCard>
                 )}
             </Box>
@@ -155,4 +155,4 @@ const Dispatch = () => {
     );
 };
 
-export default Dispatch;
+export default Receive;
