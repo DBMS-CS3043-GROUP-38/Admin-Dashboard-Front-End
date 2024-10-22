@@ -621,8 +621,8 @@ export const getStoreDataM = async () => {
     return response.data;
 }
 
-export const getManagerDataM = async () => {
-    const response = await api.get('/manager/tables/manager-data');
+export const getAdminDataM = async () => {
+    const response = await api.get('/manager/tables/admin-data');
     return response.data;
 }
 
@@ -668,5 +668,10 @@ export const searchTruckM = async (by, term) => {
     const response = await api.get(`/manager/searches/truck`, {
         params: { by, term }
     });
+    return response.data;
+}
+
+export const getDriversM = async () => {
+    const response = await api.get('/manager/tables/drivers');
     return response.data;
 }

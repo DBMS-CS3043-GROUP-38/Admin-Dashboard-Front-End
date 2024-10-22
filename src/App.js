@@ -36,12 +36,12 @@ import StoresM from "./pages/manager/Stores";
 import DriversM from "./pages/manager/Drivers";
 import AssistantsM from "./pages/manager/Assistants";
 import RoutesPathM from "./pages/manager/Routes";
-import CustomersM from "./pages/manager/Customers";
 import TrucksM from "./pages/manager/Trucks";
 import ReportOrderM from "./pages/manager/ReportOrder";
-import ManagersM from "./pages/manager/Managers";
+import ManagersM from "./pages/manager/Admins";
 import TrainsM from "./pages/manager/Trains";
 import Receive from "./pages/manager/Receive";
+import Admins from "./pages/manager/Admins";
 
 
 function App() {
@@ -92,11 +92,10 @@ function App() {
                                         <Route path='stores' element={<StoresM/>}/>
                                         <Route path='drivers' element={<DriversM/>}/>
                                         <Route path='assistants' element={<AssistantsM/>}/>
-                                        <Route path='customers' element={<CustomersM/>}/>
                                         <Route path='trucks' element={<TrucksM/>}/>
                                         <Route path='routes' element={<RoutesPathM/>}/>
                                         <Route path='report-order' element={<ReportOrderM/>}/>
-                                        <Route path='managers' element={<ManagersM/>}/>
+                                        <Route path='admins' element={<Admins/>}/>
                                         <Route path='trains' element={<TrainsM/>}/>
                                     </Route>
                                 </Route>

@@ -25,11 +25,11 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import {AddBox, Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
+import {AddBox, AdminPanelSettings, Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import InfoIcon from '@mui/icons-material/Info';
-import { TbShoppingCartDown } from "react-icons/tb";
+import {TbShoppingCartDown} from "react-icons/tb";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 
@@ -108,20 +108,20 @@ const Sidebar = () => {
                         selected={selected}
                         setSelected={setSelected}
                     />
-                        <Item
-                            title="Receive"
-                            to="receive"
-                            icon={<ArrowDownwardIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Bundle Orders"
-                            to="bundle-orders"
-                            icon={<AddBox/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
+                    <Item
+                        title="Receive"
+                        to="receive"
+                        icon={<ArrowDownwardIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Bundle Orders"
+                        to="bundle-orders"
+                        icon={<AddBox/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
 
 
                     <Item
@@ -147,62 +147,40 @@ const Sidebar = () => {
                     />
 
                     <Item
-                        title="Customers"
-                        to="customers"
-                        icon={<PeopleIcon/>}
+                        title="Admins"
+                        to="admins"
+                        icon={<AdminPanelSettings/>}
                         selected={selected}
                         setSelected={setSelected}
                     />
-
-                    <SubMenu
-                        icon={<StoreIcon/>}
-                        label="Store Details"
-                        defaultOpen={false}
-                    >
-
-                        <Item
-                            title="Stores"
-                            to="stores"
-                            icon={<InfoIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Managers"
-                            to="managers"
-                            icon={<Engineering/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Drivers"
-                            to="drivers"
-                            icon={<DriveEtaIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Assistants"
-                            to="assistants"
-                            icon={<PersonIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Trucks"
-                            to="trucks"
-                            icon={<LocalShippingIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                        <Item
-                            title="Routes"
-                            to="routes"
-                            icon={<RouteIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-                    </SubMenu>
+                    <Item
+                        title="Drivers"
+                        to="drivers"
+                        icon={<DriveEtaIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Assistants"
+                        to="assistants"
+                        icon={<PersonIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Trucks"
+                        to="trucks"
+                        icon={<LocalShippingIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Routes"
+                        to="routes"
+                        icon={<RouteIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
                     <Item
                         title="Report Order"
                         to="report-order"

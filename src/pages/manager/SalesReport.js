@@ -92,22 +92,8 @@ export default function SalesReport() {
                     <BestCustomerCard customerName={BestCustomer[0].Name} customerCity={BestCustomer[0].City}
                                       customerId={BestCustomer[0].ID} totalRevenue={BestCustomer[0].TotalRevenue}/>
                 </Grid>
-                <Grid size={6}>
+                <Grid size={12}>
                     <PastRevanueChart revenueData={revenueData}/>
-                </Grid>
-                <Grid size={6}>
-                    < RevenueBarChart fetchAvailableQuarters={getAvailableQuartersM}
-                                      fetchAvailableYears={getAvailableYearsM} fetchRevenueData={getRevenuePerStoreM}/>
-                </Grid>
-                <Grid size={6}>
-                    <TopProductsQuarter fetchAvailableQuarters={getAvailableQuartersM}
-                                        fetchAvailableYears={getAvailableYearsM}
-                                        fetchRevenueData={getTopProductsPerQuarterM}/>
-                </Grid>
-                <Grid size={6}>
-                    <TopCusomersQuarter fetchAvailableQuarters={getAvailableQuartersM}
-                                        fetchAvailableYears={getAvailableYearsM}
-                                        fetchRevenueData={getTopCustomersPerQuarterM}/>
                 </Grid>
             </Grid>
         </PageLayout>

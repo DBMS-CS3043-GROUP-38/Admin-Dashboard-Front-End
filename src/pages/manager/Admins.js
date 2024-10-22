@@ -1,17 +1,17 @@
 import PageLayout from "../../layouts/PageLayout";
 import {CustomTable} from "../../components/OrderDetailsTable";
-import {getManagerDataM} from "../../services/apiService";
+import {getAdminDataM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 
-const Managers = () => {
+const Admins = () => {
     const [managerData, setManagerData] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const managers = await getManagerDataM();
+                const managers = await getAdminDataM();
                 setManagerData(managers);
             } catch (error) {
                 console.error(error);
@@ -33,10 +33,10 @@ const Managers = () => {
     }, [navigate]);
 
     return (
-        <PageLayout heading={'Managers'} subHeading={'Details about Managers'}>
-            <CustomTable heading={"Manager List"} data={managerData} colorSelection={"purpleAccent"} maxHeight={500}/>
+        <PageLayout heading={'Admins'} subHeading={'Details about Admins'}>
+            <CustomTable heading={"Admin List"} data={managerData} colorSelection={"purpleAccent"} maxHeight={500}/>
         </PageLayout>
     );
 }
 
-export default Managers;
+export default Admins;

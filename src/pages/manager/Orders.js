@@ -2,7 +2,7 @@ import PageLayout from "../../layouts/PageLayout";
 import {OrdersStatusChartH} from "../../components/charts/OrdersStatusChart";
 import Grid from "@mui/material/Grid2";
 import {CustomTable, AttentionOrdersTable} from "../../components/OrderDetailsTable";
-import OrderDetailsSearchCard from "../../components/OrderDetailsSearch";
+import OrderDetailsSearchCard from "../../components/OrderdetailsSearchManager";
 import {
     getInStoreOrdersListM,
     getTrainAssignedOrdersM,
@@ -72,18 +72,6 @@ export default function Orders() {
                 </Grid>
                 <Grid size={12}>
                     <OrdersStatusChartH data={orderStatuses}/>
-                </Grid>
-                <Grid size={6}>
-                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={300}
-                                 colorSelection={'yellowAccent'}/>
-                </Grid>
-                <Grid size={6}>
-                    <CustomTable
-                        heading="Train Assigned Orders"
-                        data={trainAssignedOrders}
-                        maxHeight={300}
-                        colorSelection="cyanAccent"
-                    />
                 </Grid>
                 <Grid size={6}>
                     <CustomTable
