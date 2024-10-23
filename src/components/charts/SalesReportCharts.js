@@ -80,10 +80,11 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
                 } catch (error) {
                     console.error('Error fetching revenue data:', error);
                     setError('Failed to fetch revenue data');
+                    throw error;
                 }
             }
         };
-        fetchData();
+        fetchData().then(() => console.log('Data fetched successfully'));
     }, [selectedYear, selectedQuarter, fetchRevenueData]);
 
     // Calculate the domain for the y-axis
@@ -100,11 +101,17 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
             <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                     <Typography variant="h5" color="text.secondary">
-                        Revenue Chart
+                        Revenue per store
                     </Typography>
                     <Box display="flex" gap={2}>
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="year-select-label" sx={{ color: colors.purpleAccent[500] }}>
+                        <FormControl sx={{ minWidth: 120, borderRadius: 10 }}>
+                            <InputLabel
+                                id="year-select-label"
+                                sx={{
+                                    color: colors.purpleAccent[500],
+                                    '&.Mui-focused': { color: colors.purpleAccent[500] },
+                                }}
+                            >
                                 Year
                             </InputLabel>
                             <Select
@@ -114,12 +121,15 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
                                 label="Year"
                                 onChange={(e) => {
                                     setSelectedYear(e.target.value);
-                                    setSelectedQuarter('');
-                                    setError('');
+                                    setSelectedQuarter('');  // Reset quarter selection
+                                    setError('');  // Clear any existing errors
                                 }}
                                 variant="outlined"
                                 sx={{
+                                    outlineColor: colors.purpleAccent[500],
+                                    backgroundColor: colors.purpleAccent[900],
                                     color: colors.purpleAccent[500],
+                                    '& .MuiSelect-icon': { color: colors.purpleAccent[500] },
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderColor: colors.purpleAccent[500],
                                     },
@@ -129,17 +139,37 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                         borderColor: colors.purpleAccent[500],
                                     },
+                                    '&:hover': { backgroundColor: colors.purpleAccent[900] },
                                 }}
                             >
-                                {availableYears.map((year) => (
-                                    <MenuItem key={year.Year} value={year.Year}>
-                                        {year.Year}
+                                {availableYears.length > 0 ? (
+                                    availableYears.map((year) => (
+                                        <MenuItem
+                                            key={year.Year}
+                                            value={year.Year}
+                                            sx={{
+                                                backgroundColor: colors.grey[800],
+                                                '&:hover': { backgroundColor: colors.purpleAccent[800] },
+                                            }}
+                                        >
+                                            {year.Year}
+                                        </MenuItem>
+                                    ))
+                                ) : (
+                                    <MenuItem disabled>
+                                        No Years Available
                                     </MenuItem>
-                                ))}
+                                )}
                             </Select>
                         </FormControl>
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="quarter-select-label" sx={{ color: colors.purpleAccent[500] }}>
+                        <FormControl sx={{ minWidth: 120, borderRadius: 10 }}>
+                            <InputLabel
+                                id="quarter-select-label"
+                                sx={{
+                                    color: colors.purpleAccent[500],
+                                    '&.Mui-focused': { color: colors.purpleAccent[500] },
+                                }}
+                            >
                                 Quarter
                             </InputLabel>
                             <Select
@@ -154,7 +184,10 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
                                 variant="outlined"
                                 disabled={!availableQuarters.length}
                                 sx={{
+                                    outlineColor: colors.purpleAccent[500],
+                                    backgroundColor: colors.purpleAccent[900],
                                     color: colors.purpleAccent[500],
+                                    '& .MuiSelect-icon': { color: colors.purpleAccent[500] },
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderColor: colors.purpleAccent[500],
                                     },
@@ -164,15 +197,30 @@ const RevenueBarChart = ({ fetchAvailableYears, fetchAvailableQuarters, fetchRev
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                         borderColor: colors.purpleAccent[500],
                                     },
+                                    '&:hover': { backgroundColor: colors.purpleAccent[900] },
                                 }}
                             >
-                                {availableQuarters.map((quarter) => (
-                                    <MenuItem key={quarter.Quarter} value={quarter.Quarter}>
-                                        Q{quarter.Quarter}
+                                {availableQuarters.length > 0 ? (
+                                    availableQuarters.map((quarter) => (
+                                        <MenuItem
+                                            key={quarter.Quarter}
+                                            value={quarter.Quarter}
+                                            sx={{
+                                                backgroundColor: colors.grey[800],
+                                                '&:hover': { backgroundColor: colors.purpleAccent[800] },
+                                            }}
+                                        >
+                                            Q{quarter.Quarter}
+                                        </MenuItem>
+                                    ))
+                                ) : (
+                                    <MenuItem disabled>
+                                        No Quarters Available
                                     </MenuItem>
-                                ))}
+                                )}
                             </Select>
                         </FormControl>
+
                     </Box>
                 </Box>
 

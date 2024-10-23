@@ -30,6 +30,7 @@ const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetch
             } catch (error) {
                 console.error('Error fetching years:', error);
                 setError('Failed to fetch available years');
+                throw error;
             }
         };
         fetchYears().then(r => console.log('Years fetched for table'));
@@ -50,6 +51,7 @@ const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetch
                 } catch (error) {
                     console.error('Error fetching quarters:', error);
                     setError('Failed to fetch available quarters');
+                    throw error;
                 }
             }
         };
@@ -84,9 +86,15 @@ const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetch
                     <Typography variant="h5" color="text.secondary">
                         Top Products by Quarter
                     </Typography>
-                    <Box display="flex" gap={2}>
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="year-select-label" sx={{ color: colors.cyanAccent[500] }}>
+                    <Box display="flex" gap={2} alignItems={'center'}>
+                        <FormControl sx={{ minWidth: 120, borderRadius: 2 }}>
+                            <InputLabel
+                                id="year-select-label"
+                                sx={{
+                                    color: colors.cyanAccent[500],
+                                    '&.Mui-focused': { color: colors.cyanAccent[500] }
+                                }}
+                            >
                                 Year
                             </InputLabel>
                             <Select
@@ -101,27 +109,44 @@ const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetch
                                 }}
                                 variant="outlined"
                                 sx={{
+                                    backgroundColor: colors.cyanAccent[900],
                                     color: colors.cyanAccent[500],
                                     '& .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[500],
+                                        borderColor: colors.cyanAccent[500]
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[300],
+                                        borderColor: colors.cyanAccent[300]
                                     },
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[500],
+                                        borderColor: colors.cyanAccent[500]
                                     },
+                                    '& .MuiSelect-icon': {
+                                        color: colors.cyanAccent[500]
+                                    }
                                 }}
                             >
                                 {availableYears.map((year) => (
-                                    <MenuItem key={year.Year} value={year.Year}>
+                                    <MenuItem
+                                        key={year.Year}
+                                        value={year.Year}
+                                        sx={{
+                                            backgroundColor: colors.grey[800],
+                                            '&:hover': { backgroundColor: colors.cyanAccent[800] }
+                                        }}
+                                    >
                                         {year.Year}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
-                        <FormControl sx={{ minWidth: 120 }}>
-                            <InputLabel id="quarter-select-label" sx={{ color: colors.cyanAccent[500] }}>
+                        <FormControl sx={{ minWidth: 120, borderRadius: 2 }}>
+                            <InputLabel
+                                id="quarter-select-label"
+                                sx={{
+                                    color: colors.cyanAccent[500],
+                                    '&.Mui-focused': { color: colors.cyanAccent[500] }
+                                }}
+                            >
                                 Quarter
                             </InputLabel>
                             <Select
@@ -136,25 +161,37 @@ const TopProductsQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetch
                                 variant="outlined"
                                 disabled={!availableQuarters.length}
                                 sx={{
+                                    backgroundColor: colors.cyanAccent[900],
                                     color: colors.cyanAccent[500],
                                     '& .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[500],
+                                        borderColor: colors.cyanAccent[500]
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[300],
+                                        borderColor: colors.cyanAccent[300]
                                     },
                                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                        borderColor: colors.cyanAccent[500],
+                                        borderColor: colors.cyanAccent[500]
                                     },
+                                    '& .MuiSelect-icon': {
+                                        color: colors.cyanAccent[500]
+                                    }
                                 }}
                             >
                                 {availableQuarters.map((quarter) => (
-                                    <MenuItem key={quarter.Quarter} value={quarter.Quarter}>
+                                    <MenuItem
+                                        key={quarter.Quarter}
+                                        value={quarter.Quarter}
+                                        sx={{
+                                            backgroundColor: colors.grey[800],
+                                            '&:hover': { backgroundColor: colors.cyanAccent[800] }
+                                        }}
+                                    >
                                         Q{quarter.Quarter}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
+
                     </Box>
                 </Box>
 

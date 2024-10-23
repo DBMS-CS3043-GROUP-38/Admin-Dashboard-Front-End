@@ -18,10 +18,16 @@ import {
     getAvailableQuarters,
     getRevenuePerStore,
     getTopProductsPerQuarter,
-    getTopCustomersPerQuarter
+    getTopCustomersPerQuarter,
+    getStores,
+    getRouteSales
 } from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {Box, FormControl, InputLabel, MenuItem, Select, Typography, useTheme} from "@mui/material";
+import {tokens} from "../../theme";
+import CustomGrayCard from "../../components/CustomGrayCard";
+import MultiLineChart from "../../components/MultilineRouteChart";
 
 export default function SalesReport() {
     const [quarterlySales, setQuarterlySales] = useState({"current": "NaN", "previous": "NaN"});
@@ -34,6 +40,17 @@ export default function SalesReport() {
     ]);
     const [revenueData, setRevenueData] = useState([]);
     const navigate = useNavigate();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [stores, setStores] = useState([]);
+    const [selectedStore, setSelectedStore] = useState(0);
+    const [routeSales, setRouteSales] = useState([]);
+
+
+    const handleStoreChange = (event) => {
+        setSelectedStore(event.target.value);
+        console.log(event.target.value);
+    }
 
 
     useEffect(() => {
@@ -44,6 +61,7 @@ export default function SalesReport() {
                 const QStores = await getQuarterlyStores();
                 const QBestCustomer = await getBestCustomer();
                 const revenueData = await getRevenueData();
+                const stores = await getStores();
                 console.log(revenueData);
 
                 setQuarterlySales(QSales);
@@ -51,6 +69,7 @@ export default function SalesReport() {
                 setQuarterlyStores(QStores);
                 setBestCustomer(QBestCustomer);
                 setRevenueData(revenueData);
+                setStores(stores);
             } catch (error) {
                 console.error(error);
                 // Check for specific status codes
@@ -70,6 +89,33 @@ export default function SalesReport() {
 
         fetchData().then(r => console.log('Data fetched'));
     }, [navigate]);
+
+    useEffect(() => {
+        const fetchRouteSales = async () => {
+            try {
+                const response = await getRouteSales(selectedStore);
+                setRouteSales(response);
+            } catch (error) {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const {status} = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
+                    } else {
+                        navigate('/database-error'); // Redirect to Database Error page
+                    }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
+                }
+            }
+        }
+
+        if (selectedStore) {
+            fetchRouteSales().then(r => console.log('Route sales fetched'));
+        }
+    }, [selectedStore]);
 
 
     return (
@@ -98,6 +144,67 @@ export default function SalesReport() {
                 <Grid size={6}>
                     < RevenueBarChart fetchAvailableQuarters={getAvailableQuarters}
                                       fetchAvailableYears={getAvailableYears} fetchRevenueData={getRevenuePerStore}/>
+                </Grid>
+                <Grid size={12}>
+                    <CustomGrayCard>
+                        <Grid container spacing={2}>
+                            <Grid size={12}>
+                                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                                    <Typography variant={'h4'}>
+                                        Route Sales
+                                    </Typography>
+                                    <FormControl sx={{minWidth: 500, borderRadius: 10}}>
+                                        <InputLabel
+                                            id="store-select-label"
+                                            sx={{
+                                                color: colors.purpleAccent[500],
+                                                '&.Mui-focused': {color: colors.purpleAccent[500]}
+                                            }}
+                                        >
+                                            Select Store
+                                        </InputLabel>
+                                        <Select
+                                            variant="outlined"
+                                            labelId="store-select-label"
+                                            id="store-select"
+                                            value={selectedStore || ""} // Handle initial empty state
+                                            label="Select Store"
+                                            onChange={handleStoreChange}
+                                            sx={{
+                                                outlineColor: colors.purpleAccent[500],
+                                                backgroundColor: colors.purpleAccent[900],
+                                                color: colors.purpleAccent[500],
+                                                '& .MuiSelect-icon': {color: colors.purpleAccent[500]},
+                                                '&:hover': {backgroundColor: colors.purpleAccent[900]},
+                                            }}
+                                        >
+                                            {stores.length > 0 ? (
+                                                stores.map((store) => (
+                                                    <MenuItem
+                                                        key={store.StoreID}
+                                                        value={store.StoreID}
+                                                        sx={{
+                                                            backgroundColor: colors.grey[800],
+                                                            '&:hover': {backgroundColor: colors.purpleAccent[800]},
+                                                        }}
+                                                    >
+                                                        {store.City}
+                                                    </MenuItem>
+                                                ))
+                                            ) : (
+                                                <MenuItem disabled>
+                                                    No Stores Available
+                                                </MenuItem>
+                                            )}
+                                        </Select>
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                            <Grid size={12}>
+                                <MultiLineChart data={routeSales}/>
+                            </Grid>
+                        </Grid>
+                    </CustomGrayCard>
                 </Grid>
                 <Grid size={6}>
                     <TopProductsQuarter fetchAvailableQuarters={getAvailableQuarters}

@@ -30,6 +30,7 @@ const TopCustomersQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetc
             } catch (error) {
                 console.error('Error fetching years:', error);
                 setError('Failed to fetch available years');
+                throw error;
             }
         };
         fetchYears().then(r => console.log('Years fetched for table'));
@@ -85,8 +86,14 @@ const TopCustomersQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetc
                     Top 100 Customers by Quarter
                 </Typography>
                 <Box display="flex" gap={2}>
-                    <FormControl sx={{ minWidth: 120 }}>
-                        <InputLabel id="year-select-label" sx={{ color: colors.redAccent[500] }}>
+                    <FormControl sx={{ minWidth: 120, borderRadius: 2 }}>
+                        <InputLabel
+                            id="year-select-label"
+                            sx={{
+                                color: colors.redAccent[500],
+                                '&.Mui-focused': { color: colors.redAccent[500] }
+                            }}
+                        >
                             Year
                         </InputLabel>
                         <Select
@@ -101,27 +108,45 @@ const TopCustomersQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetc
                             }}
                             variant="outlined"
                             sx={{
+                                backgroundColor: colors.redAccent[900],
                                 color: colors.redAccent[500],
                                 '& .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[500],
+                                    borderColor: colors.redAccent[500]
                                 },
                                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[300],
+                                    borderColor: colors.redAccent[300]
                                 },
                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[500],
+                                    borderColor: colors.redAccent[500]
                                 },
+                                '& .MuiSelect-icon': {
+                                    color: colors.redAccent[500]
+                                }
                             }}
                         >
                             {availableYears.map((year) => (
-                                <MenuItem key={year.Year} value={year.Year}>
+                                <MenuItem
+                                    key={year.Year}
+                                    value={year.Year}
+                                    sx={{
+                                        backgroundColor: colors.grey[800],
+                                        '&:hover': { backgroundColor: colors.redAccent[800] }
+                                    }}
+                                >
                                     {year.Year}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <FormControl sx={{ minWidth: 120 }}>
-                        <InputLabel id="quarter-select-label" sx={{ color: colors.redAccent[500] }}>
+
+                    <FormControl sx={{ minWidth: 120, borderRadius: 2 }}>
+                        <InputLabel
+                            id="quarter-select-label"
+                            sx={{
+                                color: colors.redAccent[500],
+                                '&.Mui-focused': { color: colors.redAccent[500] }
+                            }}
+                        >
                             Quarter
                         </InputLabel>
                         <Select
@@ -136,20 +161,31 @@ const TopCustomersQuarter = ({ fetchAvailableYears, fetchAvailableQuarters, fetc
                             variant="outlined"
                             disabled={!availableQuarters.length}
                             sx={{
+                                backgroundColor: colors.redAccent[900],
                                 color: colors.redAccent[500],
                                 '& .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[500],
+                                    borderColor: colors.redAccent[500]
                                 },
                                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[300],
+                                    borderColor: colors.redAccent[300]
                                 },
                                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: colors.redAccent[500],
+                                    borderColor: colors.redAccent[500]
                                 },
+                                '& .MuiSelect-icon': {
+                                    color: colors.redAccent[500]
+                                }
                             }}
                         >
                             {availableQuarters.map((quarter) => (
-                                <MenuItem key={quarter.Quarter} value={quarter.Quarter}>
+                                <MenuItem
+                                    key={quarter.Quarter}
+                                    value={quarter.Quarter}
+                                    sx={{
+                                        backgroundColor: colors.grey[800],
+                                        '&:hover': { backgroundColor: colors.redAccent[800] }
+                                    }}
+                                >
                                     Q{quarter.Quarter}
                                 </MenuItem>
                             ))}
