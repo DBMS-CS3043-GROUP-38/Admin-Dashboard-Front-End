@@ -1,24 +1,25 @@
 import PageLayout from "../../layouts/PageLayout";
-import {getActiveTrainsM, getTrainStatusesM} from "../../services/apiService";
+import {getActiveShipmentsM, getShipmentStatusesM} from "../../services/apiService";
 import {useEffect, useState} from "react";
-import ActiveTrainsTable from "../../components/ActiveTrainsTable";
-import TrainStatusCard from "../../components/TrainStatusCard";
 import Grid from "@mui/material/Grid2";
 import {useNavigate} from "react-router-dom";
+import ShipmentStatusesCard from "../../components/ShipmentStatuses";
+import CustomShipmentTable from "../../components/CustomShipmentTable";
 
-const Trains = () => {
-    const [activeTrains, setActiveTrains] = useState([]);
-    const [trainStatuses, setTrainStatuses] = useState([]);
+const Shipments = () => {
+    const [activeShipments, setActiveShipments] = useState([]);
+    const [Statuses, setStatuses] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            
             try {
-                const trains = await getActiveTrainsM();
-                const statuses = await getTrainStatusesM();
-                setActiveTrains(trains);
-                setTrainStatuses(statuses);
+                const shipments = await getActiveShipmentsM();
+                const statuses = await getShipmentStatusesM();
+                setActiveShipments(shipments);
+                console.log(`Shipments: ${shipments}`);
+                setStatuses(statuses);
+                console.log(`Statuses: ${statuses}`);
             } catch (error) {
                 console.error(error);
                 // Check for specific status codes
@@ -41,13 +42,13 @@ const Trains = () => {
 
 
     return (
-        <PageLayout heading={'Trains'} subHeading={'Details about active trains'}>
+        <PageLayout heading={'Shipments'} subHeading={'Details about active shipments'}>
             <Grid container spacing={2}>
                 <Grid size={12}>
-                    <TrainStatusCard title={"Current Incoming Train Statuses"} statusData={trainStatuses}/>
+                    <ShipmentStatusesCard title={"Active Shipment Statuses"} statusData={Statuses} />
                 </Grid>
                 <Grid size={12}>
-                    <ActiveTrainsTable heading={"Active Incoming Trains"} data={activeTrains} maxHeight={600}
+                    <CustomShipmentTable heading={"Active Shipments"} data={activeShipments} maxHeight={600}
                                        colorSelection={'greenAccent'}/>
                 < /Grid>
             < /Grid>
@@ -55,4 +56,4 @@ const Trains = () => {
     );
 }
 
-export default Trains;
+export default Shipments;

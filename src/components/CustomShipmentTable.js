@@ -21,7 +21,7 @@ import {tokens} from '../theme'; // Assuming tokens is where your color palette 
 import CustomGrayCard from "./CustomGrayCard"; // Ensure this path is correct
 import CircleIcon from '@mui/icons-material/Circle';
 
-const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
+const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -79,7 +79,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                         label="All"
                     />
                     <FormControlLabel
-                        value="In Progress"
+                        value="Ready"
                         control={
                             <Radio
                                 sx={{
@@ -90,10 +90,10 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 }}
                             />
                         }
-                        label="In Progress"
+                        label="Ready"
                     />
                     <FormControlLabel
-                        value="Not Completed"
+                        value="NotReady"
                         control={
                             <Radio
                                 sx={{
@@ -104,7 +104,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 }}
                             />
                         }
-                        label="Not Completed"
+                        label="NotReady"
                     />
                 </RadioGroup>
             </FormControl>
@@ -122,28 +122,11 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 }}
                             >
                                 <TableSortLabel
-                                    active={orderBy === 'scheduleID'}
-                                    direction={orderBy === 'scheduleID' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('scheduleID')}
-                                >
-                                    Train Schedule ID
-                                </TableSortLabel>
-                            </TableCell>
-                            <TableCell
-                                sx={{
-                                    bgcolor: colors[colorSelection]["800"],
-                                    color: colors.grey["100"],
-                                    position: 'sticky',
-                                    top: 0,
-                                    zIndex: 1,
-                                }}
-                            >
-                                <TableSortLabel
                                     active={orderBy === 'id'}
                                     direction={orderBy === 'id' ? orderDirection : "asc"}
                                     onClick={() => handleSortRequest('id')}
                                 >
-                                    Train ID
+                                    Shipment ID
                                 </TableSortLabel>
                             </TableCell>
                             <TableCell
@@ -156,11 +139,11 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 }}
                             >
                                 <TableSortLabel
-                                    active={orderBy === 'destination'}
-                                    direction={orderBy === 'destination' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('destination')}
+                                    active={orderBy === 'routeID'}
+                                    direction={orderBy === 'routeID' ? orderDirection : "asc"}
+                                    onClick={() => handleSortRequest('routeID')}
                                 >
-                                    Destination
+                                    Route ID
                                 </TableSortLabel>
                             </TableCell>
                             <TableCell
@@ -172,13 +155,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     zIndex: 1,
                                 }}
                             >
-                                <TableSortLabel
-                                    active={orderBy === 'fullCapacity'}
-                                    direction={orderBy === 'fullCapacity' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('fullCapacity')}
-                                >
-                                    Full Capacity
-                                </TableSortLabel>
+                                Full Capacity
                             </TableCell>
                             <TableCell
                                 sx={{
@@ -190,24 +167,17 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 }}
                             >
                                 Filled Capacity
-                            </TableCell>
-                            <TableCell
-                                sx={{
-                                    bgcolor: colors[colorSelection]["800"],
-                                    color: colors.grey["100"],
-                                    position: 'sticky',
-                                    top: 0,
-                                    zIndex: 1,
-                                }}
-                            >
-                                <TableSortLabel
-                                    active={orderBy === 'time'}
-                                    direction={orderBy === 'time' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('time')}
-                                >
-                                    Date & Time
-                                </TableSortLabel>
-                            </TableCell>
+                            </TableCell> <TableCell
+                            sx={{
+                                bgcolor: colors[colorSelection]["800"],
+                                color: colors.grey["100"],
+                                position: 'sticky',
+                                top: 0,
+                                zIndex: 1,
+                            }}
+                        >
+                            Created Date
+                        </TableCell>
 
                             <TableCell
                                 sx={{
@@ -242,12 +212,11 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     '&:hover': {bgcolor: colors[colorSelection][900]}
                                 }}
                             >
-                                <TableCell>{row.scheduleID}</TableCell>
                                 <TableCell>{row.id}</TableCell>
-                                <TableCell>{row.destination}</TableCell>
+                                <TableCell>{row.routeID}</TableCell>
                                 <TableCell>{row.fullCapacity}</TableCell>
                                 <TableCell>{`${(parseFloat(row.capacityFilled) * parseFloat(row.fullCapacity) / 100).toFixed(2)}`}</TableCell>
-                                <TableCell>{new Date(row.time).toLocaleString()}</TableCell>
+                                <TableCell>{new Date(row.createdData).toLocaleDateString()}</TableCell>
                                 <TableCell>
                                     <Box sx={{display: 'flex', alignItems: 'center'}}>
                                         <Box sx={{width: '100%', mr: 1}}>
@@ -275,7 +244,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     <CircleIcon
                                         fontSize="small"
                                         sx={{
-                                            color: row.status === "In Progress" ? colors.greenAccent[500] : colors.yellowAccent[500]
+                                            color: row.status === "Ready" ? colors.greenAccent[500] : colors.yellowAccent[500]
                                         }}
                                     />
                                     {row.status}
@@ -285,9 +254,10 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                     </TableBody>
                 </Table>
 
+
             </TableContainer>
         </CustomGrayCard>
     );
 };
 
-export default CustomTrainTable;
+export default CustomShipmentTable;

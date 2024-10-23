@@ -25,7 +25,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PersonIcon from "@mui/icons-material/Person";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import {AddBox, AdminPanelSettings, Engineering, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
+import {AddBox, AdminPanelSettings, Engineering, Inventory, Send, TrainSharp, TrainTwoTone} from "@mui/icons-material";
 import RouteIcon from '@mui/icons-material/Route';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import InfoIcon from '@mui/icons-material/Info';
@@ -135,6 +135,13 @@ const Sidebar = () => {
                         title="Trains"
                         to="trains"
                         icon={<TrainIcon/>}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title={"Shipments"}
+                        to="shipments"
+                        icon={<Inventory />}
                         selected={selected}
                         setSelected={setSelected}
                     />

@@ -675,3 +675,29 @@ export const getDriversM = async () => {
     const response = await api.get('/manager/tables/drivers');
     return response.data;
 }
+
+export const getAssistantsM = async () => {
+    const response = await api.get('/manager/tables/assistants');
+    return response.data;
+}
+
+export const getTrucksM = async () => {
+    const response = await api.get('/manager/tables/trucks');
+    return response.data;
+}
+
+export const getRoutesM = async () => {
+    const response = await api.get('/manager/tables/routes');
+    return response.data;
+}
+
+export const getShipmentStatusesM = async () => {
+    const response = await api.get('/manager/cards/shipment-statuses');
+    return response.data;
+}
+
+export const getActiveShipmentsM = async() => {
+
+    const response = await api.get('/manager/tables/active-shipments');
+    return response.data;
+}

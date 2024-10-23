@@ -38,10 +38,10 @@ import AssistantsM from "./pages/manager/Assistants";
 import RoutesPathM from "./pages/manager/Routes";
 import TrucksM from "./pages/manager/Trucks";
 import ReportOrderM from "./pages/manager/ReportOrder";
-import ManagersM from "./pages/manager/Admins";
 import TrainsM from "./pages/manager/Trains";
 import Receive from "./pages/manager/Receive";
 import Admins from "./pages/manager/Admins";
+import Shipments from "./pages/manager/Shipments";
 
 
 function App() {
@@ -97,6 +97,7 @@ function App() {
                                         <Route path='report-order' element={<ReportOrderM/>}/>
                                         <Route path='admins' element={<Admins/>}/>
                                         <Route path='trains' element={<TrainsM/>}/>
+                                        <Route path='shipments' element={<Shipments/>}/>
                                     </Route>
                                 </Route>
 

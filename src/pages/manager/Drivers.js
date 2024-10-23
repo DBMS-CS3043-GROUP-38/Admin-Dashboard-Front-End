@@ -1,7 +1,5 @@
 import PageLayout from "../../layouts/PageLayout";
 import Grid from "@mui/material/Grid2";
-import CustomGrayCard from "../../components/CustomGrayCard";
-import {DriverSearch} from "../../components/Search";
 import CustomTableWithProgressBar from "../../components/CustomTableWithProgressBar";
 import { getDriversM} from "../../services/apiService";
 import {useEffect, useState} from "react";
@@ -48,9 +46,3 @@ const Drivers = () => {
 }
 
 export default Drivers;
-
-
-
-const drivers = [
-    {DriverID: 1, Name: "John Doe", CompletedHours: 12, WorkHours: 40, Availability: "Not Available"}
-]

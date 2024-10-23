@@ -35,19 +35,19 @@ const BigCard = ({title, statusData}) => {
                     <Stack direction="row" spacing={1} alignItems="center">
                         <CheckCircleIcon sx={{color: "#66BB6A"}}/>
                         <Typography variant="body1" color="text.primary">
-                            Completed Trains: {statuses[0].count}
+                            Completed Trains: {statuses.find(s => s.Status === "Completed").count}
                         </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1} alignItems="center">
                         <CancelIcon sx={{color: "#FF5252"}}/>
                         <Typography variant="body1" color="text.primary">
-                            Not Completed Trains: {statuses[1].count}
+                            Not Completed Trains: {statuses.find(s => s.Status === "Not Completed").count}
                         </Typography>
                     </Stack>
                     <Stack direction="row" spacing={1} alignItems="center">
                         <HourglassEmptyIcon sx={{color: "#FFA726"}}/>
                         <Typography variant="body1" color="text.primary">
-                            In Progress Trains: {statuses[2].count}
+                            In Progress Trains: {statuses.find(s => s.Status === "In Progress").count}
                         </Typography>
                     </Stack>
                 </Stack>
