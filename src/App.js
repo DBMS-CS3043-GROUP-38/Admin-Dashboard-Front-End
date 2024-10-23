@@ -26,6 +26,7 @@ import HomePage from "./pages/global/Home";
 import NotFoundPage from "./pages/global/NotFoundPage";
 import DataBaseError from "./pages/global/DataBaseError";
 import ManagerLayout from "./layouts/manager/ManagerLayout";
+import Products from "./pages/admin/Products";
 
 import OverviewM from "./pages/manager/Overview";
 import ScheduleTrainM from "./pages/manager/ScheduleTrain";
@@ -78,6 +79,7 @@ function App() {
                                         <Route path='report-order' element={<ReportOrder/>}/>
                                         <Route path='managers' element={<Managers/>}/>
                                         <Route path='trains' element={<Trains/>}/>
+                                        <Route path='products' element={<Products/>}/>
                                     </Route>
                                 </Route>
 
