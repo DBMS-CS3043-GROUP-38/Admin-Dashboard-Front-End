@@ -215,14 +215,14 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 <TableCell>{row.id}</TableCell>
                                 <TableCell>{row.routeID}</TableCell>
                                 <TableCell>{row.fullCapacity}</TableCell>
-                                <TableCell>{`${(parseFloat(row.capacityFilled) * parseFloat(row.fullCapacity) / 100).toFixed(2)}`}</TableCell>
+                                <TableCell>{`${(parseFloat(row.capacityFilled)).toFixed(2)}`}</TableCell>
                                 <TableCell>{new Date(row.createdData).toLocaleDateString()}</TableCell>
                                 <TableCell>
                                     <Box sx={{display: 'flex', alignItems: 'center'}}>
                                         <Box sx={{width: '100%', mr: 1}}>
                                             <LinearProgress
                                                 variant="determinate"
-                                                value={parseFloat(row.capacityFilled)} // Already a percentage
+                                                value={parseFloat(row.capacityFilled)/parseFloat(row.fullCapacity)*100} // Already a percentage
                                                 sx={{
                                                     bgcolor: colors.grey["800"],
                                                     '& .MuiLinearProgress-bar': {
@@ -232,7 +232,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                             />
                                         </Box>
                                         <Typography variant="body2" color="text.secondary">
-                                            {`${Math.round(parseFloat(row.capacityFilled))}%`}
+                                            {`${Math.round((row.capacityFilled)/parseFloat(row.fullCapacity)*100)}%`}
                                         </Typography>
                                     </Box>
                                 </TableCell>

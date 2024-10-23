@@ -1,5 +1,6 @@
 import axios from 'axios';
-const API_BASE_URL = 'http://localhost:3005/dashboard';
+// const API_BASE_URL = 'http://localhost:3005/dashboard';
+const API_BASE_URL = 'http://192.168.1.118:3005/dashboard';
 
 
 const api = axios.create({
