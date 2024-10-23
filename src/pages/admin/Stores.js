@@ -12,6 +12,7 @@ import {
 import {useNavigate} from "react-router-dom";
 
 import {getStores, getReadyShipment, getAvailableAssistants, getAvailableDrivers, getAvailableTrucks, getStoreData} from "../../services/apiService";
+import MultiLineChart from "../../components/MultilineRouteChart";
 
 const Stores = () => {
     const theme = useTheme();
@@ -24,6 +25,7 @@ const Stores = () => {
     const [availableDrivers, setAvailableDrivers] = useState([]);
     const [availableTrucks, setAvailableTrucks] = useState([]);
     const [storesData, setStoresData] = useState([]);
+    const [routeSales, setRouteSales] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -102,7 +104,7 @@ const Stores = () => {
                     <CustomGrayCard>
                         <Grid container spacing={2}>
                             <Grid size={12}>
-                                <FormControl sx={{ minWidth: 500, borderRadius: 10 }}>
+                                 <FormControl sx={{ minWidth: 500, borderRadius: 10 }}>
                                     <InputLabel
                                         id="store-select-label"
                                         sx={{
@@ -147,6 +149,7 @@ const Stores = () => {
                                         )}
                                     </Select>
                                 </FormControl>
+                                <MultiLineChart data={routeSales} />
                             </Grid>
                             <Grid size={3}>
                                 <ReadyShipmentsCard readyShipments={readyShipments.Ready} totalShipments={readyShipments.NotReady} />

@@ -64,7 +64,7 @@ export const getOrdersAttention = async () => {
 
 // Fetch revenue data
 export const getRevenueData = async () => {
-    const response = await api.get('/admin/charts/revenue-past-year');
+    const response = await api.get('/admin/charts/revenue-past');
     return response.data;
 };
 
@@ -374,6 +374,10 @@ export const getProductSales = async (productID) => {
     return response.data;
 }
 
+export const getRouteSales = async (storeID) => {
+    const response = await api.get(`/admin/charts/route-sales/${storeID}`);
+    return response.data;
+}
 
 
 //Manager API
@@ -402,7 +406,7 @@ export const getOrdersAttentionM = async () => {
 
 // Fetch revenue data
 export const getRevenueDataM = async () => {
-    const response = await api.get('/manager/charts/revenue-past-year');
+    const response = await api.get('/manager/charts/revenue-past');
     return response.data;
 };
 
