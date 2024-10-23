@@ -40,7 +40,7 @@ const Receive = () => {
 
     useEffect(() => {
         fetchTrains().then(() => console.log('Trains fetched'));
-    }, [fetchTrains]);
+    }, []);
 
     useEffect(() => {
         const fetchOrders = async () => {
