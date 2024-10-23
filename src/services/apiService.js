@@ -354,6 +354,27 @@ export const searchTruck = async (by, term) => {
     return response.data;
 }
 
+export const getProducts = async (type) => {
+    const response = await api.get(`/admin/tables/products/${type}`);
+    return response.data;
+}
+
+export const getProductCategories = async () => {
+    const response = await api.get(`/admin/selectors/product-categories`);
+    return response.data;
+};
+
+export const getProductDetails = async (productID) => {
+    const response = await api.get(`/admin/searches/product/${productID}`);
+    return response.data;
+}
+
+export const getProductSales = async (productID) => {
+    const response = await api.get(`/admin/searches/product-sales/${productID}`);
+    return response.data;
+}
+
+
 
 //Manager API
 export const getQuarterlySalesM = async () => {
@@ -701,3 +722,4 @@ export const getActiveShipmentsM = async() => {
     const response = await api.get('/manager/tables/active-shipments');
     return response.data;
 }
+
