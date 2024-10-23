@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import {useAuth} from "../../contexts/AuthContext";
 
-
 const fadeIn = keyframes`
     from {
         opacity: 0;

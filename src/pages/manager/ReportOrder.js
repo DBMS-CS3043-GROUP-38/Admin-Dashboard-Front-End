@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { tokens } from '../../theme';
 import CustomGrayCard from '../../components/CustomGrayCard';
 import PageLayout from "../../layouts/PageLayout";
-import { reportOrder } from '../../services/apiService'; // Make sure to import your API function
+import { reportOrderM } from '../../services/apiService'; // Make sure to import your API function
 import {useNavigate} from "react-router-dom";
 
 const ReportOrderPage = () => {
@@ -17,7 +17,7 @@ const ReportOrderPage = () => {
 
     const handleReportOrder = async () => {
         try {
-            const response = await reportOrder(orderID);
+            const response = await reportOrderM(orderID);
             setResponseMessage(response.message);
         } catch (error) {
             console.error(error);

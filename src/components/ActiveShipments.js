@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     Typography,
     TableContainer,
@@ -16,12 +16,12 @@ import {
     FormControlLabel,
     FormControl,
 } from '@mui/material';
-import {useTheme} from '@mui/material/styles';
-import {tokens} from '../theme'; // Assuming tokens is where your color palette is defined
+import { useTheme } from '@mui/material/styles';
+import { tokens } from '../theme'; // Assuming tokens is where your color palette is defined
 import CustomGrayCard from "./CustomGrayCard"; // Ensure this path is correct
 import CircleIcon from '@mui/icons-material/Circle';
 
-const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
+const CustomTrainTable = ({ data, colorSelection, heading, maxHeight }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -58,7 +58,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
             <Typography variant="h4" color="text.primary" gutterBottom>
                 {heading}
             </Typography>
-            <FormControl component="fieldset" sx={{marginBottom: 2}}>
+            <FormControl component="fieldset" sx={{ marginBottom: 2 }}>
                 <RadioGroup
                     row
                     value={statusFilter}
@@ -108,8 +108,8 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                     />
                 </RadioGroup>
             </FormControl>
-            <TableContainer component={Paper} sx={{maxHeight}}>
-                <Table stickyHeader sx={{minWidth: 500}}>
+            <TableContainer component={Paper} sx={{ maxHeight }}>
+                <Table stickyHeader sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell
@@ -189,17 +189,6 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     zIndex: 1,
                                 }}
                             >
-                                Filled Capacity
-                            </TableCell>
-                            <TableCell
-                                sx={{
-                                    bgcolor: colors[colorSelection]["800"],
-                                    color: colors.grey["100"],
-                                    position: 'sticky',
-                                    top: 0,
-                                    zIndex: 1,
-                                }}
-                            >
                                 <TableSortLabel
                                     active={orderBy === 'time'}
                                     direction={orderBy === 'time' ? orderDirection : "asc"}
@@ -208,7 +197,6 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     Date & Time
                                 </TableSortLabel>
                             </TableCell>
-
                             <TableCell
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
@@ -218,7 +206,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     zIndex: 1,
                                 }}
                             >
-                                Filled Capacity (Progress)
+                                Filled Capacity
                             </TableCell>
                             <TableCell
                                 sx={{
@@ -239,18 +227,17 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                 key={index}
                                 sx={{
                                     bgcolor: colors.grey["900"],
-                                    '&:hover': {bgcolor: colors[colorSelection][900]}
+                                    '&:hover': { bgcolor: colors[colorSelection][900] }
                                 }}
                             >
                                 <TableCell>{row.scheduleID}</TableCell>
                                 <TableCell>{row.id}</TableCell>
                                 <TableCell>{row.destination}</TableCell>
                                 <TableCell>{row.fullCapacity}</TableCell>
-                                <TableCell>{`${(parseFloat(row.capacityFilled) * parseFloat(row.fullCapacity) / 100).toFixed(2)}`}</TableCell>
                                 <TableCell>{new Date(row.time).toLocaleString()}</TableCell>
                                 <TableCell>
-                                    <Box sx={{display: 'flex', alignItems: 'center'}}>
-                                        <Box sx={{width: '100%', mr: 1}}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Box sx={{ width: '100%', mr: 1 }}>
                                             <LinearProgress
                                                 variant="determinate"
                                                 value={parseFloat(row.capacityFilled)} // Already a percentage
@@ -263,7 +250,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                             />
                                         </Box>
                                         <Typography variant="body2" color="text.secondary">
-                                            {`${Math.round(parseFloat(row.capacityFilled))}%`}
+                                            {`${Math.round(parseFloat(row.capacityFilled) )}%`}
                                         </Typography>
                                     </Box>
                                 </TableCell>
@@ -271,6 +258,7 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                                     display: 'flex',
                                     justifyContent: 'space-evenly',
                                     alignItems: 'center',
+
                                 }}>
                                     <CircleIcon
                                         fontSize="small"
@@ -284,7 +272,6 @@ const CustomTrainTable = ({data, colorSelection, heading, maxHeight}) => {
                         ))}
                     </TableBody>
                 </Table>
-
             </TableContainer>
         </CustomGrayCard>
     );

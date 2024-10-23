@@ -1,17 +1,25 @@
 import React from 'react';
-import { Box, Typography, Button, useTheme } from '@mui/material';
-import { styled, keyframes } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-import { tokens } from '../../theme';
-import {DiDatabase} from "react-icons/di"; // Assuming this is where your color tokens are defined
+import {Box, Typography, Button, useTheme} from '@mui/material';
+import {styled, keyframes} from '@mui/material/styles';
+import {Link} from 'react-router-dom';
+import {tokens} from '../../theme';
+import {DiDatabase} from "react-icons/di";
+import {HiLogout} from "react-icons/hi"; // Assuming this is where your color tokens are defined
+import {useAuth} from "../../contexts/AuthContext";
 
 const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 `;
 
-const Container = styled(Box)(({ theme }) => {
+const Container = styled(Box)(({theme}) => {
     const colors = tokens(theme.palette.mode);
     return {
         minHeight: '100vh',
@@ -26,17 +34,23 @@ const Container = styled(Box)(({ theme }) => {
 });
 
 const pulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 `;
 
-const IconWrapper = styled(Box)(({ theme }) => ({
+const IconWrapper = styled(Box)(({theme}) => ({
     animation: `${float} 3s ease-in-out infinite`,
     marginBottom: '16px',
 }));
 
-const GlowingText = styled(Typography)(({ theme }) => {
+const GlowingText = styled(Typography)(({theme}) => {
     const colors = tokens(theme.palette.mode);
     return {
         color: colors.yellowAccent[500],
@@ -46,7 +60,7 @@ const GlowingText = styled(Typography)(({ theme }) => {
     };
 });
 
-const StyledErrorIcon = styled(DiDatabase)(({ theme }) => {
+const StyledErrorIcon = styled(DiDatabase)(({theme}) => {
     const colors = tokens(theme.palette.mode);
     return {
         fontSize: '100px', // Adjust size as needed
@@ -54,7 +68,7 @@ const StyledErrorIcon = styled(DiDatabase)(({ theme }) => {
     };
 });
 
-const StyledButton = styled(Button)(({ theme }) => {
+const StyledButton = styled(Button)(({theme}) => {
     const colors = tokens(theme.palette.mode);
     return {
         backgroundColor: colors.purpleAccent[500],
@@ -70,6 +84,7 @@ const StyledButton = styled(Button)(({ theme }) => {
 const DatabaseErrorPage = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const {logout} = useAuth();
 
     const handleRefresh = () => {
         window.location.reload(); // Refresh the page
@@ -78,15 +93,15 @@ const DatabaseErrorPage = () => {
     return (
         <Container>
             <IconWrapper>
-                <StyledErrorIcon />
+                <StyledErrorIcon/>
             </IconWrapper>
-            <Typography variant="h4" sx={{ mb: 2 }}>
+            <Typography variant="h4" sx={{mb: 2}}>
                 Database Error
             </Typography>
             <GlowingText variant="h1">
                 500
             </GlowingText>
-            <Typography variant="body1" sx={{ mb: 4 }}>
+            <Typography variant="body1" sx={{mb: 4}}>
                 Oops! Something went wrong while connecting to the database.
                 Please try again later or refresh the page.
             </Typography>
@@ -96,6 +111,18 @@ const DatabaseErrorPage = () => {
                 </StyledButton>
                 <StyledButton variant="contained" onClick={handleRefresh}>
                     Refresh Page
+                </StyledButton>
+                <StyledButton
+                    component={Link}
+                    to="/"
+                    variant="contained"
+                    size="large"
+                    startIcon={<HiLogout/>}
+                    onClick={() =>
+                        logout()
+                    }
+                >
+                    Logout
                 </StyledButton>
             </Box>
         </Container>

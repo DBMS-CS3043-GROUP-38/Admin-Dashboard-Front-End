@@ -1,18 +1,19 @@
 import PageLayout from "../../layouts/PageLayout";
-import {CustomTable} from "../../components/OrderDetailsTable";
-import {getManagerData} from "../../services/apiService";
+import Grid from "@mui/material/Grid2";
+import CustomTableWithProgressBar from "../../components/CustomTableWithProgressBar";
+import { getDriversM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
-
-const Managers = () => {
-    const [managerData, setManagerData] = useState([]);
+const Drivers = () => {
     const navigate = useNavigate();
+
+    const [drivers, setDrivers] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const managers = await getManagerData();
-                setManagerData(managers);
+                const drivers = await getDriversM();
+                setDrivers(drivers);
             } catch (error) {
                 console.error(error);
                 // Check for specific status codes
@@ -29,14 +30,19 @@ const Managers = () => {
                 }
             }
         }
-        fetchData().then(() => console.log('Manager Data fetched'));
-    }, [navigate]);
+        fetchData().then(() => console.log('Driver Data fetched'));
+    }, []);
+
 
     return (
-        <PageLayout heading={'Managers'} subHeading={'Details about Managers'}>
-            <CustomTable heading={"Manager List"} data={managerData} colorSelection={"purpleAccent"} maxHeight={500}/>
+        <PageLayout heading={'Drivers'} subHeading={'Details about Drivers'}>
+            <Grid container spacing={2}>
+                <Grid size={12}>
+                    <CustomTableWithProgressBar heading={'Driver List'} colorSelection={'purpleAccent'} maxHeight={600} data={drivers} />
+                </Grid>
+            </Grid>
         </PageLayout>
     );
 }
 
-export default Managers;
+export default Drivers;

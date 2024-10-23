@@ -43,6 +43,7 @@ const GlassCard = styled(Card)(({ theme }) => {
     return {
         background: `rgba(${parseInt(colors.primary[400].slice(1, 3), 16)}, ${parseInt(colors.primary[400].slice(3, 5), 16)}, ${parseInt(colors.primary[400].slice(5, 7), 16)}, 0.1)`,
         backdropFilter: 'blur(10px)',
+        height: '100%',
         borderRadius: theme.shape.borderRadius,
         border: `1px solid ${colors.purpleAccent[200]}`,
         color: colors.grey[100],

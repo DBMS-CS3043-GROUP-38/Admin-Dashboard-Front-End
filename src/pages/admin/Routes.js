@@ -1,4 +1,4 @@
-import PageLayout from "../../layouts/admin/PageLayout";
+import PageLayout from "../../layouts/PageLayout";
 import Grid from "@mui/material/Grid2";
 import {CustomTable} from "../../components/OrderDetailsTable";
 import {RouteSearch} from "../../components/Search";

@@ -1,18 +1,20 @@
 import PageLayout from "../../layouts/PageLayout";
+import Grid from "@mui/material/Grid2";
 import {CustomTable} from "../../components/OrderDetailsTable";
-import {getManagerData} from "../../services/apiService";
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import {getRoutesM} from "../../services/apiService";
+import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
-
-const Managers = () => {
-    const [managerData, setManagerData] = useState([]);
+const Routes = () => {
     const navigate = useNavigate();
+    const [route, setRoute] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const managers = await getManagerData();
-                setManagerData(managers);
+                const drivers = await getRoutesM();
+                setRoute(drivers);
             } catch (error) {
                 console.error(error);
                 // Check for specific status codes
@@ -29,14 +31,21 @@ const Managers = () => {
                 }
             }
         }
-        fetchData().then(() => console.log('Manager Data fetched'));
-    }, [navigate]);
+        fetchData().then(() => console.log('Driver Data fetched'));
+    }, []);
+
+
 
     return (
-        <PageLayout heading={'Managers'} subHeading={'Details about Managers'}>
-            <CustomTable heading={"Manager List"} data={managerData} colorSelection={"purpleAccent"} maxHeight={500}/>
+        <PageLayout heading={'Routes'} subHeading={'Details about Routes'}>
+            <Grid container spacing={2}>
+                <Grid size={12}>
+                    <CustomTable heading={'Route List'} maxHeight={500} colorSelection={'purpleAccent'} data={route} />
+                </Grid>
+            </Grid>
         </PageLayout>
     );
 }
 
-export default Managers;
+
+export default Routes;

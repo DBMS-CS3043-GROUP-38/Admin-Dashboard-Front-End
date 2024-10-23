@@ -2,20 +2,20 @@ import PageLayout from "../../layouts/PageLayout";
 import {CustomTable} from "../../components/OrderDetailsTable";
 import Grid from "@mui/material/Grid2";
 import {Box} from "@mui/material";
-import {SchedulePendingOrdersButton} from "../../components/SchedulePendingOrdersButton";
-import {getPendingOrdersList, scheduleOrders} from "../../services/apiService";
+import {BundleInStoreOrdersButton} from "../../components/SchedulePendingOrdersButton";
+import {getInStoreOrdersListM, bundleOrdersM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 
-export default function ScheduleOrders() {
+export default function BundleOrders() {
 
     const [pendingOrders, setPendingOrders] = useState([]);
     const navigate = useNavigate();
 
     const fetchData = async () => {
         try {
-            const orders = await getPendingOrdersList();
+            const orders = await getInStoreOrdersListM();
             setPendingOrders(orders);
         } catch (error) {
             console.error(error);
@@ -38,9 +38,9 @@ export default function ScheduleOrders() {
         fetchData().then(r => console.log('Data fetched'));
     }, []);
 
-    const handleScheduleOrders = async () => {
+    const handleBundleOrders = async () => {
         // Call the scheduleOrders function
-        return await scheduleOrders(); // Return the response to be used in the button
+        return await bundleOrdersM(); // Return the response to be used in the button
     }
 
     const handleClose = () => {
@@ -49,15 +49,15 @@ export default function ScheduleOrders() {
 
 
     return (
-        <PageLayout heading={"Schedule Orders"} subHeading={"Schedule pending orders"}>
+        <PageLayout heading={"Bundle Orders"} subHeading={"Bundle orders into existing or new Shipments"}>
             <Grid container spacing={2}>
                 <Grid size={12}>
-                    <CustomTable heading={"Pending Orders"} data={pendingOrders} maxHeight={600}
+                    <CustomTable heading={"In Store Orders"} data={pendingOrders} maxHeight={600}
                                  colorSelection={'yellowAccent'}/>
                 </Grid>
             </Grid>
             <Box sx={{display: 'flex', width: '100%', alignContent: 'center', justifyContent: 'center'}}>
-                <SchedulePendingOrdersButton onSchedulePendingOrders={handleScheduleOrders} onClose={handleClose}/>
+                <BundleInStoreOrdersButton onBundleInStoreOrders={handleBundleOrders} onClose={handleClose}/>
             </Box>
         </PageLayout>
     );

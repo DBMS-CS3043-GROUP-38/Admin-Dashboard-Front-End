@@ -10,6 +10,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import MailIcon from '@mui/icons-material/Mail';
 import {Archive, Handshake} from "@mui/icons-material";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
+import {default as TrainIcon} from "@mui/icons-material/Train";
 
 // CompletedCard component definition
 function CompletedCard({ title, completed, total, color, Icon }) {
@@ -76,6 +77,20 @@ export function TrainsCompletedCard({ completedTrains, totalTrains }) {
             completed={completedTrains}
             total={totalTrains}
             color="purpleAccent"
+            Icon={TrainIcon} // Pass the icon component
+        />
+    );
+}
+
+export function TrainsArrivedCard({ completedTrains, totalTrains }) {
+    const TrainIcon = require('@mui/icons-material/Train').default; // Import icon as component
+
+    return (
+        <CompletedCard
+            title="Trains Arrived"
+            completed={completedTrains}
+            total={totalTrains}
+            color="greenAccent"
             Icon={TrainIcon} // Pass the icon component
         />
     );

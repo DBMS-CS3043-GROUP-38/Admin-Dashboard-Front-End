@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 import ScheduleTrainsButton from "../../components/ScheduleTrainsButton";
 import WeeklyTrainsTable from "../../components/WeeklyTrainsTable";
 import Grid from "@mui/material/Grid2";
-import {getScheduledTrains, getWeeklyTrains, scheduleTrains} from "../../services/apiService";
+import {getScheduledTrainsM, getWeeklyTrainsM, scheduleTrainsM} from "../../services/apiService";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -16,8 +16,8 @@ export default function ScheduleTrain() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const weeklyTrains = await getWeeklyTrains();
-                const scheduledTrains = await getScheduledTrains();
+                const weeklyTrains = await getWeeklyTrainsM();
+                const scheduledTrains = await getScheduledTrainsM();
 
                 setScheduledTrains(scheduledTrains);
                 setWeeklyTrainData(weeklyTrains);
@@ -46,7 +46,7 @@ export default function ScheduleTrain() {
         let response;
 
         try {
-            response = await scheduleTrains();
+            response = await scheduleTrainsM();
         } catch (error) {
             console.error(error);
             // Check for specific status codes

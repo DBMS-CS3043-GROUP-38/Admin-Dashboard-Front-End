@@ -1,4 +1,4 @@
-import PageLayout from "../../layouts/admin/PageLayout";
+import PageLayout from "../../layouts/PageLayout";
 import { CustomerSearch} from "../../components/Search";
 import CustomGrayCard from "../../components/CustomGrayCard";
 import CustomerPieChart from "../../components/CustomerPieChart";
