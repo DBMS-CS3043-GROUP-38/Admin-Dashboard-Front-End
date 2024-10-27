@@ -2,7 +2,7 @@ import PageLayout from "../../layouts/PageLayout";
 import ScheduledTrains from "../../components/ScheduledTrains";
 import {Box} from "@mui/material";
 import ScheduleTrainsButton from "../../components/ScheduleTrainsButton";
-import WeeklyTrainsTable from "../../components/WeeklyTrainsTable";
+import { CustomTable } from "../../components/OrderDetailsTable";
 import Grid from "@mui/material/Grid2";
 import {getScheduledTrains, getWeeklyTrains, scheduleTrains} from "../../services/apiService";
 import {useEffect, useState} from "react";
@@ -71,7 +71,7 @@ export default function ScheduleTrain() {
         <PageLayout heading={"Schedule Train"} subHeading={"Schedule a new train"}>
             <Grid container spacing={2}>
                 <Grid size={12}>
-                    <WeeklyTrainsTable weeklyData={weeklyTrainData}/>
+                    <CustomTable data={weeklyTrainData} colorSelection={'purpleAccent'} heading={'Weekly Trains'} maxHeight={500}/>
                 </Grid>
 
                 <Box sx={{display: 'flex', width: '100%', alignContent: 'center', justifyContent: 'center'}}>
