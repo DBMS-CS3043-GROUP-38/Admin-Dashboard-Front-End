@@ -129,20 +129,20 @@ export default function Products() {
                             <Grid size={12}>
                                 <FormControl sx={{minWidth: 500, borderRadius: 10}}>
                                     <InputLabel
-                                        id="store-select-label"
+                                        id="Category-select-label"
                                         sx={{
                                             color: colors.cyanAccent[500],
                                             '&.Mui-focused': {color: colors.cyanAccent[500]}
                                         }}
                                     >
-                                        Select Store
+                                        Select Category
                                     </InputLabel>
                                     <Select
                                         variant="outlined"
-                                        labelId="store-select-label"
-                                        id="store-select"
+                                        labelId="Category-select-label"
+                                        id="Category-select"
                                         value={selectedCategory || ""}
-                                        label="Select Store"
+                                        label="Select Category"
                                         onChange={handleCategoryChange}
                                         sx={{
                                             outlineColor: colors.cyanAccent[500],
@@ -153,21 +153,21 @@ export default function Products() {
                                         }}
                                     >
                                         {categories.length > 0 ? (
-                                            categories.map((store) => (
+                                            categories.map((Category) => (
                                                 <MenuItem
-                                                    key={store.category}
-                                                    value={store.category}
+                                                    key={Category.category}
+                                                    value={Category.category}
                                                     sx={{
                                                         backgroundColor: colors.grey[800],
                                                         '&:hover': {backgroundColor: colors.cyanAccent[800]},
                                                     }}
                                                 >
-                                                    {store.category}
+                                                    {Category.category}
                                                 </MenuItem>
                                             ))
                                         ) : (
                                             <MenuItem disabled>
-                                                No Stores Available
+                                                No Categorys Available
                                             </MenuItem>
                                         )}
                                     </Select>
