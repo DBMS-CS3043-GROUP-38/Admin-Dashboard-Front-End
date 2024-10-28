@@ -1,6 +1,6 @@
 import axios from 'axios';
-// const API_BASE_URL = 'http://localhost:3000/dashboard';
-const API_BASE_URL = 'http://192.168.1.110:3000/dashboard';
+const API_BASE_URL = 'http://localhost:3000/dashboard';
+// const API_BASE_URL = 'http://192.168.109.29:3000/dashboard';
 
 
 const api = axios.create({ 
@@ -728,3 +728,7 @@ export const getActiveShipmentsM = async() => {
     return response.data;
 }
 
+export const getOrdersByShipment = async (shipmentID) => {
+    const response = await api.get(`/manager/tables/orders-by-shipment/${shipmentID}`);
+    return response.data;
+}

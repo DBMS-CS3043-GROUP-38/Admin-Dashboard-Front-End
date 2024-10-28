@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
     Typography,
     TableContainer,
@@ -15,20 +15,20 @@ import {
     RadioGroup,
     FormControlLabel,
     FormControl,
-} from '@mui/material';
-import {useTheme} from '@mui/material/styles';
-import {tokens} from '../theme'; // Assuming tokens is where your color palette is defined
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { tokens } from "../theme"; // Assuming tokens is where your color palette is defined
 import CustomGrayCard from "./CustomGrayCard"; // Ensure this path is correct
-import CircleIcon from '@mui/icons-material/Circle';
+import CircleIcon from "@mui/icons-material/Circle";
 
-const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
+const CustomShipmentTable = ({ data, colorSelection, heading, maxHeight, setSelectedShipment }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     // State for sorting and filtering
     const [orderDirection, setOrderDirection] = useState("asc");
     const [orderBy, setOrderBy] = useState(null);
-    const [statusFilter, setStatusFilter] = useState('All');
+    const [statusFilter, setStatusFilter] = useState("All");
 
     const handleSortRequest = (property) => {
         const isAscending = orderBy === property && orderDirection === "asc";
@@ -41,15 +41,29 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
         if (!orderBy) return data;
 
         return [...data].sort((a, b) => {
-            if (a[orderBy] < b[orderBy]) return orderDirection === "asc" ? -1 : 1;
-            if (a[orderBy] > b[orderBy]) return orderDirection === "asc" ? 1 : -1;
+            let aValue, bValue;
+
+            console.log(`orderBy = ${orderBy}`);
+            if (orderBy === "capacityFilled") {
+                aValue = parseFloat(a[orderBy]);
+                bValue = parseFloat(b[orderBy]);
+            } else if (orderBy === "createdData") {
+                aValue = new Date(a[orderBy]);
+                bValue = new Date(b[orderBy]);
+            } else {
+                aValue = a[orderBy];
+                bValue = b[orderBy];
+            }
+
+            if (aValue < bValue) return orderDirection === "asc" ? -1 : 1;
+            if (aValue > bValue) return orderDirection === "asc" ? 1 : -1;
             return 0;
         });
     }, [data, orderBy, orderDirection]);
 
     // Filter data based on selected status
     const filteredData = sortedData.filter((row) => {
-        if (statusFilter === 'All') return true;
+        if (statusFilter === "All") return true;
         return row.status === statusFilter;
     });
 
@@ -58,7 +72,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
             <Typography variant="h4" color="text.primary" gutterBottom>
                 {heading}
             </Typography>
-            <FormControl component="fieldset" sx={{marginBottom: 2}}>
+            <FormControl component="fieldset" sx={{ marginBottom: 2 }}>
                 <RadioGroup
                     row
                     value={statusFilter}
@@ -70,7 +84,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                             <Radio
                                 sx={{
                                     color: colors[colorSelection][500],
-                                    '&.Mui-checked': {
+                                    "&.Mui-checked": {
                                         color: colors[colorSelection][500],
                                     },
                                 }}
@@ -84,7 +98,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                             <Radio
                                 sx={{
                                     color: colors[colorSelection][500],
-                                    '&.Mui-checked': {
+                                    "&.Mui-checked": {
                                         color: colors[colorSelection][500],
                                     },
                                 }}
@@ -98,7 +112,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                             <Radio
                                 sx={{
                                     color: colors[colorSelection][500],
-                                    '&.Mui-checked': {
+                                    "&.Mui-checked": {
                                         color: colors[colorSelection][500],
                                     },
                                 }}
@@ -108,23 +122,27 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                     />
                 </RadioGroup>
             </FormControl>
-            <TableContainer component={Paper} sx={{maxHeight}}>
-                <Table stickyHeader sx={{minWidth: 500}}>
+            <TableContainer component={Paper} sx={{ maxHeight }}>
+                <Table stickyHeader sx={{ minWidth: 500 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
                             >
                                 <TableSortLabel
-                                    active={orderBy === 'id'}
-                                    direction={orderBy === 'id' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('id')}
+                                    active={orderBy === "id"}
+                                    direction={
+                                        orderBy === "id"
+                                            ? orderDirection
+                                            : "asc"
+                                    }
+                                    onClick={() => handleSortRequest("id")}
                                 >
                                     Shipment ID
                                 </TableSortLabel>
@@ -133,15 +151,19 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
                             >
                                 <TableSortLabel
-                                    active={orderBy === 'routeID'}
-                                    direction={orderBy === 'routeID' ? orderDirection : "asc"}
-                                    onClick={() => handleSortRequest('routeID')}
+                                    active={orderBy === "routeID"}
+                                    direction={
+                                        orderBy === "routeID"
+                                            ? orderDirection
+                                            : "asc"
+                                    }
+                                    onClick={() => handleSortRequest("routeID")}
                                 >
                                     Route ID
                                 </TableSortLabel>
@@ -150,7 +172,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
@@ -161,29 +183,41 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
                             >
-                                Filled Capacity
-                            </TableCell> <TableCell
-                            sx={{
-                                bgcolor: colors[colorSelection]["800"],
-                                color: colors.grey["100"],
-                                position: 'sticky',
-                                top: 0,
-                                zIndex: 1,
-                            }}
-                        >
-                            Created Date
-                        </TableCell>
-
+                                <TableSortLabel
+                                    active={orderBy === "capacityFilled"}
+                                    direction={
+                                        orderBy === "capacityFilled"
+                                            ? orderDirection
+                                            : "asc"
+                                    }
+                                    onClick={() =>
+                                        handleSortRequest("capacityFilled")
+                                    }
+                                >
+                                    Filled Capacity
+                                </TableSortLabel>
+                            </TableCell>{" "}
                             <TableCell
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
+                                    top: 0,
+                                    zIndex: 1,
+                                }}
+                            >
+                                Created Date
+                            </TableCell>
+                            <TableCell
+                                sx={{
+                                    bgcolor: colors[colorSelection]["800"],
+                                    color: colors.grey["100"],
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
@@ -194,7 +228,7 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 sx={{
                                     bgcolor: colors[colorSelection]["800"],
                                     color: colors.grey["100"],
-                                    position: 'sticky',
+                                    position: "sticky",
                                     top: 0,
                                     zIndex: 1,
                                 }}
@@ -209,42 +243,82 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                                 key={index}
                                 sx={{
                                     bgcolor: colors.grey["900"],
-                                    '&:hover': {bgcolor: colors[colorSelection][900]}
+                                    "&:hover": {
+                                        bgcolor: colors[colorSelection][900],
+                                    },
                                 }}
+                                onClick={() => setSelectedShipment(row.id)}
                             >
                                 <TableCell>{row.id}</TableCell>
                                 <TableCell>{row.routeID}</TableCell>
                                 <TableCell>{row.fullCapacity}</TableCell>
-                                <TableCell>{`${(parseFloat(row.capacityFilled)).toFixed(2)}`}</TableCell>
-                                <TableCell>{new Date(row.createdData).toLocaleDateString()}</TableCell>
+                                <TableCell>{`${parseFloat(
+                                    row.capacityFilled
+                                ).toFixed(2)}`}</TableCell>
                                 <TableCell>
-                                    <Box sx={{display: 'flex', alignItems: 'center'}}>
-                                        <Box sx={{width: '100%', mr: 1}}>
+                                    {new Date(
+                                        row.createdData
+                                    ).toLocaleDateString()}
+                                </TableCell>
+                                <TableCell>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Box sx={{ width: "100%", mr: 1 }}>
                                             <LinearProgress
                                                 variant="determinate"
-                                                value={parseFloat(row.capacityFilled)/parseFloat(row.fullCapacity)*100} // Already a percentage
+                                                value={
+                                                    (parseFloat(
+                                                        row.capacityFilled
+                                                    ) /
+                                                        parseFloat(
+                                                            row.fullCapacity
+                                                        )) *
+                                                    100
+                                                } // Already a percentage
                                                 sx={{
                                                     bgcolor: colors.grey["800"],
-                                                    '& .MuiLinearProgress-bar': {
-                                                        bgcolor: colors[colorSelection][500],
-                                                    }
+                                                    "& .MuiLinearProgress-bar":
+                                                        {
+                                                            bgcolor:
+                                                                colors[
+                                                                    colorSelection
+                                                                ][500],
+                                                        },
                                                 }}
                                             />
                                         </Box>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {`${Math.round((row.capacityFilled)/parseFloat(row.fullCapacity)*100)}%`}
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
+                                            {`${Math.round(
+                                                (row.capacityFilled /
+                                                    parseFloat(
+                                                        row.fullCapacity
+                                                    )) *
+                                                    100
+                                            )}%`}
                                         </Typography>
                                     </Box>
                                 </TableCell>
-                                <TableCell sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-evenly',
-                                    alignItems: 'center',
-                                }}>
+                                <TableCell
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "space-evenly",
+                                        alignItems: "center",
+                                    }}
+                                >
                                     <CircleIcon
                                         fontSize="small"
                                         sx={{
-                                            color: row.status === "Ready" ? colors.greenAccent[500] : colors.yellowAccent[500]
+                                            color:
+                                                row.status === "Ready"
+                                                    ? colors.greenAccent[500]
+                                                    : colors.yellowAccent[500],
                                         }}
                                     />
                                     {row.status}
@@ -253,8 +327,6 @@ const CustomShipmentTable = ({data, colorSelection, heading, maxHeight}) => {
                         ))}
                     </TableBody>
                 </Table>
-
-
             </TableContainer>
         </CustomGrayCard>
     );
