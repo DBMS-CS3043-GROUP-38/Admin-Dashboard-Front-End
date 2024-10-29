@@ -732,3 +732,18 @@ export const getOrdersByShipment = async (shipmentID) => {
     const response = await api.get(`/manager/tables/orders-by-shipment/${shipmentID}`);
     return response.data;
 }
+
+export const getTruckSchedule = async (truckID) => {
+    const response = await api.get(`/manager/tables/truck-schedule/${truckID}`);
+    return response.data;
+}
+
+export const getTruckScheduleStatuses = async () => {
+    const response = await api.get(`/manager/cards/truck-schedule-statuses`);
+    return response.data;
+}
+
+export const getTruckSchedules = async () => {
+    const response = await api.get(`/manager/tables/truck-schedules`);
+    return response.data;
+}

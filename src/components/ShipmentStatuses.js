@@ -3,14 +3,10 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import {useTheme} from "@mui/material";
-import {tokens} from "../theme";
 import CustomGrayCard from "./CustomGrayCard";
 import {ThumbUp} from "@mui/icons-material";
 
 const ShipmentStatusesCard = ({title, statusData}) => {
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     // Ensure all statuses have a value, defaulting to 0 if not found
     const statuses = [

@@ -43,6 +43,7 @@ import TrainsM from "./pages/manager/Trains";
 import Receive from "./pages/manager/Receive";
 import Admins from "./pages/manager/Admins";
 import Shipments from "./pages/manager/Shipments";
+import TruckSchedule from "./pages/manager/TruckSchedule";
 
 
 function App() {
@@ -100,6 +101,7 @@ function App() {
                                         <Route path='admins' element={<Admins/>}/>
                                         <Route path='trains' element={<TrainsM/>}/>
                                         <Route path='shipments' element={<Shipments/>}/>
+                                        <Route path='truck-schedule' element={<TruckSchedule/>}/>
                                     </Route>
                                 </Route>
 
