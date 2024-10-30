@@ -32,14 +32,9 @@ import {useNavigate} from "react-router-dom";
 
 const Overview = () => {
 
-    const [todaySales, setTodaySales] = useState({current: 0, previous: 0});
     const [completedTrains, setCompletedTrains] = useState([]);
-    const [pendingOrders, setPendingOrders] = useState([]);
-    const [ordersAttention, setOrdersAttention] = useState([]);
-    const [revenueData, setRevenueData] = useState([]);
     const [orderStatuses, setOrderStatuses] = useState([]);
     const [todayTrains, setTodayTrains] = useState([]);
-    const [bestProducts, setBestProducts] = useState([]);
     const [availableAssistants, setAvailableAssistants] = useState({Available: 0, Busy: 0});
     const [availableDrivers, setAvailableDrivers] = useState({Available: 0, Busy: 0});
     const [availableTrucks, setAvailableTrucks] = useState({Available: 0, Busy: 0});
@@ -48,28 +43,18 @@ const Overview = () => {
     useEffect(() => {
             const fetchData = async () => {
                 try {
-                    const salesData = await getTodaySalesM();
                     const trainsData = await getCompletedTrainsM();
-                    const pendingData = await getPendingOrdersM();
-                    const attentionData = await getOrdersAttentionM();
                     const statuses = await getOrderStatusesM();
                     const trainsToday = await getTodayTrainsM();
-                    const revenue = await getMonthlyRevenueM();
-                    const bestProducts = await getBestProductsQuarterM();
                     const availableAssistants = await getAvailableAssistantsM();
                     const availableDrivers = await getAvailableDriversM();
                     const availableTrucks = await getAvailableTrucksM();
 
 
                     // Set state for each of the fetched data
-                    setTodaySales(salesData);
                     setCompletedTrains(trainsData);
-                    setPendingOrders(pendingData);
-                    setOrdersAttention(attentionData);
-                    setRevenueData(revenue);
                     setOrderStatuses(statuses);
                     setTodayTrains(trainsToday);
-                    setBestProducts(bestProducts);
                     setAvailableAssistants(availableAssistants);
                     setAvailableDrivers(availableDrivers);
                     setAvailableTrucks(availableTrucks);

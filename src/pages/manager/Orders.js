@@ -16,8 +16,6 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function Orders() {
-    const [pendingOrders, setPendingOrders] = useState([]);
-    const [trainAssignedOrders, setTrainAssignedOrders] = useState([]);
     const [inTrain, setInTrain] = useState([]);
     const [InStoreData, setInStoreData] = useState([]);
     const [InShipmentData, setInShipmentData] = useState([]);
@@ -28,8 +26,6 @@ export default function Orders() {
     useEffect(() => {
         const fetchOrderStatuses = async () => {
             try {
-                const p = await getInStoreOrdersListM();
-                const t = await getTrainAssignedOrdersM();
                 const i = await getOrdersInTrainM();
                 const s = await getOrdersInStoreM();
                 const sh = await getOrdersInShipmentM();
@@ -37,8 +33,6 @@ export default function Orders() {
                 const orderStatuses = await getOrderStatusesM();
 
 
-                setPendingOrders(p);
-                setTrainAssignedOrders(t);
                 setInTrain(i);
                 setInStoreData(s);
                 setInShipmentData(sh);
