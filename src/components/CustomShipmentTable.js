@@ -257,7 +257,7 @@ const CustomShipmentTable = ({ data, colorSelection, heading, maxHeight, setSele
                                 ).toFixed(2)}`}</TableCell>
                                 <TableCell>
                                     {new Date(
-                                        row.createdData
+                                        row.createdDate
                                     ).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell>
