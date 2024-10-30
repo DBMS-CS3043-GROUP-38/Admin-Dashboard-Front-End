@@ -31,6 +31,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import InfoIcon from '@mui/icons-material/Info';
 import {TbShoppingCartDown} from "react-icons/tb";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import TodayIcon from '@mui/icons-material/Today';
 
 
 const Item = ({title, to, icon, selected, setSelected}) => {
@@ -142,6 +143,13 @@ const Sidebar = () => {
                         title={"Shipments"}
                         to="shipments"
                         icon={<Inventory />}
+                        selected={selected}
+                        setSelected={setSelected}
+                    />
+                    <Item
+                        title="Truck Schedule"
+                        to="truck-schedule"
+                        icon={<TodayIcon/>}
                         selected={selected}
                         setSelected={setSelected}
                     />

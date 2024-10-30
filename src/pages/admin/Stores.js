@@ -25,7 +25,6 @@ const Stores = () => {
     const [availableDrivers, setAvailableDrivers] = useState([]);
     const [availableTrucks, setAvailableTrucks] = useState([]);
     const [storesData, setStoresData] = useState([]);
-    const [routeSales, setRouteSales] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -149,7 +148,6 @@ const Stores = () => {
                                         )}
                                     </Select>
                                 </FormControl>
-                                <MultiLineChart data={routeSales} />
                             </Grid>
                             <Grid size={3}>
                                 <ReadyShipmentsCard readyShipments={readyShipments.Ready} totalShipments={readyShipments.NotReady} />
