@@ -1,7 +1,7 @@
 import axios from 'axios';
 // const API_BASE_URL = 'http://localhost:3000/dashboard';
 // const API_BASE_URL = 'http://192.168.109.29:3000/dashboard';
-const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:3000/dashboard`;
+const API_BASE_URL = `http://${window.location.hostname}:3000/dashboard`;
 
 
 
