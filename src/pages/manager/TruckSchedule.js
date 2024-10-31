@@ -25,10 +25,18 @@ export default function TruckSchedule() {
                 setSchedules(schedules);
             } catch (error) {
                 console.error(error);
+                // Optional: Handle specific error responses or states here
             }
         };
 
-        fetchData().then((r) => console.log("Data fetched"));
+        // Fetch data immediately on mount
+        fetchData().then(() => console.log("Data fetched"));
+
+        // Set up an interval to fetch data every 10 seconds
+        const intervalId = setInterval(fetchData, 10000); // 10000 milliseconds = 10 seconds
+
+        // Cleanup the interval on component unmount
+        return () => clearInterval(intervalId);
     }, []);
 
 

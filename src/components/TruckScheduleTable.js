@@ -220,11 +220,7 @@ const CustomScheduleTable = ({
                             >
                                 <TableCell>{row["Schedule ID"]}</TableCell>
                                 <TableCell>
-                                    {row["Schedule Time"].split("T")[0] +
-                                        " " +
-                                        row["Schedule Time"]
-                                            .split("T")[1]
-                                            .split(".")[0]}
+                                    {new Date(row["Schedule Time"]).toLocaleString()}
                                 </TableCell>
                                 <TableCell>{row["Shipment ID"]}</TableCell>
                                 <TableCell>{row["Truck ID"]}</TableCell>

@@ -41,42 +41,48 @@ const Overview = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const trainsData = await getCompletedTrainsM();
-                    const statuses = await getOrderStatusesM();
-                    const trainsToday = await getTodayTrainsM();
-                    const availableAssistants = await getAvailableAssistantsM();
-                    const availableDrivers = await getAvailableDriversM();
-                    const availableTrucks = await getAvailableTrucksM();
+        const fetchData = async () => {
+            try {
+                const trainsData = await getCompletedTrainsM();
+                const statuses = await getOrderStatusesM();
+                const trainsToday = await getTodayTrainsM();
+                const availableAssistants = await getAvailableAssistantsM();
+                const availableDrivers = await getAvailableDriversM();
+                const availableTrucks = await getAvailableTrucksM();
 
-
-                    // Set state for each of the fetched data
-                    setCompletedTrains(trainsData);
-                    setOrderStatuses(statuses);
-                    setTodayTrains(trainsToday);
-                    setAvailableAssistants(availableAssistants);
-                    setAvailableDrivers(availableDrivers);
-                    setAvailableTrucks(availableTrucks);
-                } catch (error) {
-                    console.error(error);
-                    // Check for specific status codes
-                    if (error.response) {
-                        const {status} = error.response;
-                        if (status === 401 || status === 403) {
-                            navigate('/unauthorized'); // Redirect to Unauthorized page
-                        } else {
-                            navigate('/database-error'); // Redirect to Database Error page
-                        }
+                // Set state for each of the fetched data
+                setCompletedTrains(trainsData);
+                setOrderStatuses(statuses);
+                setTodayTrains(trainsToday);
+                setAvailableAssistants(availableAssistants);
+                setAvailableDrivers(availableDrivers);
+                setAvailableTrucks(availableTrucks);
+            } catch (error) {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const { status } = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
                     } else {
-                        // Network error or no response
-                        navigate('/database-error'); // Redirect for network or unexpected errors
+                        navigate('/database-error'); // Redirect to Database Error page
                     }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
                 }
-            };
-            fetchData().then(r => console.log('Data fetched successfully'));
-        }
-        , []);
+            }
+        };
+
+        // Fetch data immediately on mount
+        fetchData().then(r => console.log('Data fetched successfully'));
+
+        // Set up an interval to fetch data every 10 seconds
+        const intervalId = setInterval(fetchData, 10000); // 10000 milliseconds = 10 seconds
+
+        // Cleanup the interval on component unmount
+        return () => clearInterval(intervalId);
+    }, []); // Empty dependency array to run only on mount
 
     return (
         <PageLayout heading={"Overview"} subHeading={"Welcome to the Dashboard"}>

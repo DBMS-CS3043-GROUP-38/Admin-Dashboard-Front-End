@@ -90,7 +90,7 @@ const Trains = () => {
                         data={activeTrains}
                         maxHeight={600}
                         colorSelection={"greenAccent"}
-                        onRowClick={(train) => setSelectedTrain(train.id)}
+                        onRowClick={(train) => setSelectedTrain(train)}
                     />
                 </Grid>
 

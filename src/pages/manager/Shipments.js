@@ -11,10 +11,6 @@ import { useNavigate } from "react-router-dom";
 import ShipmentStatusesCard from "../../components/ShipmentStatuses";
 import CustomShipmentTable from "../../components/CustomShipmentTable";
 import { CustomTable } from "../../components/OrderDetailsTable";
-import CustomGrayCard from "../../components/CustomGrayCard";
-import { Box, Divider, Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { tokens } from "../../theme";
 
 const Shipments = () => {
     const [activeShipments, setActiveShipments] = useState([]);
@@ -22,9 +18,6 @@ const Shipments = () => {
     const navigate = useNavigate();
     const [selectedShipment, setSelectedShipment] = useState(-1);
     const [orders, setOrders] = useState([]);
-    const [truckSchedule, setTruckSchedule] = useState([]);
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,9 +53,7 @@ const Shipments = () => {
         const fetchOrders = async () => {
             try {
                 const data = await getOrdersByShipment(selectedShipment);
-                const truckSchedule = await getTruckSchedule(selectedShipment);
                 setOrders(data);
-                setTruckSchedule(truckSchedule);
             } catch (error) {
                 console.error(error);
                 // Check for specific status codes
@@ -117,65 +108,6 @@ const Shipments = () => {
                         maxHeight={600}
                         colorSelection={"greenAccent"}
                     />
-                </Grid>
-
-                <Grid size={12}>
-                    <CustomGrayCard>
-                        <Typography
-                            variant="h6"
-                            gutterBottom
-                            color="text.primary"
-                        >
-                            Truck Schedule
-                        </Typography>
-                        <Divider sx={{ mb: 2 }} />
-                        {truckSchedule.length ? (
-                            truckSchedule.map((schedule, index) => (
-                                <Box
-                                    key={index}
-                                    sx={{
-                                        mb: 2,
-                                        color: colors.purpleAccent["300"],
-                                    }}
-                                    display={"flex"}
-                                    flexDirection={"column"}
-                                    justifyContent={"space-between"}
-                                >
-                                    <Typography variant="h5">
-                                        Truck ID: {schedule.TruckID}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        License Plate: {schedule.LicencePlate}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Driver: {schedule.DriverName}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Assistant: {schedule.AssistantName}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Store City: {schedule.StoreCity}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                    {/* 2024-10-26T18:30:00.000Z */}
-                                        Schedule Date & Time:{" "}
-                                        {schedule.ScheduleDateTime.split("T")[0]}{" "} - {schedule.ScheduleDateTime.split("T")[1].split(".")[0]}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Route ID: {schedule.RouteID}
-                                    </Typography>
-                                    <Typography variant="h5">
-                                        Status: {schedule.Status}
-                                    </Typography>
-                                    <Divider sx={{ my: 1 }} />
-                                </Box>
-                            ))
-                        ) : (
-                            <Typography color="text.secondary">
-                                No truck schedule available.
-                            </Typography>
-                        )}
-                    </CustomGrayCard>
                 </Grid>
             </Grid>
         </PageLayout>

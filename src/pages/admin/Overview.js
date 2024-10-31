@@ -34,45 +34,52 @@ const Overview = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const salesData = await getTodaySales();
-                    const trainsData = await getCompletedTrains();
-                    const pendingData = await getPendingOrders();
-                    const attentionData = await getOrdersAttention();
-                    const statuses = await getOrderStatuses();
-                    const trainsToday = await getTodayTrains();
-                    const revenue = await getMonthlyRevenue();
-                    const bestProducts = await getBestProductsQuarter();
+        const fetchData = async () => {
+            try {
+                const salesData = await getTodaySales();
+                const trainsData = await getCompletedTrains();
+                const pendingData = await getPendingOrders();
+                const attentionData = await getOrdersAttention();
+                const statuses = await getOrderStatuses();
+                const trainsToday = await getTodayTrains();
+                const revenue = await getMonthlyRevenue();
+                const bestProducts = await getBestProductsQuarter();
 
-                    // Set state for each of the fetched data
-                    setTodaySales(salesData);
-                    setCompletedTrains(trainsData);
-                    setPendingOrders(pendingData);
-                    setOrdersAttention(attentionData);
-                    setRevenueData(revenue);
-                    setOrderStatuses(statuses);
-                    setTodayTrains(trainsToday);
-                    setBestProducts(bestProducts);
-                } catch (error) {
-                    console.error(error);
-                    // Check for specific status codes
-                    if (error.response) {
-                        const {status} = error.response;
-                        if (status === 401 || status === 403) {
-                            navigate('/unauthorized'); // Redirect to Unauthorized page
-                        } else {
-                            navigate('/database-error'); // Redirect to Database Error page
-                        }
+                // Set state for each of the fetched data
+                setTodaySales(salesData);
+                setCompletedTrains(trainsData);
+                setPendingOrders(pendingData);
+                setOrdersAttention(attentionData);
+                setRevenueData(revenue);
+                setOrderStatuses(statuses);
+                setTodayTrains(trainsToday);
+                setBestProducts(bestProducts);
+            } catch (error) {
+                console.error(error);
+                // Check for specific status codes
+                if (error.response) {
+                    const { status } = error.response;
+                    if (status === 401 || status === 403) {
+                        navigate('/unauthorized'); // Redirect to Unauthorized page
                     } else {
-                        // Network error or no response
-                        navigate('/database-error'); // Redirect for network or unexpected errors
+                        navigate('/database-error'); // Redirect to Database Error page
                     }
+                } else {
+                    // Network error or no response
+                    navigate('/database-error'); // Redirect for network or unexpected errors
                 }
-            };
-            fetchData().then(r => console.log('Data fetched successfully'));
-        }
-        , []);
+            }
+        };
+
+        // Fetch data immediately on mount
+        fetchData().then(r => console.log('Data fetched successfully'));
+
+        // Set up an interval to fetch data every 10 seconds
+        const intervalId = setInterval(fetchData, 10000); // 10000 milliseconds = 10 seconds
+
+        // Cleanup the interval on component unmount
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <PageLayout heading={"Overview"} subHeading={"Welcome to the Dashboard"}>
