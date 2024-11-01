@@ -158,7 +158,14 @@ const CustomScheduleTable = ({
                                     bgcolor: colors[colorSelection][800],
                                 }}
                             >
-                                Schedule Time
+                                Start TIme
+                            </TableCell>
+                            <TableCell
+                                sx={{
+                                    bgcolor: colors[colorSelection][800],
+                                }}
+                            >
+                                End Time(Std.)
                             </TableCell>
                             <TableCell
                                 sx={{
@@ -221,6 +228,9 @@ const CustomScheduleTable = ({
                                 <TableCell>{row["Schedule ID"]}</TableCell>
                                 <TableCell>
                                     {new Date(row["Schedule Time"]).toLocaleString()}
+                                </TableCell>
+                                <TableCell>
+                                    {new Date(row["Estimated End Time"]).toLocaleString()}
                                 </TableCell>
                                 <TableCell>{row["Shipment ID"]}</TableCell>
                                 <TableCell>{row["Truck ID"]}</TableCell>
