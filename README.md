@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# Admin Dashboard (React Application)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The **Admin Dashboard** is a React-based user interface designed to manage and monitor the Supply Chain Management Platform effectively. This front-end application enables administrators to oversee system operations, manage orders, monitor shipments, and configure key settings.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🛠 Setup Instructions
 
-### `npm start`
+### Prerequisites
+- Ensure **Node.js** and **npm** are installed on your machine.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Steps
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-### `npm test`
+2. **Start the Application**:
+   ```bash
+   npm start
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **API Connectivity**:
+   - First, follow the guide on the API repository [here](https://github.com/DBMS-CS3043-GROUP-38/SCMS-API) to set up the API server.
+   - Ensure the **API server** and the hosting machine for this application are on the same network.
+   - The application is configured to connect to the API server via the following code in `src\services\apiService.js`:
+     ```javascript
+     import axios from "axios";
 
-### `npm run build`
+     const BASE_URL = `http://${window.location.hostname}:3000/admin`;
+     ```
+   - If the API server runs on a different port or IP address, update this setting accordingly.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Access the Application**:
+    - Open a web browser and navigate to `http://localhost:PORT` to access the application.
+    - The default port is `3002`.
+    - If changed it will be displayed in the terminal after running `npm start`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. **Login Credentials**:
+    - Use the following credentials to log in:
+        - **Admin Hub**: username: `{Might need to check mannually on the database if you added dummy users}`, password: `Password@Admin`
+        - **Store Manager**: username: `{Might need to check mannually on the database if you added dummy users}`, password: `Password@StoreManager`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+6. **Serve the Application**:
+    - To serve the application for production, run:
+      ```bash
+      npm run build
+      ```
+    - This will create a production build in the `build` directory.
 
-### `npm run eject`
+7. **Deploy the Application**:
+    - Deploy the contents of the `build` directory to a web server to host the application.
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🔧 Troubleshooting
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### API Connection Issues
+- If the application cannot connect to the API server:
+  1. Verify that the API server is running.
+  2. Ensure the port and hostname in `src\services\apiService.js` are correct.
+  3. If the API and application are on different networks, adjust the **CORS settings** in the backend API to allow cross-origin requests.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### CORS Adjustments (Backend)
+- Update the backend API CORS configuration to allow secure connections:
+  ```javascript
+  const cors = require("cors");
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  app.use(cors({
+      origin: '*', // Replace with specific origin(s) for better security in production
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  ```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🎨 User Interface Overview
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Dashboard Page
+- View overall statistics and monitor system operations in a single glance.
+![Dashboard Page](/images/Screenshot%202024-12-11%20170823.png)
 
-### Code Splitting
+### Order Tracking
+- View and manage orders in different states.
+![Order Tracking Page](/images/Screenshot%202024-12-11%20171045.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Store Management
+- Manage store details
+![Store Management Page](/images/Screenshot%202024-12-11%20171116.png)
 
-### Analyzing the Bundle Size
+### Manage Shipments
+- Monitor and manage shipments in the system.
+![Manage Shipments Page](/images/Screenshot%202024-12-11%20171231.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### More images
+- [View more screenshots](/images/).
 
-### Making a Progressive Web App
+## Default Passwords
+- The default passwords for dummy data are:
+  - **Admin Hub**: `Password@Admin`
+  - **Store Manager**: `Password@StoreManager`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Additional Media
+- [Watch a walkthrough video](https://youtu.be/-bgOPcxjmuA).
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🧩 Contribution Guidelines
 
-### Deployment
+We welcome contributions to this React application. Please ensure you:
+- Follow React and JavaScript best practices.
+- Test your changes locally before submitting a pull request.
+- Document any new features or components.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
